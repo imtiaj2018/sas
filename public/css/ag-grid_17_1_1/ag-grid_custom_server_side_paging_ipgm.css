@@ -1,0 +1,77 @@
+.ag-paging-row-summary-panel,.ag-paging-page-summary-panel{
+		display:none;
+	}
+	
+	.ag-theme-balham button[ref="btFirst_custom_gm"] {
+		background-color: transparent;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgNEw4IDhsNCA0TTQuNSA0djgiIHN0cm9rZT0iIzdGOEM4RCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 16px 16px;
+		height: 16px;
+		opacity: 0.87;
+		width: 16px;
+		overflow: hidden;
+		text-indent: 100%;
+		appearance: none;
+		border: 0;
+		opacity: 0.54;
+		padding: 0;
+	}
+	.ag-theme-balham button[ref="btPrevious_custom_gm"] {
+		background-color: transparent;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNOSA0TDUgOGw0IDQiIHN0cm9rZT0iIzdGOEM4RCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 16px 16px;
+		height: 16px;
+		opacity: 0.87;
+		width: 16px;
+		overflow: hidden;
+		text-indent: 100%;
+		appearance: none;
+		border: 0;
+		opacity: 0.54;
+		padding: 0;
+	}
+	
+	.ag-theme-balham button[ref="btNext_custom_gm"] {
+		background-color: transparent;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiAxMmw0LTQtNC00IiBzdHJva2U9IiM3RjhDOEQiIGZpbGw9Im5vbmUiLz48L3N2Zz4=);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 16px 16px;
+		height: 16px;
+		opacity: 0.87;
+		width: 16px;
+		overflow: hidden;
+		text-indent: 100%;
+		appearance: none;
+		border: 0;
+		opacity: 0.54;
+		padding: 0;
+	}
+	
+	
+	.ag-theme-balham button[ref="btLast_custom_gm"] {
+		background-color: transparent;
+		background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNCAxMmw0LTQtNC00bTcuNSAwdjgiIHN0cm9rZT0iIzdGOEM4RCIgZmlsbD0ibm9uZSIvPjwvc3ZnPg==);
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: 16px 16px;
+		height: 16px;
+		opacity: 0.87;
+		width: 16px;
+		overflow: hidden;
+		text-indent: 100%;
+		appearance: none;
+		border: 0;
+		opacity: 0.54;
+		padding: 0;
+	}
+	
+	.ag-theme-balham button[ref="btLast_custom_gm"][disabled] {
+		opacity: 0.38;
+	}
+	
+ 

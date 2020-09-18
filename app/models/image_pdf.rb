@@ -1,0 +1,2 @@
+class ImagePdf < ApplicationRecord
+end

@@ -1,0 +1,264 @@
+<%= csrf_meta_tags %>
+
+<script src="/js/jquery.js"></script>
+
+<script src="/js/ag-grid_17_1_1/ag-grid-enterprise.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-grid.css">
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-theme-balham.css"> 
+<script src="/js/ag-grid_17_1_1/ag-grid_custom_server_side_paging.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-grid_custom_server_side_paging.css">  
+
+<style>
+	#upload_project_images input[type="button"]{
+		/*border-radius:5px;*/
+		border:0px solid #cccccc;
+		color : #fff;
+		padding :5px 10px 5px 10px; 
+	}
+	
+	#upload_project_images input[type="submit"]{
+		/*border-radius:5px;*/
+		border:0px solid #cccccc;
+		padding :5px 10px 5px 10px; 
+		color : #fff;
+		background :#BE3364
+	}
+	
+	.ui-widget-header {
+		background: #d9d9d9 !important; 
+		border: 1px solid #808080;
+		color: #ffffff;
+		font-weight: bold;
+	} 
+	.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+		color: #ffffff !important;
+		font-family:   Arial !important;
+	} 
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background-color :#c6e6f0 !important;
+		background-image: none !important;
+	} 
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+		background-color :#8fb8bf !important;
+		background-image: none !important;
+	}
+	.ui-state-default a {
+		color: #215a66 !important;
+	}
+	
+	.corner_border_div_100_green_ag{
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px; 
+		border-radius:0px;
+		text-align:center;
+		background-color: #459bac;
+		color: white;
+		border: 0;
+	}
+	
+	.corner_border_div_100_red_ag{
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px; 
+		border-radius:0px;
+		text-align:center;
+		background-color: #BE3364;
+		color: white;
+		border: 0;
+	}
+	
+</style>
+<html style="background-color:#9a497d;">
+	<div style="width:100%;text-align:center;border:1px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Upload and Download Client Logo</h2></div>
+	<marquee behavior="scroll" direction="left" style="color:#ffd724;" >***Large Image Size should be <b>1200x800</b>***</marquee>
+	<marquee behavior="scroll" direction="right" style="color:#ffd724;" >***Small Image Size should be <b>420x350</b>***</marquee>
+	<div id="dialog_form"></div>
+	<div id="iframe_download_div" style="display:none;"></div> 
+	<div style="width:100%;height:60px;">
+		<form  enctype="multipart/form-data" id="upload_project_images" name="upload_project_images" method="post" action="/upload_project_images_form" style="float:left;width:30%;"> 
+			<table  width="100%">
+				<tr>
+					<td>
+						<input type="file" id="upload_datafile" accept=".jpg" name="upload[datafile]" required >
+					</td> 
+					
+					<td>
+						<select name="image_type" id="image_type" required>
+							<option value="">Select Type</option>
+							<option value="l">Large</option>
+							<option value="s">Small</option>
+						</select>
+					</td> 
+					<td>
+						<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
+					</td>
+					<td>
+						<input type="button" name="cancelBttn" value="Cancel" style="width:100px; background: #459bac;" onclick="cancel_upload();">
+					</td>
+					<td>
+						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
+					</td>
+					
+					<td>
+						<input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();">
+					</td>
+				</tr>  
+			</table>  
+			<br>
+			<br>
+			<br>
+			<br>
+		</form>
+	</div>
+	<br>
+<br>
+<br> 
+<div style="width:100%;float:left;">
+	<div id="document_gridvw" class="ag-theme-balham" style="height:400px;float:left;width:60%;padding-left: 3px;"></div>
+	</div> 
+</html> 
+
+<script>
+	function cancel_upload(){
+		$("#upload_file").val("");
+		window.location.href= '/upload_brochure'; 
+	}
+	
+	function admin_panel(){
+		window.location.href= '/admin_panel'; 
+	}
+	function cancel_upload(){
+		$("#upload_file").val("");
+		window.location.href= '/upload_project_images'; 
+	}
+	
+	 $(document).ready(function(){ 
+		<% if session[:document_upload_status].present? %>
+			alert('<%=session[:document_upload_status] %>');
+			
+			<% session.delete(:document_upload_status) %>
+		<%end%>
+		init_grid();
+	 });
+	 
+	upload_datafile.onchange = function(e){
+		e.preventDefault();
+		console.log(this.files)
+		allowed_file_types=["jpg"];
+		var files=this.files;
+		var flag=true;
+		for(i=0;i<files.length;i++){
+			console.log(files[i]['name']);
+			var fileName=files[i]['name']
+			fileExtension = fileName.replace(/^.*\./, '');
+			console.log(fileExtension);
+			console.log(allowed_file_types.indexOf(fileExtension));
+			if(allowed_file_types.indexOf(fileExtension)<0){
+				this.value = null;
+				alert("Only .jpg image(s) are allowed.");
+			} 
+		}
+	}
+	  
+</script>
+
+<script> 
+	var coldef_for_item= <%= raw @coldef.to_json %>
+	
+	var gridOptions = {
+		columnDefs: coldef_for_item,
+		rowData: null,
+		enableSorting: true,
+		enableFilter: true,
+		rowSelection: 'multiple',
+		headerHeight: 50,
+		singleClickEdit: true,	
+		rowHeight:30,
+		enableRangeSelection: true,			
+		enableStatusBar: true, 
+		enableColResize: true,
+		suppressRowClickSelection:true, 
+		onGridReady: function() {   } ,
+		components: {
+			'simpleRenderer': SimpleRenderer 
+		}, 
+		pagination: true
+	};  
+	
+	function init_grid(){
+		pageSize1=100;  
+		var gridDiv = document.querySelector('#document_gridvw');  
+		new agGrid.Grid(gridDiv, gridOptions);  
+		load_custom_paging();		 
+		gridOptions.api.hideOverlay();  
+		load_datasource();
+	}
+	
+	/*----------------celrenderer using component-----------------------*/
+	function SimpleRenderer() {} 
+	SimpleRenderer.prototype.init = function(params) {
+		this.eGui = document.createElement('div');
+		if(params.value != undefined){
+			this.eGui.innerHTML = params.value; 
+		}else{
+			this.eGui.innerHTML = "";
+		}
+	};
+	SimpleRenderer.prototype.getGui = function() {
+		return this.eGui;
+	};
+	/*----------------celrenderer using component-----------------------*/
+	
+	function load_datasource(){
+		createNewDatasource(); 
+	}
+	function createNewDatasource(){     
+		var limit= (startRow-1)+"_"+pageSize1;  
+		gridOptions.api.showLoadingOverlay(); 
+		enableDisableButtons("disable");
+		
+		$.ajax({
+			type: "post",
+			url: "/get_project_images_aggrid_data",
+			data: "limit="+limit,
+			success: function(msg){
+				
+				var rowsThisPage = JSON.parse(msg);  
+				total_aggrid_rows=parseInt(rowsThisPage["total"]); 
+				set_global_pagination_variables(rowsThisPage["data"].length); 
+				enableDisableButtons("enable");
+				gridOptions.api.setRowData(rowsThisPage["data"]);   
+				if(rowsThisPage.length == 0){
+					gridOptions.api.showNoRowsOverlay(); 
+				}
+			}
+		}); 	
+	} 
+	
+	
+	function download_file(file_id){
+		window.location.href= '/download_documentation_admin?id='+file_id;  
+	}	
+	
+	function delete_file(file_id){
+		if(confirm("Are you sure to delete this project image?")){
+			$.ajax({
+				type: "post",
+				url: "/delete_project_image_file",
+				data: "id="+file_id,
+				success: function(msg){
+					
+					alert(msg);
+					createNewDatasource();
+				}
+			}); 
+		}	
+	} 
+	
+	
+</script> 
