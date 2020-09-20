@@ -1,7 +1,11 @@
 class ImagePdfController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:upload_documentation_file,:get_documentation_aggrid_data,:delete_document_file, :upload_project_images_form, :get_project_images_aggrid_data, :delete_project_image_file]
 	def upload_brochure
-		@coldef = create_documentation_grid_coldef
+		if current_user
+			@coldef = create_documentation_grid_coldef
+		else
+			redirect_to login_url
+		end		
 	end
 	
 	def upload_documentation_file
@@ -96,7 +100,12 @@ class ImagePdfController < ApplicationController
 	end 
 	
 	def upload_project_images
-		@coldef = create_image_upload_grid_coldef
+		if current_user
+			@coldef = create_image_upload_grid_coldef
+		else
+			redirect_to login_url
+		end
+		
 	end
 	
 	def upload_project_images_form

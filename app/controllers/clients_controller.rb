@@ -1,7 +1,11 @@
 class ClientsController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:get_clients_logo_aggrid_data, :upload_client_images_form, :delete_client_logo_image_file]
 	def upload_clients
-		@coldef = create_client_grid_coldef
+		if current_user
+			@coldef = create_client_grid_coldef
+		else
+			redirect_to login_url
+		end		
 	end
 	
 	def upload_client_images_form
