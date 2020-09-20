@@ -1,4 +1,19 @@
 Rails.application.routes.draw do
+	devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations',passwords: 'users/passwords'}
+	
+	devise_scope :user do
+		get 'login', to: 'users/sessions#new' 
+		get 'logout', to: 'users/sessions#destroy' 
+		get 'change_my_password', to: 'users/registrations#edit' 
+		get '/users/password', to:'users/passwords#new'
+		get '/users', to:'users/registrations#new'
+		authenticated :user do
+			root to: redirect('/admin_panel')
+		end 
+		unauthenticated do
+			root to: redirect('/home')
+		end
+	end 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
   get '/', to:'sunshines#home'

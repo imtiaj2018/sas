@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<style>
+	body{
+		min-height: 100vh;
+		height:auto;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-position: 50% 0%;
+		margin:0px auto;
+	}
+	#flash_notice h4{
+		margin: 2px 0px !important;
+		color: #e74c3c;
+		font-size:13px;	
+	}
+	
+	::placeholder{
+		opacity:1;
+	}
+	
+	label, .forget_assword_css{
+		font-size:12px;
+		font-weight:bold;
+		color:#000;
+		text-align:right;
+	}
+	.alert{
+		background:white;
+	}
+	.button-login, .button-login:focus {
+		color: #ffffff;
+		background-color: #eb6e6e;
+		border-color: #eb6e6e;
+	}
+	.button-login:hover, .button-login:active {
+		color: #ffffff;
+		background-color: #151515;
+		border-color: #151515;
+	}
+</style>
+<html class="wide wow-animation" lang="en">	
+	
+	<script src="/js/jquery.js"></script>
+    
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+	
+	<head>
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8">
+
+		<link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+		<!-- Stylesheets-->
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:400,500%7CTeko:300,400,500%7CMaven+Pro:500">
+		<link rel="stylesheet" href="../../css/bootstrap.css">
+		<link rel="stylesheet" href="../../css/fonts.css">
+		<link rel="stylesheet" href="../../css/style.css">
+	
+	</head>
+
+	<body style="background-color:#9a497d;">
+		<div class="page">
+			<div class="preloader">
+			  <div class="preloader-body">
+				<div class="cssload-container"><span></span><span></span><span></span><span></span>
+				</div>
+			  </div>
+			</div>
+			<!-- < header started> -->
+			<header class="section page-header" style="background-color:#9a497d;">
+				<!-- RD Navbar-->
+				<div class="rd-navbar-wrap" style="background-color:#9a497d;">
+				  <nav class="rd-navbar rd-navbar-classic" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed" data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed" data-xl-layout="rd-navbar-static" data-xl-device-layout="rd-navbar-static" data-xxl-layout="rd-navbar-static" data-xxl-device-layout="rd-navbar-static" data-lg-stick-up-offset="46px" data-xl-stick-up-offset="46px" data-xxl-stick-up-offset="46px" data-lg-stick-up="true" data-xl-stick-up="true" data-xxl-stick-up="true">
+					<div class="rd-navbar-main-outer" style="background-color:#9a497d;">
+					  <div class="rd-navbar-main" style="background-color:#9a497d;">
+						<!-- RD Navbar Panel-->
+						  <div class="rd-navbar-brand"><a class="brand" href="index.html"><img src="../../images/LOGO_FINAL.png" alt="" width="229" height="43"/></a></div>
+					  </div>
+					</div>
+				  </nav>
+				</div>
+			</header>
+			
+			<div id="body_content" style="background-color:#9a497d;">
+				<div class="row row-30 justify-content-center">
+					<div class="col-md-10 col-lg-6 col-xl-4 wow fadeInRight" data-wow-delay=".1s">
+						<div class="box-footer">
+							<h2>Sign up</h2>
+							<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+								<div id="flash_notice" style="text-align:center;"> 
+									<% flash.each do |key,value| %> 
+										<%= devise_error_messages! %>
+									<% end -%>
+								</div>		
+								<% if @minimum_password_length %>
+								<em style="color:red;">(<%= @minimum_password_length %> characters minimum)</em>
+								<% end %>
+								<div class="form-wrap"> 
+									<%= f.password_field :password, :class => "form-input", :placeholder => "Password" %>
+								</div>
+								<div class="form-wrap">			
+									 <%= f.password_field :password_confirmation, :class => "form-input", autocomplete: "off", :placeholder => "Confirm password" %>
+								</div>
+								<%= f.submit "Sign up", :class => "button button-block button-login" %>
+								<div>	
+									<a class="forget_assword_css" onclick="login_page();" href="javascript:void(0)">Log in</a>
+								</div>
+								
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<!-- footer section -->
+			<footer class="section section-fluid footer-classic" style="background-color:#9a497d;">
+				
+				<div class="container footer-bottom-panel wow fadeInUp">
+				  <!-- Rights-->
+				  <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>, All rights reserved. <span> Design&nbsp;by&nbsp;<a href="https://www.sunshineadsolutions.com">SAS</a></span>
+				  </p>
+				</div>
+			</footer>
+		</div>
+		<script src="../../js/core.min.js"></script>
+		<script src="../../js/script.js"></script>
+	</body>
+</html>
+
+<script>
+	function login_page(){
+		window.location.href="/login";
+	}
+</script>
+

@@ -1,4 +1,6 @@
 require 'turbolinks'
+# skip_before_action :require_login, only: [:admin_panel]
+
 
 class SunshinesController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:send_mail]
@@ -52,5 +54,10 @@ class SunshinesController < ApplicationController
 	end
 	
 	def admin_panel
+		if current_user
+			
+		else
+			redirect_to login_url
+		end
 	end
 end

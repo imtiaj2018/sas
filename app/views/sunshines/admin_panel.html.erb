@@ -78,9 +78,29 @@
 		border: 0;
 	}
 	
+	.logout_css{
+		font-size:20px;
+		font-weight:bold;
+		color:#fff;
+		float:right;
+		text-align:right;
+	}
+	.sign_up_css{
+		font-size:20px;
+		font-weight:bold;
+		color:#fff;
+		text-align:right;
+		float:left;
+	}
+	
 </style>
 <html style="background-color:#9a497d;">
 	<div style="width:100%;text-align:center;border:1px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Welcome to Sunshine Ad Solutions Admin Page</h2></div>
+	<div style="width:100%;text-align:center;border:0px solid;"></div>
+	<div style="width:100%;border:0px solid;">
+		<a class="logout_css" onclick="logout();" href="javascript:void(0)">Log out</a>
+		<a class="sign_up_css" onclick="sign_up();" href="javascript:void(0)">Sign up</a>
+	</div>
 	
 	<div style="width:100%;">
 		
@@ -155,5 +175,12 @@
 </html> 
 
 <script>
+	function logout(){
+		window.location.href="/logout";
+	}
+	
+	function sign_up(){
+		window.location.href="/users/sign_up";
+	}
 	
 </script> 
