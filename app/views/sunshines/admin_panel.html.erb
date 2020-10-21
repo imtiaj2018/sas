@@ -82,15 +82,20 @@
 		font-size:20px;
 		font-weight:bold;
 		color:#fff;
-		float:right;
-		text-align:right;
+		text-align:left;
 	}
 	.sign_up_css{
 		font-size:20px;
 		font-weight:bold;
 		color:#fff;
-		text-align:right;
-		float:left;
+		float:right;
+	}
+	
+	.user_css{
+		font-size:20px;
+		font-weight:bold;
+		color:#fff;
+		text-align:center;
 	}
 	
 </style>
@@ -98,9 +103,10 @@
     <title>Admin Panel</title>
 	<div style="width:100%;text-align:center;border:1px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Welcome to Sunshine Ad Solutions Admin Page</h2></div>
 	<div style="width:100%;text-align:center;border:0px solid;"></div>
-	<div style="width:100%;border:0px solid;">
-		<a class="logout_css" onclick="logout();" href="javascript:void(0)">Log out</a>
-		<a class="sign_up_css" onclick="sign_up();" href="javascript:void(0)">Sign up</a>
+	<div style="width:100%;border:0px solid yellow;">
+		<div style="border:0px solid red; height:10px;width:33%;float:left;"> <a class="logout_css" onclick="logout();" href="javascript:void(0)">Log out</a> </div>
+		<div style="border:0px solid black; height:10px;width:33%;float:left;"><p style="text-align:center;color:#ffd724;">Hi... <%= @current_user.email.split("@")[0] %></p></div>
+		<div style="border:0px solid green;height:10px;width:33%;float:right;"><a class="sign_up_css" onclick="sign_up();" href="javascript:void(0)">Sign up</a></div>
 	</div>
 	
 	<div style="width:100%;">

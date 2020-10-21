@@ -55,7 +55,7 @@ class SunshinesController < ApplicationController
 	
 	def admin_panel
 		if current_user
-			
+			@current_user = current_user
 		else
 			redirect_to login_url
 		end
