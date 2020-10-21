@@ -97,11 +97,11 @@ Rails.application.configure do
 	config.action_mailer.delivery_method = :smtp 
 	config.action_mailer.raise_delivery_errors = true 
 	config.action_mailer.smtp_settings = {
-		user_name:      'sunshineadsolutions@gmail.com',
-		password:       'kolkatA@2020business',
+		user_name:      'imtiajromi@gmail.com',
+		password:       'Romi786@',
 		domain:         'gmail.com',
 		address:       'smtp.gmail.com',
-		port:          '587',
+		port:          '25',
 		authentication: :login,
 		enable_starttls_auto: true
 	}
