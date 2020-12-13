@@ -50,8 +50,8 @@ test:
 
 production:
   <<: *default
-  database: IaigvrEfGp
-  username: IaigvrEfGp
-  password: DDzZfUatRu
+  database: xIvYTgcydL
+  username: xIvYTgcydL
+  password: rac2eni55J
   host: remotemysql.com
   port: 3306
