@@ -112,7 +112,8 @@ class ImagePdfController < ApplicationController
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
 		# directory="#{Rails.root}/public/project_images"  
 		directory="/public/project_images"  
-		Rails.logger.info "==============#{Rails.root}=========="
+		Rails.logger.info "============wewe======#{Rails.root}=============="
+		logger.info "============deded======#{Rails.root}=============="
 		if !(File.directory? directory) 	#if directory is not present then creating
 			FileUtils.mkdir_p directory, :mode => 0777	rescue nil
 		end
