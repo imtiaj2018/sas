@@ -111,7 +111,7 @@ class ImagePdfController < ApplicationController
 	def upload_project_images_form
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p") 
 		# Rails.logger "+======+=======#{Rails.public_path}=====+====+===+"
-		directory="#{Rails.root}/public/project_images"  
+		directory="#{Rails.root}/app/public/project_images"  
 		# directory="sas/public/project_images"  
 		# directory="https://github.com/imtiaj2018/sas/commits/master/public/project_images"
 		Rails.logger.info "============directory======#{directory}=============="
