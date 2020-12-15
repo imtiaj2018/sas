@@ -111,7 +111,7 @@ class ImagePdfController < ApplicationController
 	def upload_project_images_form
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
 		# directory="#{Rails.root}/public/project_images"  
-		directory="/public/project_images"  
+		directory="sas/public/project_images"  
 		Rails.logger.info "============wewe======#{Rails.root}=============="
 		logger.info "============deded======#{Rails.root}=============="
 		if !(File.directory? directory) 	#if directory is not present then creating
