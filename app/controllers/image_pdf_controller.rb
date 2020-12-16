@@ -109,20 +109,12 @@ class ImagePdfController < ApplicationController
 	end
 	
 	def upload_project_images_form
-		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p") 
-		# Rails.logger "+======+=======#{Rails.public_path}=====+====+===+"
-		directory="#{Rails.root}/app/public/project_images"  
-		# directory="sas/public/project_images"  
-		# directory="https://github.com/imtiaj2018/sas/commits/master/public/project_images"
-		Rails.logger.info "============directory======#{directory}=============="
-		puts "============directory======#{directory}=============="
-		Rails.logger.info "============root======#{Rails.root}=============="
-		puts "============root======#{Rails.root}=============="
-		puts "============rootededededed======#{Rails.public_path}=============="
-		Rails.logger.info "============rootededededed======#{Rails.public_path}=============="
+		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")
+		directory="/app/public/project_images"  
 		if !(File.directory? directory) 	#if directory is not present then creating
 			FileUtils.mkdir_p directory, :mode => 0777	rescue nil
 		end
+		Rails.logger.info "=====directory====#{directory}"
 		name =  params[:upload]['datafile'].original_filename   
 		image_size =  params[:image_type]
 		file_extention = File.extname(name)
