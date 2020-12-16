@@ -81,7 +81,7 @@ class ImagePdfController < ApplicationController
 	
 	def download_documentation_admin
 		id=params[:id]
-		file_name=BrochurePdf.find(id.to_i).file_name  
+		file_name=ProjectImage.find(id.to_i).file_name  
 		directory="public/project_images"  
 		final_file_name = "#{directory}/#{file_name}" 
 		send_file final_file_name, :type=>"application/csv", :disposition => "attachment", :stream => false
