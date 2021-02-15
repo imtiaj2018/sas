@@ -91,8 +91,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
 	config.active_record.dump_schema_after_migration = false
-    config.action_mailer.default_url_options = { host: 'https://sunshineadsolutions.herokuapp.com' }
-	# config.action_mailer.default_url_options = { host: 'sunshineadsolutions.herokuapp.com' }
+    # config.action_mailer.default_url_options = { host: 'https://sunshineadsolutions.herokuapp.com' }
+	config.action_mailer.default_url_options = { host: 'sunshineadsolutions.herokuapp.com' }
 	# config.action_mailer.default_url_options = { host: 'http://www.sunshineadsolutions.com' }
 	config.action_mailer.perform_deliveries = true
 	config.action_mailer.delivery_method = :smtp 
@@ -100,9 +100,9 @@ Rails.application.configure do
 	config.action_mailer.smtp_settings = {
 		user_name:      'sunshineadsolutions@gmail.com',
 		password:       'kolkatA@2020business',
-		domain:         'gmail.com',
+		domain:         'heroku.com',
 		address:       'smtp.gmail.com',
-		port:          '25',
+		port:          '587',
 		authentication: :login,
 		enable_starttls_auto: true
 	}
