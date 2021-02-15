@@ -107,9 +107,6 @@ Rails.application.configure do
 		# enable_starttls_auto: true
 	# }
 	
-	# Rails.logger.info "=================================================0000000000==="
-	# Rails.logger.info "==========#{ENV['MAILGUN_SMTP_PORT']}==========#{ENV['MAILGUN_SMTP_SERVER']}===========#{ENV['MAILGUN_SMTP_LOGIN']}========#{}======#{ENV['MAILGUN_SMTP_PASSWORD']}====0000000000==="
-	# Rails.logger.info "=================================================0000000000==="
 	config.action_mailer.delivery_method = :smtp
     config.action_mailer.smtp_settings = {
 		:port           => ENV['MAILGUN_SMTP_PORT'],
