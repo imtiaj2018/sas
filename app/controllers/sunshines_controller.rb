@@ -48,7 +48,7 @@ class SunshinesController < ApplicationController
 		sunshine_message = "<br></br>Thank you for contact us.<br> We will get back to you soon<br>"
 		message = "<br>Hi Sunshine Team,</br><br><br> Visitor Query: #{message}</br><br><br> Visitor Email: #{recipient}</br>#{visitor_phone_str}"
 		UserMailer.send_mail(sunshine_mail, sunshine_subject, message).deliver
-		# UserMailer.send_mail(recipient, subject, sunshine_message).deliver
+		UserMailer.send_mail(recipient, subject, sunshine_message).deliver
 		# redirect_to '/register_by_mail?status=Message sent successfully'
 		# redirect_to '/home'
 	end
