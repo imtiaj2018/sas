@@ -32,7 +32,7 @@ class SunshinesController < ApplicationController
 	end
 	
 	def send_mail
-		recipient = (params[:email].to_s).strip
+		recipient_mail = (params[:email].to_s).strip
 		sunshine_mail="sunshineadsolutions@gmail.com"
 		customer_name=params[:name]
 		message=params[:message]
@@ -42,13 +42,13 @@ class SunshinesController < ApplicationController
 		end
 		
 		sunshine_subject = "Someone is knocking..."
-		subject = "Welcome to Sunshine Ad Solutions"
-		encrypt_decrypt_obj=ApplicationHelper::EncryptDecrypt.new  
-		user_email = encrypt_decrypt_obj.encrypt(recipient.to_s)		
-		sunshine_message = "<br></br>Thank you for contact us.<br> We will get back to you soon<br>"
-		message = "<br>Hi Sunshine Team,</br><br><br> Visitor Query: #{message}</br><br><br> Visitor Email: #{recipient}</br>#{visitor_phone_str}"
-		UserMailer.send_mail(sunshine_mail, sunshine_subject, message).deliver
-		# UserMailer.send_mail(recipient, subject, sunshine_message).deliver
+		recipient_subject = "Welcome to Sunshine Ad Solutions"
+		# encrypt_decrypt_obj=ApplicationHelper::EncryptDecrypt.new  
+		# user_email = encrypt_decrypt_obj.encrypt(recipient.to_s)		
+		recipient_message = "<br></br>Thank you for contact us.<br> We will get back to you soon<br>"
+		sunshine_message = "<br>Hi Sunshine Team,</br><br><br> Visitor Query: #{message}</br><br><br> Visitor Email: #{recipient_mail1}</br>#{visitor_phone_str}"
+		UserMailer.send_mail(recipient_mail, recipient_subject, recipient_message).deliver #send to sunshine official mail id
+		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to the visiter
 		# redirect_to '/register_by_mail?status=Message sent successfully'
 		# redirect_to '/home'
 	end
