@@ -42,9 +42,7 @@ class SunshinesController < ApplicationController
 		end
 		
 		sunshine_subject = "Someone is knocking..."
-		recipient_subject = "Welcome to Sunshine Ad Solutions"
-		# encrypt_decrypt_obj=ApplicationHelper::EncryptDecrypt.new  
-		# user_email = encrypt_decrypt_obj.encrypt(recipient.to_s)		
+		recipient_subject = "Welcome to Sunshine Ad Solutions"	
 		recipient_message = "<br></br>Thank you for contact us.<br> We will get back to you soon<br>"
 		sunshine_message = "<br>Hi Sunshine Team,</br><br><br> Visitor Query: #{message}</br><br><br> Visitor Email: #{recipient_mail}</br>#{visitor_phone_str}"
 		
