@@ -49,8 +49,7 @@ class SunshinesController < ApplicationController
 		UserMailer.send_mail(recipient_mail, recipient_subject, recipient_message).deliver #send to the visiter
 		# UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		
-		# redirect_to '/register_by_mail?status=Message sent successfully'
-		# redirect_to '/home'
+		render :plain => "Thank you for contact. We will get back soon."
 	end
 	
 	def admin_panel

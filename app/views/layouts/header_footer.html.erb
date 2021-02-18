@@ -181,7 +181,8 @@
 					<div class="col-md-10 col-lg-6 col-xl-4 wow fadeInRight" data-wow-delay=".1s">
 					  <div class="box-footer">
 						<h3 class="font-weight-normal">Questions? Contact Us</h3>
-						<form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" data-turbolinks=false method="post" action="/send_mail">
+						<div class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" data-turbolinks=false>
+						<!-- <form class="rd-form rd-mailform" data-form-output="form-output-global" data-form-type="contact" data-turbolinks=false method="post" action="/"> -->
 						  <div class="form-wrap">
 							<input class="form-input" id="contact-name-6" type="text" name="name" data-constraints="@Required" required/>
 							<label class="form-label" for="contact-name-6">Name</label>
@@ -194,8 +195,9 @@
 							<label class="form-label" for="contact-message-6">Message</label>
 							<textarea class="form-input" id="contact-message-6" name="message" data-constraints="@Required" required></textarea>
 						  </div>
-						  <button class="button button-block button-ujarak button-secondary" type="submit">Send Message</button>
-						</form>
+						  <button class="button button-block button-ujarak button-secondary" type="submit" onclick="submit_query();">Send Message</button>
+						<!-- </form> -->
+						</div>
 					  </div>
 					</div>
 					<div class="col-md-10 col-lg-6 col-xl-4 wow fadeInRight" data-wow-delay=".2s">
@@ -217,6 +219,7 @@
 				  <p class="rights"><span>&copy;&nbsp;</span><span class="copyright-year"></span>, All rights reserved. <span> Design&nbsp;by&nbsp;<a href="https://www.sunshineadsolutions.com">SAS</a></span>
 				  </p>
 				</div>
+				
 			</footer>
 		</div>
 		 <!-- Global Mailform Output-->
@@ -242,6 +245,20 @@
 				$("#iframe_download_div").html("");
 				var iframe='<iframe name="file_download" id="file_download" style="display:none;" src="'+url +'"  ></iframe>'
 				$("#iframe_download_div").html(iframe);   
+			}
+		});	 
+	}
+	
+	function submit_query(){
+		var name = $("#contact-name-6").val();
+		var email = $("#contact-email-6").val();
+		var message = $("#contact-message-6").val();
+		$.ajax({
+			type: "post",
+			url: "/send_mail", 
+			data:"name="+name+"&email="+email+"&message="+message,
+			success: function(msg){ 
+				alert(msg);  
 			}
 		});	 
 	}
