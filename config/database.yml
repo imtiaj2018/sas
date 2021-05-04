@@ -50,8 +50,8 @@ test:
 
 production:
   <<: *default
-  database: xIvYTgcydL
-  username: xIvYTgcydL
-  password: rac2eni55J
-  host: remotemysql.com
+  database: w90da7vcf9qpzgle
+  username: xig0e34cjrk76qwl
+  password: hw4mdwjx8q2a3rwl
+  host: frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
   port: 3306
