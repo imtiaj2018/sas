@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 	end 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
+  #sas_2021
+  get 'sas', to: 'sunshines#index'
+  
   get '/', to:'sunshines#home'
   get 'home', to:'sunshines#home'
   get 'about', to:'sunshines#about'

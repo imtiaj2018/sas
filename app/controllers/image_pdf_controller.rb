@@ -28,6 +28,7 @@ class ImagePdfController < ApplicationController
 	end
 	
 	def download_documentation  
+		puts "ashdgfdgdasgd"
 		file_name=BrochurePdf.download_document_file
 		directory="#{Rails.root}/public"  
 		final_file_name=""
