@@ -27,13 +27,10 @@ class ImagePdfController < ApplicationController
 		redirect_to '/upload_brochure'		
 	end
 	
-	def download_documentation
+	def download_documentation  
+		puts "ashdgfdgdasgd"
 		file_name=BrochurePdf.download_document_file
-		if Rails.env == "development"
-			directory="#{Rails.root}/public"
-		else
-			directory="#{Rails.root}"
-		end
+		directory="#{Rails.root}/public"  
 		final_file_name=""
 		final_file_name = "#{directory}/#{file_name}" if file_name.strip != "" 
 		render :plain => final_file_name		
