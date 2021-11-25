@@ -32,7 +32,7 @@ class ImagePdfController < ApplicationController
 		if Rails.env == "development"
 			directory="#{Rails.root}/public"
 		else
-			directory="/public"
+			directory="#{Rails.root}"
 		end
 		final_file_name=""
 		final_file_name = "#{directory}/#{file_name}" if file_name.strip != "" 
