@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+	  let phoneExp = /^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/gm;
 
     f.children('input').each(function() { // run all inputs
 
@@ -37,6 +38,12 @@ jQuery(document).ready(function($) {
 
           case 'email':
             if (!emailExp.test(i.val())) {
+              ferror = ierror = true;
+            }
+            break;
+			
+		case 'phone':
+            if (!phoneExp.test(i.val())) {
               ferror = ierror = true;
             }
             break;
@@ -89,10 +96,11 @@ jQuery(document).ready(function($) {
       }
     });
     if (ferror) return false;
-    else var str = $(this).serialize();
-    var action = $(this).attr('action');
+    else 
+		var str = $(this).serialize();
+		var action = $(this).attr('action');
     if( ! action ) {
-      action = 'contactform/contactform.php';
+      action = '/send_mail';
     }
     $.ajax({
       type: "POST",
