@@ -55,7 +55,7 @@ class SunshinesController < ApplicationController
 		recipient_message = "<br></br>Thank you for contact us.<br> We will get back to you soon<br>"
 		sunshine_message = "<br>Hi Sunshine Team,</br><br><br> Visitor Query: #{message}</br><br><br> Visitor Email: #{recipient_mail}</br>#{visitor_phone_str}"
 		
-		# UserMailer.send_mail(recipient_mail, recipient_subject, recipient_message).deliver #send to the visiter
+		UserMailer.send_mail(recipient_mail, recipient_subject, recipient_message).deliver #send to the visiter
 		# UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		
 		render :plain => "Thank you for contact. We will get back soon."
