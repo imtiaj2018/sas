@@ -83,7 +83,7 @@
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#portfolio">Our Works</a></li>
-          <!-- <li><a href="#testimonials">Testimonials</a></li> -->
+          <li><a href="#clients">Clients</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ul>
@@ -219,6 +219,9 @@
   
   <!--========================== Porfolio Section end============================-->
 
+
+
+
   <!--==========================
   Team Section
   ============================-->
@@ -235,7 +238,7 @@
       <div class="row">
         <div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/taj.jpeg" alt=""></div>
+            <div class="pic"><img src="img/taj.jpg" alt=""></div>
             <h4 style="color:#ffff;">Syed Mustaque</h4>
             <span style="color:#ffff;">Founder and Designer Head</span>
             <div class="social">
@@ -247,7 +250,7 @@
 		
 		<div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/rana.jpeg" alt=""></div>
+            <div class="pic"><img src="img/rana.jpg" alt=""></div>
             <h4 style="color:#ffff;">Syed Iftikar</h4>
             <span style="color:#ffff;">Co-founder and Marketing Head</span>
             <div class="social">
@@ -259,7 +262,7 @@
 
         <div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/romi.jpeg" alt=""></div>
+            <div class="pic"><img src="img/romi.jpg" alt=""></div>
             <h4 style="color:#ffff;">Syed Imtiaj</h4>
             <span style="color:#ffff;">Web Developer and Technical Head</span>
             <div class="social">
@@ -273,7 +276,7 @@
 
         <div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/sonu.jpeg" alt=""></div>
+            <div class="pic"><img src="img/sonu.jpg" alt=""></div>
             <h4 style="color:#ffff;">Syed Ershad</h4>
             <span style="color:#ffff;">Operation and Execution Head</span>
             <div class="social">
@@ -285,7 +288,7 @@
 		
 		<div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/rajarshi.jpeg" alt=""></div>
+            <div class="pic"><img src="img/rajo.jpg" alt=""></div>
             <h4 style="color:#ffff;">Rajarshi Sarkar</h4>
             <span style="color:#ffff;">Accounts and Management Head</span>
             <div class="social">
@@ -297,7 +300,7 @@
 		
 		<div class="col-md-2">
           <div class="member">
-            <div class="pic"><img src="img/shovon.jpeg" alt=""></div>
+            <div class="pic"><img src="img/shovon.jpg" alt=""></div>
             <h4 style="color:#ffff;">Syed Yousuf</h4>
             <span style="color:#ffff;">Head of Sales and Field Manager</span>
             <div class="social">
@@ -308,6 +311,35 @@
         </div>
 
       </div>
+    </div>
+  </section>
+  
+  
+  <!--========================== Clients Section ============================-->
+  <section id="clients" style="background-color:#434343;">
+    <div class="container wow fadeInUp">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="section-title" style="color:#ffff;">Our Clients</h3>
+          <div class="section-title-divider"></div>
+          <!-- <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p> -->
+        </div>
+      </div>
+
+      <div class="row">
+		  <% (0..@clients_logo.length-1).each do |i| %>
+			<div class="col-md-2">
+			  <div class="member">
+				<div class="pic"><img src="../../client_images/<%= @clients_logo[i] %>" alt="" width="180" height="150"></div>
+			  </div>
+			</div>
+			<% end %>
+			<div class="col-md-2">
+			  <div class="member">
+				<div class="pic"><img src="../../client_images/next.jpg" alt="" width="180" height="150"></div>
+			  </div>
+			</div>
+		  </div>
     </div>
   </section>
 
