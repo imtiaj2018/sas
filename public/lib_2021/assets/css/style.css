@@ -202,7 +202,7 @@ transition: all 0.35s ease 0s;
    background: url("../img/team-bg.jpg") no-repeat scroll center bottom / cover ;
     color: #fff;
     overflow: hidden;
-	padding:100px 0 220px;
+	/* padding:100px 0 220px; */
     transition: all 0.35s ease 0s;
 }
 .t-box {
@@ -249,43 +249,41 @@ margin:20px 0 0 0px;
 #Services {
     overflow: hidden;
 }
-#Services h2 {
-    padding: 50px 0 25px;
-    position: relative;
-    text-align: center;
-    width: 100%;
-}
-#Services h2::before {
-    background: #000 none repeat scroll 0 0;
-    bottom: 9px;
-    content: "";
-    height: 2px;
-    position: absolute;
-    width: 100%;
-	left:0;
-}
-#Services h2::after {
-    background: #ffa100 none repeat scroll 0 0;
-    bottom: 9px;
-    content: "";
-    height: 2px;
-    position: absolute;
-    right: 0;
-    width: 50%;
-    z-index: 999;
-}
+/* #Services h2 { */
+    /* padding: 50px 0 25px; */
+    /* position: relative; */
+    /* text-align: center; */
+    /* width: 100%; */
+/* } */
+/* #Services h2::before { */
+    /* background: #000 none repeat scroll 0 0; */
+    /* bottom: 9px; */
+    /* content: ""; */
+    /* height: 2px; */
+    /* position: absolute; */
+    /* width: 100%; */
+	/* left:0; */
+/* } */
+/* #Services h2::after { */
+    /* background: #ffa100 none repeat scroll 0 0; */
+    /* bottom: 9px; */
+    /* content: ""; */
+    /* height: 2px; */
+    /* position: absolute; */
+    /* right: 0; */
+    /* width: 50%; */
+    /* z-index: 999; */
+/* } */
 #Services p {
     font-size: 16px;
     padding: 10px 0;
     text-align: left;
 }
 /*----------- for box ------------*/
-.for-box
-{
- background: url("../img/services-bg.jpg") no-repeat scroll center bottom / cover ;
-padding-top:200px;
-background-attachment:fixed;
-padding-bottom:100px;
+.for-box{
+	background: url("../img/services-bg.jpg") no-repeat scroll center bottom / cover ;
+	background-attachment:fixed;
+	padding-bottom:100px;
 	overflow:hidden;
 }
 .for-box-crecl {
