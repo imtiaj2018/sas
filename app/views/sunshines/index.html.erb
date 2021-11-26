@@ -68,10 +68,14 @@
                             <a class="page-scroll" href="#Services">Services</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#Gallery">Our Works</a>
+                            <a class="page-scroll" href="#Gallery">Works</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#clients">Our Clients</a>
+                            <a class="page-scroll" href="#clients">Clients</a>
+                        </li>
+						
+						<li>
+                            <a class="page-scroll" href="#team">Team</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#contact">Contact</a>
@@ -240,7 +244,6 @@
 		<div class="row">
 			<div class="title">
 				<h2 style="color:#fff;">Services</h2>
-				<!-- <p>Meet some of our lovely, passionate, positive people.</p> -->
 			</div>
 			<div class="col-xs-12 col-sm-6 col-md-3 wow rotateInDownLeft animated" data-wow-delay=".1s">
 				<div class="for-box-crecl">
@@ -252,7 +255,6 @@
 				</h2>
 				</div>
 				<div class="wbox">
-					<!-- <strong>sorem ipsum </strong> -->
 					<p>We execute your interior and exterior need.</p>
 					<a href="" class="clr1-a">+</a>
 				</div>
@@ -268,7 +270,6 @@
 				</h2>
 				</div>
 				<div class="wbox">
-					<!-- <strong>sorem ipsum </strong> -->
 					<p>We create your digital world and elaborate your brand worldwide.</p>
 					<a href="" class="clr2-a">+</a>
 				</div>
@@ -284,7 +285,6 @@
 				</h2>	
 				</div>
 				<div class="wbox">
-					<!-- <strong>sorem ipsum </strong> -->
 					<p>Our specialists are ready to consult and execute your branding needs.</p>
 					<a href="#" class="clr3-a">+</a>
 				</div>
@@ -300,7 +300,6 @@
 				</h2>
 				</div>
 				<div class="wbox">
-					<!-- <strong>sorem ipsum </strong> -->
 					<p>We full-fill your wishs to give you total satisfactions.</p>
 					<a href="#" class="clr4-a">+</a>
 				</div>
@@ -315,35 +314,14 @@
         <div class="container">            
             <div class="row">
 				<div class="title">
-				<h2 style="color:#fff;">Our Clients</h2>
-				<!-- <p>Meet some of our lovely, passionate, positive people.</p> -->
+					<h2 style="color:#fff;">Our Clients</h2>
 				</div>
+				<% (0..@clients_logo.length-1).each do |i| %>
 				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".1s">
-					<div class="timg"><img src="../../lib_2021/assets/img/taj.jpg"/></div>
-					<div class="t-box"></div>
+					<div class="timg"><img src="../../client_images/<%= @clients_logo[i] %>"></div>
+					<div class="t-box" style="background-color:#222222;"></div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".2s">
-					<div class="timg"><img src="../../lib_2021/assets/img/rana.jpg"/></div>
-					<div class="t-box"></div>					
-				</div>
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".3s">
-					<div class="timg"><img src="../../lib_2021/assets/img/sonu.jpg"/></div>
-					<div class="t-box"></div>
-				</div> 
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
-					<div class="timg"><img src="../../lib_2021/assets/img/rajo.jpg"/></div>
-					<div class="t-box"></div>
-				</div>
-
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
-					<div class="timg"><img src="../../lib_2021/assets/img/romi.jpg"/></div>
-					<div class="t-box"></div>
-				</div>
-
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
-					<div class="timg"><img src="../../lib_2021/assets/img/shovon.jpg"/></div>
-					<div class="t-box"></div>
-				</div>
+				 <% end %>
             </div>
         </div>   
 		<!-- =============== container end =============== -->		
@@ -398,7 +376,8 @@
     </section>	
     
 <!-- =============== Gallery =============== -->
-    <section id="Gallery" class="wow flipInX animated" data-wow-delay=".5s" style="padding:0 0 0;background-color:#222222;">
+    <!-- <section id="Gallery" class="wow flipInX animated" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;"> -->
+    <section id="Gallery" class="" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;">
 		<div class="title" style="background-color:#222222; padding-top:10px;">
 			<h2 style="color:#fff;">Our Works</h2>				
 			<p style="color:#fff;">In our portfolio you can browse the latest branding works florished in various places and for different branding purposes.<br>Our qualified designers, professionals are always ready to execute something spectacular for you and beyond your thinking.</p>
@@ -493,7 +472,7 @@
                          <h3 class="widget-title">West Bengal, India</h3> <div class="textwidget"> Walli Nagar, Brooklane, Garden Reach, Kolkata-700024<br>
                         <p>Mobile: +91 9433508881<br>
                         E-mail: <a href="#" style="color:#fff">sunshineadsolutions@gmail.com</a></p>
-                        <a href="#" style="color:#fff">Get directions on the map</a> →</div>
+                        <a href="https://www.google.com/maps/place/Sunshine+Ad+Solutions/@22.5331067,88.2932252,15z/data=!4m5!3m4!1s0x0:0xb06f85a547fdb1d3!8m2!3d22.5331067!4d88.2932252" style="color:#fff">Get directions on the map</a> →</div>
                     </section>
 
 				</div>
