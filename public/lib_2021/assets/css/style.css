@@ -36,7 +36,6 @@ a {
 }
 .title {
     text-align: center;
-	padding-bottom: 70px;
 	position: relative;
 }
 .header {
@@ -552,7 +551,6 @@ padding:10px;
 }
 /*----------- gallery ------------*/
 #Gallery {
-    padding: 150px 0 0;
 	overflow:hidden;
 }
 #controls ul li {
