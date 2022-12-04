@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 			root to: redirect('/admin_panel')
 		end 
 		unauthenticated do
-			root to: redirect('/home')
+			root to: redirect('/sas')
 		end
 	end 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   #sas_2021
   get 'sas', to: 'sunshines#index'
   
-  get '/', to:'sunshines#home'
+  get '/', to:'sunshines#index'
   get 'home', to:'sunshines#home'
   get 'about', to:'sunshines#about'
   get 'contact_us', to:'sunshines#contact_us'
@@ -44,4 +44,5 @@ Rails.application.routes.draw do
   post 'upload_client_images_form', to:'clients#upload_client_images_form'
   post 'delete_client_logo_image_file', to:'clients#delete_client_logo_image_file'
   get 'download_client_logos', to:'clients#download_client_logos'
+  get 'test_pdf', to:'sunshines#test_pdf'
 end
