@@ -1,9 +1,10 @@
 class ProjectImage < ApplicationRecord
-	def self.save_project_image_file(file_name,display_name,image_size)
+	def self.save_project_image_file(file_name,display_name,image_size,path)
 		img_obj=ProjectImage.new
 		img_obj.file_name = file_name
 		img_obj.display_name = display_name
 		img_obj.image_size = image_size
+		img_obj.image_path = path
 		img_obj.save
 	end
 	

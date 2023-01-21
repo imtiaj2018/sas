@@ -111,7 +111,7 @@ class ImagePdfController < ApplicationController
 	
 	def upload_project_images_form
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")
-		directory="/mnt/project_images"
+		directory="#{Rails.root}/project_images"
 		if !(File.directory? directory) 	#if directory is not present then creating
 			FileUtils.mkdir_p directory, :mode => 0777	rescue nil
 		end
@@ -125,7 +125,7 @@ class ImagePdfController < ApplicationController
 		final_file_name="#{directory}/#{new_file_name}" 
 		
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
-		ProjectImage.save_project_image_file(new_file_name,name,image_size) 
+		ProjectImage.save_project_image_file(new_file_name,name,image_size,final_file_name) 
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_project_images'		
 	end
