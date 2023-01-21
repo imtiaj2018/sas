@@ -442,11 +442,9 @@
 
 			<div class="grid baguetteBoxThree gallery">
 				<% (0..@image_small.length-1).each do |i| %>
-				<%= raw @image_large[i] %>
 				<div class="element-item transition " data-category="post-transition">
-					<%= image_tag "../mnt/project_images/asasasasasas_01_21_2023_07_48_51PM.jpg" %>
-					<a href="../mnt/project_images/asasasasasas_01_21_2023_07_48_51PM.jpg">	 
-					<img src="../mnt/project_images/asasasasasas_01_21_2023_07_48_51PM.jpg"/>      
+					<a href="../..<%= @image_large[i] %>">	 
+					<img src="../..<%= @image_large[i] %>"/>      
 					<div class="hover-img">
 						<i class="fa fa-camera camera"></i>
 					</div>
