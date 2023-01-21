@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   
   #sas_2021
   get 'sas', to: 'sunshines#index'
-  
+  get 'site_up', to: 'sunshines#site_ok'
   get '/', to:'sunshines#index'
   get 'home', to:'sunshines#home'
   get 'about', to:'sunshines#about'

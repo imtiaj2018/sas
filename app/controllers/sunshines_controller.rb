@@ -4,6 +4,10 @@ require 'turbolinks'
 
 class SunshinesController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:send_mail]
+	def site_ok
+		User.check_db()
+		render :plain => "SITE_UP"
+	end
 	def index
 		@image_small = ProjectImage.get_project_images["s"]
 		@image_large = ProjectImage.get_project_images["l"]
