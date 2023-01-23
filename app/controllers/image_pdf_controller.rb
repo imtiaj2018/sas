@@ -126,7 +126,8 @@ class ImagePdfController < ApplicationController
 		new_file_name = "#{file_name}_#{time}#{file_extention}"
 		final_file_name="#{directory}/#{new_file_name}" 
 		image_file_path= File.join(directory, new_file_name)
-		FileUtils.move params[:upload]['datafile'].path, final_file_name , :mode => 0777	rescue nil
+		FileUtils.move params[:upload]['datafile'].path, final_file_name 
+		FileUtils.chmod 0777, Dir.glob("#{Rails.root}/public/project_images/*")
 		ProjectImage.save_project_image_file(new_file_name,name,image_size,image_file_path) 
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_project_images'		
