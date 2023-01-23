@@ -441,15 +441,17 @@
 
 
 			<div class="grid baguetteBoxThree gallery">
-				<% (0..@image_small.length-1).each do |i| %>
-				<div class="element-item transition " data-category="post-transition">
-					<a href="../../project_images/<%= @image_large[i]%>">	 
-					<img src="../../project_images/<%= @image_small[i]%>"/>      
-					<div class="hover-img">
-						<i class="fa fa-camera camera"></i>
-					</div>
-					</a>
-				</div>  
+				<% if !@image_small.nil? %>
+					<% (0..@image_small.length-1).each do |i| %>
+					<div class="element-item transition " data-category="post-transition">
+						<a href="../../project_images/<%= @image_large[i]%>">	 
+						<img src="../../project_images/<%= @image_small[i]%>"/>      
+						<div class="hover-img">
+							<i class="fa fa-camera camera"></i>
+						</div>
+						</a>
+					</div>  
+					<% end %>
 				<% end %>
 			</div>
 		</div>
