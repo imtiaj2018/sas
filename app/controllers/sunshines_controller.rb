@@ -9,6 +9,8 @@ class SunshinesController < ApplicationController
 		render :plain => "SITE_UP"
 	end
 	def index
+		@image_small = []
+		@image_large =[]
 		@image_small = ProjectImage.get_project_images["s"]
 		@image_large = ProjectImage.get_project_images["l"]
 		@clients_logo = Client.get_client_images

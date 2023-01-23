@@ -22,6 +22,7 @@ class ClientsController < ApplicationController
 		final_file_name="#{directory}/#{new_file_name}" 
 		
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
+		FileUtils.chmod 0777, Dir.glob("#{Rails.root}/public/client_images/*")
 		Client.save_client_logo_file(new_file_name,name,client_name) 
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_clients'		
