@@ -16,10 +16,16 @@ default: &default
 
 development:
   <<: *default
-  database: sas_2020_db
-  username: root
-  password: root
-  host: 127.0.0.1
+  #database: sas_2020_db
+  #username: root
+  #password: root
+  #host: 127.0.0.1
+
+  database: w90da7vcf9qpzgle
+  username: xig0e34cjrk76qwl
+  password: hw4mdwjx8q2a3rwl
+  host: frwahxxknm9kwy6c.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
