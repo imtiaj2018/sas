@@ -60,17 +60,34 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   
 	config.active_record.dump_schema_after_migration = false
-	config.action_mailer.default_url_options = { host: 'http://www.sunshineadsolutions.com' }
+	# config.action_mailer.default_url_options = { host: 'http://www.sunshineadsolutions.com' }
+	# config.action_mailer.perform_deliveries = true
+	# config.action_mailer.delivery_method = :smtp 
+	# config.action_mailer.raise_delivery_errors = true 
+	# config.action_mailer.smtp_settings = {
+		# user_name:      'sunshineadsolutions@gmail.com',
+		# password:       'KolkatA@2021business',
+		# domain:         'gmail.com',
+		# address:       'smtp.gmail.com',
+		# port:          '25',
+		# authentication: :login,
+		# enable_starttls_auto: true
+	# }
+	
+	
+	
+	config.action_mailer.raise_delivery_errors = true
 	config.action_mailer.perform_deliveries = true
-	config.action_mailer.delivery_method = :smtp 
-	config.action_mailer.raise_delivery_errors = true 
+	config.action_mailer.delivery_method = :smtp
 	config.action_mailer.smtp_settings = {
-		user_name:      'sunshineadsolutions@gmail.com',
-		password:       'KolkatA@2021business',
-		domain:         'gmail.com',
-		address:       'smtp.gmail.com',
-		port:          '25',
-		authentication: :login,
-		enable_starttls_auto: true
+		address:              'smtp.gmail.com',
+		port:                 587,
+		domain:               'gmail.com',
+		user_name:            'sunshineadsolutions@gmail.com',
+		password:             'KolkatA@2021business',
+		authentication:       'plain',
+		enable_starttls_auto: true  
 	}
+
+	config.action_mailer.default_url_options = { :host => "http://www.sunshineadsolutions.com" }
 end
