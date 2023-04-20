@@ -181,7 +181,8 @@ class ImagePdfController < ApplicationController
 	def delete_project_image_file
 		id = params[:id]
 		file_name = ProjectImage.find(id.to_i).file_name  
-		directory="#{Rails.root}/public/project_images"  
+		# directory="#{Rails.root}/public/project_images"  
+		directory="/mnt/project_images"  
 		final_file_name = "#{directory}/#{file_name}" 
 		if File.exist?(final_file_name)
 			FileUtils.rm final_file_name, :force => true

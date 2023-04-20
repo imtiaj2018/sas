@@ -27,7 +27,8 @@ class ProjectImage < ApplicationRecord
 		_hash={}
 		project_images_obj.each do|poi|
 			_hash[poi["image_size"]] ||=[]
-			_hash[poi["image_size"]] <<poi["file_name"]
+			# _hash[poi["image_size"]] <<poi["file_name"]
+			_hash[poi["image_size"]] <<poi["image_path"]
 		end
 		return _hash
 	end
