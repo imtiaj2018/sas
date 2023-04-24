@@ -63,7 +63,7 @@ class SunshinesController < ApplicationController
 		# UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		
 		# render :plain => "Thank you for contact. We will get back soon."
-		render :text => "<script>alert(Thank you for contact. We will get back soon.)</script>"
+		render :plain => "<script>alert(Thank you for contact. We will get back soon.)</script>"
 	end
 	
 	def admin_panel
