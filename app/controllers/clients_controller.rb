@@ -72,7 +72,8 @@ class ClientsController < ApplicationController
 	def download_client_logos
 		id=params[:id]
 		file_name=Client.find(id.to_i).file_name  
-		directory="#{Rails.root}/public/client_images"  
+		# directory="#{Rails.root}/public/client_images"  
+		directory="/mnt/client_images"  
 		final_file_name = "#{directory}/#{file_name}" 
 		send_file final_file_name, :type=>"application/csv", :disposition => "attachment", :stream => false
 	end
@@ -80,7 +81,8 @@ class ClientsController < ApplicationController
 	def delete_client_logo_image_file
 		id = params[:id]
 		file_name = Client.find(id.to_i).file_name  
-		directory="#{Rails.root}/public/client_images"  
+		# directory="#{Rails.root}/public/client_images"  
+		directory="/mnt/client_images"  
 		final_file_name = "#{directory}/#{file_name}" 
 		if File.exist?(final_file_name)
 			FileUtils.rm final_file_name, :force => true

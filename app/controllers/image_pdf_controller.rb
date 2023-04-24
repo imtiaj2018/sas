@@ -127,6 +127,7 @@ class ImagePdfController < ApplicationController
 		puts "final_file_name===>>#{final_file_name}"
 		
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
+		File.chmod(0777, final_file_name)
 		# ProjectImage.save_project_image_file(new_file_name,name,image_size) 
 		ProjectImage.save_project_image_file(new_file_name,name,image_size,final_file_name) 
 		session[:document_upload_status]="Uploaded Successfully"
