@@ -69,7 +69,7 @@ Rails.application.configure do
 		:domain => "gmail.com",
 		:address => "smtp.gmail.com",
 		:port => "587",
-		:authentication => :login,
+		:authentication => :plain,
 		:enable_starttls_auto => true
 	}
 end
