@@ -2,8 +2,9 @@ require 'turbolinks'
 # skip_before_action :require_login, only: [:admin_panel]
 
 
+
 class SunshinesController < ApplicationController
-	protect_from_forgery with: :exception, :except => [:send_mail]
+	protect_from_forgery with: :exception, :except => [:mail_send_to_customer]
 	def site_ok
 		User.check_db()
 		render :plain => "SITE_UP"
@@ -44,7 +45,7 @@ class SunshinesController < ApplicationController
 		render :layout => 'header_footer'
 	end
 	
-	def send_mail
+	def mail_send_to_customer
 		recipient_mail = (params[:email].to_s).strip
 		sunshine_mail="sunshineadsolutions@gmail.com"
 		customer_name=params[:name]
@@ -63,8 +64,7 @@ class SunshinesController < ApplicationController
 		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		
 		render :plain => "Thank you for contact. We will get back soon."
-		# render :plain => "<script>alert(Thank you for contact. We will get back soon.)</script>"
-		# render(html: "<script>alert('Thank you for contact. We will get back soon.')</script>".html_safe)
+		
 	end
 	
 	def admin_panel

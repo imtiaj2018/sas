@@ -466,33 +466,23 @@
 			</div>
 
 			<div class="row">
-
 				<div class="col-xs-12 col-sm-12 col-md-12 wow bounceIn animated" data-wow-delay=".1s">
-
-					<!-- <form id="contact_form" name="contact_form" method="post" action="/send_mail" target="_parent"> -->
-					<!-- <form id="contact_form" name="contact_form" method="post" action="#" target="_parent"> -->
-					<!-- <form> -->
-						<div class="ajax-hidden">
-							<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
-								<label for="c_name" class="sr-only">Name</label>
-								<input type="text" placeholder="Name" name="customer_name" class="form-control" id="customer_name" required="">
-							</div>
-
-							<div data-wow-delay=".1s" class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
-								<label for="c_email" class="sr-only">Email</label>
-								<input type="email" placeholder="E-mail" name="customer_email" class="form-control" id="customer_email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" placeholder="e.g. info@envato.com" required="">
-							</div>
-
-							<div data-wow-delay=".2s" class="col-xs-12 col-sm-12 col-md-12 form-group wow fadeInUp animated">
-								<textarea placeholder="Message" rows="7" name="customer_message" id="customer_message" class="form-control" required=""></textarea>
-							</div>
-
-							<!-- <button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" type="submit">Send Message</button> -->
-							<button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button>
+					<div>
+						<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
+							<label for="c_name" class="sr-only">Name</label>
+							<input type="text" placeholder="Name" name="customer_name" class="form-control" id="customer_name" required="">
 						</div>
-						<div class="ajax-response"></div>
-					<!-- </form> -->
 
+						<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
+							<label for="c_email" class="sr-only">Email</label>
+							<input type="email" placeholder="E-mail" name="customer_email" class="form-control" id="customer_email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" placeholder="e.g. info@envato.com" required="">
+						</div>
+
+						<div class="col-xs-12 col-sm-12 col-md-12 form-group wow fadeInUp animated">
+							<textarea placeholder="Message" rows="7" name="customer_message" id="customer_message" class="form-control" required=""></textarea>
+						</div>
+						<button class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button>
+					</div>
 				</div>              
 			</div>
 		</div><!-- =============== container end =============== -->
@@ -668,12 +658,13 @@ window.onload = function() {
 
 
 function contact_form_message_send(){
+	alert("test");
 	var customer_name = $("#customer_name").val();
 	var customer_email = $("#customer_email").val();
 	var customer_message = $("#customer_message").val();
 	$.ajax({
 		type: "post",
-		url: "send_mail",
+		url: "/mail_send_to_customer",
 		data: "name="+customer_name+"&email="+customer_email+"&message="+customer_message,
 		success: function(msg){
 			alert(msg);
