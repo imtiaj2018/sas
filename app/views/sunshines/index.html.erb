@@ -469,7 +469,7 @@
 
 				<div class="col-xs-12 col-sm-12 col-md-12 wow bounceIn animated" data-wow-delay=".1s">
 
-					<form id="contact_form" name="contact_form">
+					<form id="contact_form" name="contact_form" method="post" action="/send_mail" target="_parent">
 					<!-- <form> -->
 						<div class="ajax-hidden">
 							<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
@@ -486,8 +486,8 @@
 								<textarea placeholder="Message" rows="7" name="message" id="message" class="form-control" required=""></textarea>
 							</div>
 
-							<!-- <button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" type="submit">Send Message</button> -->
-							<button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button>
+							<button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" type="submit">Send Message</button>
+							<!-- <button data-wow-delay=".3s" class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button> -->
 						</div>
 						<div class="ajax-response"></div>
 					</form>
