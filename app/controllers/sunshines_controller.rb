@@ -64,7 +64,7 @@ class SunshinesController < ApplicationController
 		
 		# render :plain => "Thank you for contact. We will get back soon."
 		# render :plain => "<script>alert(Thank you for contact. We will get back soon.)</script>"
-		render(html: "<script>alert('Thank you for contact. We will get back soon.')</script>".html_safe)
+		# render(html: "<script>alert('Thank you for contact. We will get back soon.')</script>".html_safe)
 	end
 	
 	def admin_panel
