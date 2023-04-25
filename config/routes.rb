@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   get 'home', to:'sunshines#home'
   get 'about', to:'sunshines#about'
   get 'contact_us', to:'sunshines#contact_us'
-  post 'send_mail', to:'sunshines#send_mail'
+  # post 'send_mail', to:'sunshines#send_mail'
+  post 'mail_send_to_customer', to:'sunshines#mail_send_to_customer'
   get 'admin_panel', to:'sunshines#admin_panel'
   
   get 'upload_brochure', to:'image_pdf#upload_brochure'
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
   
   get 'upload_project_images', to:'image_pdf#upload_project_images'
   post 'upload_project_images_form', to:'image_pdf#upload_project_images_form'
+  get 'upload_project_images_form', to:'image_pdf#upload_project_images_form'
   post 'get_project_images_aggrid_data', to:'image_pdf#get_project_images_aggrid_data'
   post 'delete_project_image_file', to:'image_pdf#delete_project_image_file'
   
