@@ -11,13 +11,15 @@ Rails.application.routes.draw do
 			root to: redirect('/admin_panel')
 		end 
 		unauthenticated do
-			root to: redirect('/sas')
+			# root to: redirect('/')
+			# redirect_to root_path
+			redirect('/')
 		end
 	end 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
   #sas_2021
-  get 'sas', to: 'sunshines#index'
+  # get 'sas', to: 'sunshines#index'
   get 'site_up', to: 'sunshines#site_ok'
   get '/', to:'sunshines#index'
   get 'home', to:'sunshines#home'

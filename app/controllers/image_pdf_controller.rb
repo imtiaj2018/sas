@@ -30,7 +30,8 @@ class ImagePdfController < ApplicationController
 	def download_documentation  
 		puts "ashdgfdgdasgd"
 		file_name=BrochurePdf.download_document_file
-		directory="#{Rails.root}/public"  
+		# directory="#{Rails.root}/public"  
+		directory="/public"  
 		final_file_name=""
 		final_file_name = "#{directory}/#{file_name}" if file_name.strip != "" 
 		render :plain => final_file_name		

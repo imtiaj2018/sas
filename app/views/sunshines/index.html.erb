@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<!--
-	Be by TEMPLATE STOCK
-	templatestock.co @templatestock
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
+<div id="iframe_download_div" style="display:none;"></div> 
 <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
 <html lang="en">
-
+<style>
+.brochure_class {
+        cursor: pointer;
+        border: 1px solid #3498db;
+        background-color: transparent;
+        
+    }
+</style>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -81,10 +84,16 @@
                         <li>
                             <a class="page-scroll" href="#contact">Contact</a>
                         </li>
+						<li>
+                            <button class="brochure_class" onclick="download_brochure();" title="Download our latest brochure.">
+							<img width="25" height="32" src="../../lib_2021/assets/img/download.png">
+							</button>
+                        </li>
                     </ul>
+					
                 </div>
                 <!-- =============== navbar-collapse =============== -->
-
+				
             </div>
         </div>
         <!-- =============== container-fluid =============== -->
@@ -518,27 +527,6 @@
     </div><!-- =============== container end =============== -->
 	</footer> 
 
-
-
-
-
-
-
-
-
-
-
-<!-- Button trigger modal -->
-<button
-  type="button"
-  class="btn btn-primary"
-  data-mdb-toggle="modal"
-  data-mdb-target="#exampleModal"
->
-  Launch demo modal
-</button>
-
-<!-- Modal -->
 <div
   class="modal fade"
   id="exampleModal"
@@ -568,12 +556,6 @@
   </div>
 </div>
 
-Advanced examples
-
-This component requires MDB Pro Essential package.
-Learn more
-
-Click the buttons to launch the modals.
 
 
 
@@ -668,6 +650,23 @@ function contact_form_message_send(){
 		}
 	});
 } 
+
+function download_brochure(){
+		$.ajax({
+			type: "get",
+			url: "/download_documentation", 
+			success: function(msg){ 
+				if(msg.trim() == ""){
+					alert("Brochure File not available.");
+					return;
+				}
+				url="/download_file?file_name="+encodeURIComponent(msg); 
+				$("#iframe_download_div").html("");
+				var iframe='<iframe name="file_download" id="file_download" style="display:none;" src="'+url +'"  ></iframe>'
+				$("#iframe_download_div").html(iframe);   
+			}
+		});	 
+	}
 
 </script>
 </body>
