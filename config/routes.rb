@@ -49,4 +49,8 @@ Rails.application.routes.draw do
   post 'delete_client_logo_image_file', to:'clients#delete_client_logo_image_file'
   get 'download_client_logos', to:'clients#download_client_logos'
   get 'test_pdf', to:'sunshines#test_pdf'
+  
+  #bill details
+  get 'bill_generation', to:'bill_details#index'
+  get 'createBill', to:'bill_details#createBill'
 end

@@ -1,0 +1,278 @@
+<%= csrf_meta_tags %>
+
+<script src="/js/jquery.js"></script>
+
+<script src="/js/ag-grid_17_1_1/ag-grid-enterprise.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-grid.css">
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-theme-balham.css"> 
+<script src="/js/ag-grid_17_1_1/ag-grid_custom_server_side_paging.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/ag-grid_17_1_1/ag-grid_custom_server_side_paging.css">  
+
+<style>
+	#upload_project_images input[type="button"]{
+		/*border-radius:5px;*/
+		border:0px solid #cccccc;
+		color : #fff;
+		padding :5px 10px 5px 10px; 
+	}
+	
+	#upload_project_images input[type="submit"]{
+		/*border-radius:5px;*/
+		border:0px solid #cccccc;
+		padding :5px 10px 5px 10px; 
+		color : #fff;
+		background :#BE3364
+	}
+	
+	.ui-widget-header {
+		background: #d9d9d9 !important; 
+		border: 1px solid #808080;
+		color: #ffffff;
+		font-weight: bold;
+	} 
+	.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+		color: #ffffff !important;
+		font-family:   Arial !important;
+	} 
+	.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default{
+		background-color :#c6e6f0 !important;
+		background-image: none !important;
+	} 
+	.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active{
+		background-color :#8fb8bf !important;
+		background-image: none !important;
+	}
+	.ui-state-default a {
+		color: #215a66 !important;
+	}
+	
+	.corner_border_div_100_green_ag{
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px; 
+		border-radius:0px;
+		text-align:center;
+		background-color: #459bac;
+		color: white;
+		border: 0;
+	}
+	
+	.corner_border_div_100_red_ag{
+		float:left;
+		padding-left:10px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px; 
+		border-radius:0px;
+		text-align:center;
+		background-color: #BE3364;
+		color: white;
+		border: 0;
+	}
+	
+</style>
+<title>Bill Details</title>
+<html style="background-color:#9a497d;">
+	<div id="dialog_form"></div>
+	<div id="iframe_download_div" style="display:none;"></div> 
+	<div style="width:100%;height:60px;">
+			<table  width="100%">
+				<tr>
+					
+					<td>
+						<input type="button" name="create_bill" value="Create" style="width:100px;" id="create_bill" onclick="window.location.href='/createBill'"> 
+					</td>
+					<td>
+						<input type="button" name="edit_bill" value="Edit" style="width:100px; background: #459bac;" onclick="cancel_upload();">
+					</td>
+					<td>
+						<input type="button" name="generate_bill" value="Generate Bill" style="width:100px; background: #459bac;" onclick="cancel_upload();">
+					</td>
+					<td>
+						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
+					</td>
+					
+					<td>
+						<input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();">
+					</td>
+				</tr>  
+			</table>  
+			<br>
+			<br>
+	</div>
+	<br>
+<br>
+<br> 
+<div style="width:100%;float:left;">
+	<div id="document_gridvw" class="ag-theme-balham" style="height:400px;float:left;width:60%;padding-left: 3px;"></div>
+	</div> 
+</html> 
+
+<script>
+	
+	
+	function admin_panel(){
+		window.location.href= '/admin_panel'; 
+	}
+	
+	
+	 $(document).ready(function(){ 
+		
+		init_grid();
+	 });
+	 
+	  
+</script>
+
+<script> 
+	var coldef_for_bill= <%= raw @coldef.to_json %>
+	
+	var gridOptions = {
+		columnDefs: coldef_for_bill,
+		rowData: null,
+		enableSorting: true,
+		enableFilter: true,
+		rowSelection: 'multiple',
+		headerHeight: 50,
+		singleClickEdit: true,	
+		rowHeight:30,
+		enableRangeSelection: true,			
+		enableStatusBar: true, 
+		enableColResize: true,
+		suppressRowClickSelection:true, 
+		onGridReady: function() {   } ,
+		components: {
+			'simpleRenderer': SimpleRenderer 
+		}, 
+		pagination: true
+	};  
+	
+	
+	var gridOptions = 
+	{
+		columnDefs: coldef_for_bill,
+		rowData: null,
+		enableSorting: true,
+		enableFilter: true,
+		rowSelection: 'multiple',
+		headerHeight: 40, 
+		rowHeight:30,
+		enableRangeSelection: true,			
+		enableStatusBar: true, 
+		pagination: true,
+		paginationPageSize: 2000,
+		suppressRowClickSelection:true,
+		onRowSelected: unchk_header_all,
+		onGridReady: function() {   },
+		enableColResize: true, 
+		icons: {
+			columnGroupOpened: '<i class="fa fa-minus-square-o"/>',
+			columnGroupClosed: '<i class="fa fa-plus-square-o"/>'
+		} ,
+		onSortChanged:  sortpresent,
+		defaultColDef:{
+			comparator: function(a,b) {
+				if (typeof a === 'string') {
+					return a.localeCompare(b);
+				} else {
+					return (a > b ? 1 : (a < b ? -1 : 0));
+				}
+			}
+		}
+		
+	}; 
+	
+	function unchk_header_all(){ 
+		var selected_row_count = get_selected_row_ids().length;
+		var row_number_in_this_page = gridOptions.api.paginationGetRowCount();
+		if(selected_row_count == row_number_in_this_page){
+			$('#picb').attr('checked', true);
+		}else{
+			$('#picb').attr('checked', false); 
+		}
+	}
+	
+	function get_selected_row_ids(){
+		sel_rows=[]; 
+		gridOptions.api.forEachNodeAfterFilterAndSort(function(node, index){
+			if (node.selected == true) {
+				if (node.data) { 
+					sel_rows.push(node.data);
+				} 
+			}
+		});  
+		var ids=[] 
+		for (var i=0;i<sel_rows.length;i++){
+			id=sel_rows[i]["id"]
+			ids.push(id);
+		}
+		return ids;
+	} 
+	
+	function init_grid(){
+		pageSize1=100;  
+		var gridDiv = document.querySelector('#document_gridvw');  
+		new agGrid.Grid(gridDiv, gridOptions);  
+		load_custom_paging();		 
+		gridOptions.api.hideOverlay();  
+		//load_datasource();
+	}
+	
+	/*----------------celrenderer using component-----------------------*/
+	function SimpleRenderer() {} 
+	SimpleRenderer.prototype.init = function(params) {
+		this.eGui = document.createElement('div');
+		if(params.value != undefined){
+			this.eGui.innerHTML = params.value; 
+		}else{
+			this.eGui.innerHTML = "";
+		}
+	};
+	SimpleRenderer.prototype.getGui = function() {
+		return this.eGui;
+	};
+	/*----------------celrenderer using component-----------------------*/
+	
+	function load_datasource(){
+		createNewDatasource(); 
+	}
+	function createNewDatasource(){     
+		var limit= (startRow-1)+"_"+pageSize1;  
+		gridOptions.api.showLoadingOverlay(); 
+		enableDisableButtons("disable");
+		
+		$.ajax({
+			type: "post",
+			url: "/get_project_images_aggrid_data",
+			data: "limit="+limit,
+			success: function(msg){
+				
+				var rowsThisPage = JSON.parse(msg);  
+				total_aggrid_rows=parseInt(rowsThisPage["total"]); 
+				set_global_pagination_variables(rowsThisPage["data"].length); 
+				enableDisableButtons("enable");
+				gridOptions.api.setRowData(rowsThisPage["data"]);   
+				if(rowsThisPage.length == 0){
+					gridOptions.api.showNoRowsOverlay(); 
+				}
+			}
+		}); 	
+	} 
+	
+	function header_select_all(obj){ 
+		if(obj.is(':checked') == true){  
+			gridOptions.api.selectAll();  
+			obj.attr('checked', true);
+		}    
+		else{ 
+			gridOptions.api.deselectAll();  
+		}  
+	} 
+	
+	
+	
+	
+	
+</script> 
