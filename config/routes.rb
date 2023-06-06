@@ -53,4 +53,7 @@ Rails.application.routes.draw do
   #bill details
   get 'bill_generation', to:'bill_details#index'
   get 'createBill', to:'bill_details#createBill'
+  post 'save_bill', to:'bill_details#save_bill'
+  post 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
+  get 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
 end

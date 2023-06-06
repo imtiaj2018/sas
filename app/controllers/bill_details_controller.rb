@@ -1,9 +1,10 @@
+require 'tmpdir'
+
 class BillDetailsController < ApplicationController
-	protect_from_forgery with: :exception, :except => []
+	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill]
 	def index
 		if current_user
 			@coldef = create_bill_details_coldef
-			puts "======#coldef=======#{@coldef.to_json}"
 		else
 			redirect_to login_url
 		end		
@@ -17,7 +18,79 @@ class BillDetailsController < ApplicationController
 		end		
 	end
 	
-	
+	def save_bill
+		oper = params[:oper]
+		if oper=="add"
+			client_name_address=params[:client_name_address]
+			campaign_event_duration=params[:campaign]
+			campaign_event_name=params[:campaign_name]
+			job_done_on=params[:job_done_date]
+			location=params[:locations]
+			bill_number=params[:bill_no]
+			bill_date=params[:bill_date]
+			advanced=params[:advanced]
+			additional_or_discount=params[:additinonal_charges]
+			
+			client_work_details_create_arr=[]
+			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
+			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
+			client_work_details_create_arr<<["job_done_on",job_done_on]
+			client_work_details_create_arr<<["location",location]
+			client_work_details_create_arr<<["bill_number",bill_number]
+			client_work_details_create_arr<<["bill_date",bill_date]
+			client_work_details_create_arr<<["advanced",advanced]
+			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
+			
+			if params[:specification].present?
+				(0..params[:specification].length-1).each do |i| 
+				
+					name=params[:name][i]
+					specification=params[:specification][i] 
+					size=params[:size][i] 
+					rate=params[:rate][i]
+					qty=params[:qty][i]
+					cost=params[:cost][i]
+					cgst=params[:cgst][i]
+					sgst=params[:sgst][i]
+					gst=params[:gst][i]
+					hsn=params[:hsn][i]
+					tax=params[:tax][i]
+					total=params[:total][i]
+					
+					bill_details_create_arr=[]
+					bill_details_create_arr<<["bill_number",client_work_details_object.bill_number]
+					bill_details_create_arr<<["name",name]
+					bill_details_create_arr<<["specification",specification]
+					bill_details_create_arr<<["size",size]
+					bill_details_create_arr<<["rate",rate]
+					bill_details_create_arr<<["qty",qty]
+					bill_details_create_arr<<["cost",cost]
+					bill_details_create_arr<<["cgst",cgst]
+					bill_details_create_arr<<["sgst",sgst]
+					bill_details_create_arr<<["gst",gst]
+					bill_details_create_arr<<["hsn",hsn]
+					bill_details_create_arr<<["tax",tax]
+					bill_details_create_arr<<["total",total]
+					
+					BillDetail.create_bill_details(bill_details_create_arr) 
+				end
+			end 
+			
+			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
+			
+			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
+			client_work_details_object.total_cgst = bd_obj.collect{|x| x.cgst}.sum
+			client_work_details_object.total_sgst = bd_obj.collect{|x| x.sgst}.sum
+			client_work_details_object.total_tax = bd_obj.collect{|x| x.tax}.sum
+			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) - client_work_details_object.additional_or_discount.to_f
+			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.save
+			
+			
+		end
+	end
 	
 	def create_bill_details_coldef 
 		columndef_arr=[]	
@@ -48,4 +121,65 @@ class BillDetailsController < ApplicationController
 		end 
 		return columndef_arr 
 	end
+	
+	# def generate_pdf_bill
+		# html_content = render_to_string(template: "bill_details/generate_pdf_bill.html.erb", layout: false)
+		# respond_to do |format|
+			# format.html
+			# format.pdf do
+				# begin
+					# pdf = WickedPdf.new.pdf_from_string(html_content)
+					# send_data pdf,
+					# filename: 'report.pdf',
+					# type: 'application/pdf',
+					# disposition: 'attachment',
+					# page_size: 'A4',
+					# orientation: 'Portrait'
+				# rescue => e
+					# puts "Error generating PDF: #{e.message}"
+					# # Handle the error appropriately
+				# end
+			# end
+		# end
+	# end
+
+	# def generate_pdf_bill
+		# html_string = render_to_string(
+		# {
+		# template: 'bill_details/generate_pdf_bill.html.erb',
+		# locals: { id: params[:id] }
+		# })
+
+		# pdf = Grover.new(html_string, format: 'A4').to_pdf
+
+		# respond_to do |format|
+			# format.html
+			# format.pdf do
+				# send_data(pdf, disposition: 'inline', filename: "Show_ID_#{params[:id]}", type: 'application/pdf')
+			# end
+		# end
+	# end
+	
+
+	# def generate_pdf_bill
+		# temp_directory = Dir.mktmpdir
+		# begin
+			# pdf = WickedPdf.new.pdf_from_string(
+			# render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false),
+			# tmpdir: temp_directory
+			# )
+			# send_data pdf, filename: "report.pdf", type: "application/pdf", disposition: "attachment"
+		# ensure
+			# FileUtils.remove_entry(temp_directory, force: true)
+		# end
+	# end
+
+
+	def generate_pdf_bill
+		@bill_details = BillDetail.where("bill_number='123'")
+		@client_work_details = ClientWorkDetail.where("bill_number='123'")
+		pdf = WickedPdf.new.pdf_from_string(render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false))
+		send_data pdf, :filename => "report.pdf", :type => "application/pdf", :disposition => "attachment"
+	end
+
 end

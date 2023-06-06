@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_19_115332) do
+ActiveRecord::Schema.define(version: 2023_05_16_170047) do
+
+  create_table "bill_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "brochure_pdfs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "file_name"
@@ -24,11 +29,45 @@ ActiveRecord::Schema.define(version: 2020_09_19_115332) do
     t.string "file_name"
     t.string "display_name"
     t.string "client_name"
+    t.string "image_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients_copy", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "file_name"
+    t.string "display_name"
+    t.string "client_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "clients_copy1", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "file_name"
+    t.string "display_name"
+    t.string "client_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "project_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "file_name"
+    t.string "display_name"
+    t.string "image_size"
+    t.string "image_path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_images_copy", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "file_name"
+    t.string "display_name"
+    t.string "image_size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "project_images_copy1", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "file_name"
     t.string "display_name"
     t.string "image_size"
