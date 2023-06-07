@@ -1,0 +1,243 @@
+
+<html>
+
+<head>
+<style>
+table,th,td{
+	border:1px solid black;
+	border-collapse: collapse;
+	font-family: Camberia;
+}
+</style>
+</head>
+<p>
+To,<br>
+<b><%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[0] %></b><br>
+<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[1] %><br>
+<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[2] %><br>
+<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[3] %><br>
+<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[4] %><br>
+<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[5] %>
+<p>
+<br><br><br>
+<table style="width:100%" >
+<tr>
+<td colspan="14" style="text-align:center;font-weight:bold;height:30px">
+	TAX INVOICE
+</td>
+</tr>
+<tr>
+
+	<td colspan="6.5" style="width:62%">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
+	<td colspan="5.5" >Campaign/Event Name - <%= raw @client_work_details[0].campaign_event_name.to_s %></td>
+	<td colspan="3">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
+</tr>
+<tr>
+
+	<td colspan="6.5" style="width:62%">Location(s): <%= raw @client_work_details[0].location.to_s %>.</td>
+	<td colspan="5.5">Bill No: <%= raw @client_work_details[0].bill_number.to_s %></td>
+	<td colspan="3">Bill Date:<%= raw @client_work_details[0].bill_date.to_s %></td>
+</tr>
+</table >
+<table style="width:100%">
+<tr style="height:30px;font-weight:bold">
+
+	<td>SL NO</td>
+	<td>Name</td>
+	<td style="width:50%">SPECIFICATION</td>
+	<td>SIZE</td>
+	<td>RATE</td>
+	<td>QTY</td>
+	<td>COST</td>
+	<td>CGST</td>
+	<td>SGST</td>
+	<td>GST%</td>
+	<td>#HSN</td>
+	<td>TAX</td>
+	<td>TOTAL</td>
+</tr>
+<tr>
+
+	<td>1</td>
+	<td>VINYL</td>
+	<td style="width:50%">Vinyl print and pasting</td>
+	<td>8'*8'</td>
+	<td>3520</td>
+	<td>3</td>
+	<td>10560</td>
+	<td>950.4</td>
+	<td>950.4</td>
+	<td>18</td>
+	<td>#4569</td>
+	<td>1900.8</td>
+	<td>12460.8</td>
+</tr>
+<tr>
+
+	<td>1</td>
+	<td>VINYL</td>
+	<td style="width:50%">Vinyl print and pasting</td>
+	<td>8'*8'</td>
+	<td>3520</td>
+	<td>3</td>
+	<td>10560</td>
+	<td>950.4</td>
+	<td>950.4</td>
+	<td>18</td>
+	<td>#4569</td>
+	<td>1900.8</td>
+	<td>12460.8</td>
+</tr>
+<tr>
+
+	<td>1</td>
+	<td>VINYL</td>
+	<td style="width:50%">Vinyl print and pasting</td>
+	<td>8'*8'</td>
+	<td>3520</td>
+	<td>3</td>
+	<td>10560</td>
+	<td>950.4</td>
+	<td>950.4</td>
+	<td>18</td>
+	<td>#4569</td>
+	<td>1900.8</td>
+	<td>12460.8</td>
+</tr>
+<tr>
+
+	<td>1</td>
+	<td>VINYL</td>
+	<td style="width:50%">Vinyl print and pasting</td>
+	<td>8'*8'</td>
+	<td>3520</td>
+	<td>3</td>
+	<td>10560</td>
+	<td>950.4</td>
+	<td>950.4</td>
+	<td>18</td>
+	<td>#4569</td>
+	<td>1900.8</td>
+	<td>12460.8</td>
+</tr>
+
+<tr style="height:30px">
+
+	<td colspan="2">Total</td>
+	<td colspan="3"></td>
+	<td></td>
+	<td>11900</td>
+	<td>1020</td>
+	<td>1020</td>
+	<td></td>
+	<td></td>
+	<td>2039.4</td>
+	<td>14029.4</td>
+
+</tr>
+</table>
+<br>
+<table style="width:100%">
+<tr >
+
+	<td >Bank Details:</td>
+	<td ></td>
+	<td>SUBTOTAL:</td>
+	<td>11990</td>
+	<td>ADDITIONAL CHARGES INFO.</td>
+	
+
+</tr>
+<tr>
+
+	<td >Bank Name:</td>
+	<td > STATE BANK OF INDIA</td>
+	<td>TAXABLE AMOUNT:</td>
+	<td>2039.40</td>
+	<td rowspan="9"></td>
+	
+
+</tr>
+<tr>
+
+	<td >Account No:</td>
+	<td > 664455445555445</td>
+	<td>ADDITIONAL CHARGES:</td>
+	<td>2039.40</td>
+	
+	
+
+</tr>
+<tr>
+
+	<td >IFSC CODE:</td>
+	<td > SBI66511111</td>
+	<td>GROSS AMOUNT:</td>
+	<td>2039.40</td>
+	
+	
+
+</tr>
+<tr >
+
+	<td >Agency Details:</td>
+	<td ></td>
+	<td>ADVANCED:</td>
+	<td>0</td>
+</tr>
+
+<tr >
+
+	<td >Agency Name:</td>
+	<td >SUNSHINE AD SOLUTIONS</td>
+	<td rowspan="2"></td>
+	
+</tr>
+<tr >
+
+	<td >License No:</td>
+	<td >15041024823</td>
+	
+</tr>
+<tr style="height:30px">
+
+	<td >Address:</td>
+	<td >Walli Nagar,Brooklane,garden Reach,kolkata-700024</td>
+	<td >TOTAL PAYBALE AMOUNT</td>
+	<td >14030.00</td>
+	
+</tr>
+<tr >
+
+	<td >GSTIN:</td>
+	<td >19ADZFS4322F1ZL</td>
+	<td rowspan="2"colspan="2"></td>
+	
+</tr>
+<tr >
+
+	<td >PAN No:</td>
+	<td >ADZFS4322</td>
+	
+</tr>
+</table>
+<table style="width:100%">
+
+<tr >
+
+	<td style="width:30%">Contact number of agency person(s):</td>
+	<td >9051637782<br>9836666946</td>
+	
+</tr>
+</table>
+<table style="width:40%;float:right">
+
+<tr style="height:100px">
+	<td style="vertical-align:bottom;text-align:center">
+		Authorized Signature
+	</td>
+<tr>
+</table>
+
+
+</html>

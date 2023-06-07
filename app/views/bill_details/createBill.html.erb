@@ -1,9 +1,18 @@
 <%= csrf_meta_tags %>
 <!DOCTYPE html>
 <html>
+	<div id="overlay">
+	  <div id="overlayContent">
+		<h2>Loading...</h2>
+		<p>Please wait while the backend process completes.</p>
+	  </div>
+	</div>
 <head>
 	<title>BILL GENERATE</title>
 	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.validate.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 	<style>
 		table {
@@ -98,80 +107,39 @@
 			font-family: Camberia;
 			color:#ffffff !important;
 		}
+		
+		#overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		#overlayContent {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 20px;
+		}
 	</style>
-	<script>
-		// function to add a new row
-		function addRow() {
-			// get the table body
-			var table = document.getElementById("myTable");
-			var tbody = table.getElementsByTagName("tbody")[0];
-			
-			// create a new row and cells
-			var newRow = tbody.insertRow();
-			var cell1 = newRow.insertCell(0);
-			var cell2 = newRow.insertCell(1);
-			var cell3 = newRow.insertCell(2);
-			var cell4 = newRow.insertCell(3);
-			var cell5 = newRow.insertCell(4);
-			var cell6 = newRow.insertCell(5);
-			var cell7 = newRow.insertCell(6);
-			var cell8 = newRow.insertCell(7);
-			var cell9 = newRow.insertCell(8);
-			var cell10 = newRow.insertCell(9);
-			var cell11 = newRow.insertCell(10);
-			var cell12 = newRow.insertCell(11);
-			var cell13 = newRow.insertCell(12);
-			
-			// add content to the cells
-			cell1.innerHTML = '<input type="text" name="name[]" placeholder="Name">';
-			cell2.innerHTML = '<input type="text" name="specification[]" placeholder="Specification">';
-			cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
-			cell4.innerHTML = '<input type="text" name="rate[]" placeholder="Rate" class="small-input">';
-			cell5.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
-			cell6.innerHTML = '<input type="text" name="cost[]" placeholder="Cost">';
-			cell7.innerHTML = '<input type="text" name="cgst[]" placeholder="CGST" readonly>';
-			cell8.innerHTML = '<input type="text" name="sgst[]" placeholder="SGST" readonly>';
-			cell9.innerHTML = '<input type="text" name="gst[]" value="18" class="small-input" readonly>';
-			cell10.innerHTML = '<input type="text" name="hsn[]" placeholder="HSN">';
-			cell11.innerHTML = '<input type="text" name="tax[]" placeholder="TAX" readonly>';
-			cell12.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
-			cell13.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
-		}
-		
-		// function to delete the current row
-		function deleteRow(btn) {
-			var row = btn.parentNode.parentNode;
-			row.parentNode.removeChild(row);
-		}
-		
-		function qty_onchange(input) { 
-			var row = input.parentNode.parentNode; 
-			var rate = row.querySelector('input[name="rate[]"]'); 
-			var qty = row.querySelector('input[name="qty[]"]'); 
-			var cost = row.querySelector('input[name="cost[]"]'); 
-			var cgst = row.querySelector('input[name="cgst[]"]'); 
-			var sgst = row.querySelector('input[name="sgst[]"]'); 
-			var tax = row.querySelector('input[name="tax[]"]'); 
-			var total = row.querySelector('input[name="total[]"]'); 
-			
-			cost.value = (parseFloat(rate.value) * parseInt(qty.value)).toFixed(2);
-			cgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
-			sgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
-			tax.value = (parseFloat(cgst.value) + parseFloat(sgst.value)).toFixed(2);
-			total.value = (parseFloat(tax.value) + parseFloat(cost.value)).toFixed(2);
-		}
-		
-	</script>
 </head>
 <body>
-	<form id="bill_generate_form" method="post">
+	
+	<form id="bill_generate_form" name="bill_generate_form" method="post" action="/save_bill" target="_parent" style="float:left;width:80%;">
 		<fieldset>
 		<legend>Client Details</legend>
+		<input type="hidden" name="oper" id="oper" value="add" />
 		<table>
 			<tbody>
 			  <tr>
 				<td colspan="2">
-				  <textarea rows="5" cols="30" placeholder="Client Name & Address"></textarea>
+				  <textarea rows="5" cols="30" name="client_name_address" id="client_name_address" placeholder="Client Name & Address"></textarea>
 				</td>
 			  </tr>
 			</tbody>
@@ -181,26 +149,26 @@
 			<tbody>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Campaign/Event Duration" name="campaign[]">
+				  <input type="text" placeholder="Campaign/Event Duration" name="campaign">
 				</td>
 				<td>
-				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name[]">
-				</td>
-			  </tr>
-			  <tr>
-				<td>
-				  <input type="text" placeholder="Job Done on" name="job_done_date[]">
-				</td>
-				<td>
-				  <input type="text" placeholder="Location(s)" name="locations[]">
+				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name">
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Bill No." name="bill_no[]">
+				  <input type="text" placeholder="Job Done on" name="job_done_date">
 				</td>
 				<td>
-				  <input type="text" placeholder="Bill Date" name="bill_date[]">
+				  <input type="text" placeholder="Location(s)" name="locations">
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Bill No." name="bill_no">
+				</td>
+				<td>
+				  <input type="text" placeholder="Bill Date" name="bill_date">
 				</td>
 			  </tr>
 			</tbody>
@@ -231,10 +199,104 @@
 		<button type="button" onclick="addRow()" class="icon-button">
 		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
 		</button>
-		<input type="text" name="advanced[]" placeholder="Advanced">
-		<input type="text" name="additinonal_charges[]" placeholder="Additional Charges">
+		<input type="text" name="advanced" placeholder="Advanced">
+		<input type="text" name="additinonal_charges" placeholder="Additional Charges">
 		<input type="submit" value="Generate Bill" class="generate-bill">
 		</fieldset>
 	</form>
 </body>
 </html>
+
+<script>
+	// function to add a new row
+	function addRow() {
+		// get the table body
+		var table = document.getElementById("myTable");
+		var tbody = table.getElementsByTagName("tbody")[0];
+		
+		// create a new row and cells
+		var newRow = tbody.insertRow();
+		var cell1 = newRow.insertCell(0);
+		var cell2 = newRow.insertCell(1);
+		var cell3 = newRow.insertCell(2);
+		var cell4 = newRow.insertCell(3);
+		var cell5 = newRow.insertCell(4);
+		var cell6 = newRow.insertCell(5);
+		var cell7 = newRow.insertCell(6);
+		var cell8 = newRow.insertCell(7);
+		var cell9 = newRow.insertCell(8);
+		var cell10 = newRow.insertCell(9);
+		var cell11 = newRow.insertCell(10);
+		var cell12 = newRow.insertCell(11);
+		var cell13 = newRow.insertCell(12);
+		
+		// add content to the cells
+		cell1.innerHTML = '<input type="text" name="name[]" placeholder="Name">';
+		cell2.innerHTML = '<input type="text" name="specification[]" placeholder="Specification">';
+		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
+		cell4.innerHTML = '<input type="text" name="rate[]" placeholder="Rate" class="small-input">';
+		cell5.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
+		cell6.innerHTML = '<input type="text" name="cost[]" placeholder="Cost">';
+		cell7.innerHTML = '<input type="text" name="cgst[]" placeholder="CGST" readonly>';
+		cell8.innerHTML = '<input type="text" name="sgst[]" placeholder="SGST" readonly>';
+		cell9.innerHTML = '<input type="text" name="gst[]" value="18" class="small-input" readonly>';
+		cell10.innerHTML = '<input type="text" name="hsn[]" placeholder="HSN">';
+		cell11.innerHTML = '<input type="text" name="tax[]" placeholder="TAX" readonly>';
+		cell12.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
+		cell13.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
+	}
+	
+	// function to delete the current row
+	function deleteRow(btn) {
+		var row = btn.parentNode.parentNode;
+		row.parentNode.removeChild(row);
+	}
+	
+	function qty_onchange(input) { 
+		var row = input.parentNode.parentNode; 
+		var rate = row.querySelector('input[name="rate[]"]'); 
+		var qty = row.querySelector('input[name="qty[]"]'); 
+		var cost = row.querySelector('input[name="cost[]"]'); 
+		var cgst = row.querySelector('input[name="cgst[]"]'); 
+		var sgst = row.querySelector('input[name="sgst[]"]'); 
+		var tax = row.querySelector('input[name="tax[]"]'); 
+		var total = row.querySelector('input[name="total[]"]'); 
+		
+		cost.value = (parseFloat(rate.value) * parseInt(qty.value)).toFixed(2);
+		cgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
+		sgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
+		tax.value = (parseFloat(cgst.value) + parseFloat(sgst.value)).toFixed(2);
+		total.value = (parseFloat(tax.value) + parseFloat(cost.value)).toFixed(2);
+	}
+
+	$("#bill_generate_form").validate({
+		rules: {
+			
+		}, ///// rules block
+		submitHandler : function(form){
+			jquery_overlay_start();
+			create_bill_form_submit();
+		}
+	}); 
+	
+	function create_bill_form_submit(){ 
+		$.ajax({
+			type: "post",
+			url: '/save_bill',
+			data: $("#bill_generate_form").serialize(),
+			success: function(msg){
+				jquery_overlay_stop();
+			}
+		});
+		
+	}
+
+	
+	function jquery_overlay_start(){
+		$('#overlay').fadeIn();
+	}
+		
+	function jquery_overlay_stop(){
+		$('#overlay').fadeOut();
+	}
+</script>
