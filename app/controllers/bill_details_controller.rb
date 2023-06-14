@@ -122,11 +122,25 @@ class BillDetailsController < ApplicationController
 		return columndef_arr 
 	end
 
+	# def generate_pdf_bill
+		# @bill_details = BillDetail.where("bill_number='123'")
+		# @client_work_details = ClientWorkDetail.where("bill_number='123'")
+		# pdf = WickedPdf.new.pdf_from_string(render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false))
+		# send_data pdf, :filename => "SAS/2324/0423/B0019.pdf", :type => "application/pdf", :disposition => "attachment"
+	# end
+	
 	def generate_pdf_bill
 		@bill_details = BillDetail.where("bill_number='123'")
 		@client_work_details = ClientWorkDetail.where("bill_number='123'")
-		pdf = WickedPdf.new.pdf_from_string(render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false))
-		send_data pdf, :filename => "sas/report/1234/009.pdf", :type => "application/pdf", :disposition => "attachment"
+		pdf = WickedPdf.new.pdf_from_string(
+		  render_to_string('bill_details/generate_pdf_bill.html.erb', layout: false),
+		  pdf: {
+			font_face: 'Camberia',
+			font_size: 12
+		  }
+		)
+
+		send_data pdf, :filename => "SAS/2324/0423/B0019.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 
 end

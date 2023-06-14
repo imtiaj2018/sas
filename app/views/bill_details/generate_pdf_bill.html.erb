@@ -8,8 +8,13 @@ table,th,td{
 	border-collapse: collapse;
 	font-family: Camberia;
 }
+
+body{
+	font-family: Camberia;
+}
 </style>
 </head>
+<body>
 <p>
 To,<br>
 <b><%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[0] %></b><br>
@@ -199,5 +204,5 @@ To,<br>
 <tr>
 </table>
 
-
+</body>
 </html>
