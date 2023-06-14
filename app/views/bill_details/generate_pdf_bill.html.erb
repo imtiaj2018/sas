@@ -22,7 +22,7 @@ To,<br>
 <br><br><br>
 <table style="width:100%" >
 <tr>
-<td colspan="14" style="text-align:center;font-weight:bold;height:30px">
+<td colspan="14" style="text-align:center;font-weight:bold;height:30px;font-family: Camberia;">
 	TAX INVOICE
 </td>
 </tr>
@@ -56,83 +56,43 @@ To,<br>
 	<td>TAX</td>
 	<td>TOTAL</td>
 </tr>
+<%
+ counter = 1
+%>
+
+<% @bill_details.each do |bd,index| %>
 <tr>
 
-	<td>1</td>
-	<td>VINYL</td>
-	<td style="width:50%">Vinyl print and pasting</td>
-	<td>8'*8'</td>
-	<td>3520</td>
-	<td>3</td>
-	<td>10560</td>
-	<td>950.4</td>
-	<td>950.4</td>
-	<td>18</td>
-	<td>#4569</td>
-	<td>1900.8</td>
-	<td>12460.8</td>
+	<td><%= counter%></td>
+	<td><%= bd.name%></td>
+	<td style="width:50%"><%= bd.specification%></td>
+	<td><%= bd.size%></td>
+	<td><%= bd.rate%></td>
+	<td><%= bd.qty%></td>
+	<td><%= bd.cost%></td>
+	<td><%= bd.cgst%></td>
+	<td><%= bd.sgst%></td>
+	<td><%= bd.gst%></td>
+	<td><%= bd.hsn%></td>
+	<td><%= bd.tax%></td>
+	<td><%= bd.total%></td>
 </tr>
-<tr>
+<% counter = counter+1 %>
+<% end %>
 
-	<td>1</td>
-	<td>VINYL</td>
-	<td style="width:50%">Vinyl print and pasting</td>
-	<td>8'*8'</td>
-	<td>3520</td>
-	<td>3</td>
-	<td>10560</td>
-	<td>950.4</td>
-	<td>950.4</td>
-	<td>18</td>
-	<td>#4569</td>
-	<td>1900.8</td>
-	<td>12460.8</td>
-</tr>
-<tr>
-
-	<td>1</td>
-	<td>VINYL</td>
-	<td style="width:50%">Vinyl print and pasting</td>
-	<td>8'*8'</td>
-	<td>3520</td>
-	<td>3</td>
-	<td>10560</td>
-	<td>950.4</td>
-	<td>950.4</td>
-	<td>18</td>
-	<td>#4569</td>
-	<td>1900.8</td>
-	<td>12460.8</td>
-</tr>
-<tr>
-
-	<td>1</td>
-	<td>VINYL</td>
-	<td style="width:50%">Vinyl print and pasting</td>
-	<td>8'*8'</td>
-	<td>3520</td>
-	<td>3</td>
-	<td>10560</td>
-	<td>950.4</td>
-	<td>950.4</td>
-	<td>18</td>
-	<td>#4569</td>
-	<td>1900.8</td>
-	<td>12460.8</td>
-</tr>
 
 <tr style="height:30px">
 
 	<td colspan="2">Total</td>
 	<td colspan="3"></td>
 	<td></td>
-	<td>11900</td>
-	<td>1020</td>
-	<td>1020</td>
+	<td><%= @client_work_details[0].total_cost.to_f %></td>
+	<td><%= @client_work_details[0].total_cgst.to_f %></td>
+	<td><%= @client_work_details[0].total_sgst.to_f %></td>
 	<td></td>
 	<td></td>
-	<td>2039.4</td>
-	<td>14029.4</td>
+	<td><%= @client_work_details[0].total_tax.to_f %></td>
+	<td><%= @client_work_details[0].payable_amount.to_f %></td>
 
 </tr>
 </table>
@@ -143,7 +103,7 @@ To,<br>
 	<td >Bank Details:</td>
 	<td ></td>
 	<td>SUBTOTAL:</td>
-	<td>11990</td>
+	<td><%= @client_work_details[0].total_cost.to_f %></td>
 	<td>ADDITIONAL CHARGES INFO.</td>
 	
 
@@ -153,7 +113,7 @@ To,<br>
 	<td >Bank Name:</td>
 	<td > STATE BANK OF INDIA</td>
 	<td>TAXABLE AMOUNT:</td>
-	<td>2039.40</td>
+	<td><%= @client_work_details[0].total_tax.to_f %></td>
 	<td rowspan="9"></td>
 	
 
@@ -163,7 +123,7 @@ To,<br>
 	<td >Account No:</td>
 	<td > 664455445555445</td>
 	<td>ADDITIONAL CHARGES:</td>
-	<td>2039.40</td>
+	<td><%= @client_work_details[0].additional_or_discount.to_f %></td>
 	
 	
 
@@ -173,7 +133,7 @@ To,<br>
 	<td >IFSC CODE:</td>
 	<td > SBI66511111</td>
 	<td>GROSS AMOUNT:</td>
-	<td>2039.40</td>
+	<td><%= @client_work_details[0].gross_amount.to_f %></td>
 	
 	
 
@@ -183,7 +143,7 @@ To,<br>
 	<td >Agency Details:</td>
 	<td ></td>
 	<td>ADVANCED:</td>
-	<td>0</td>
+	<td><%= @client_work_details[0].advanced.to_f %></td>
 </tr>
 
 <tr >
@@ -204,7 +164,7 @@ To,<br>
 	<td >Address:</td>
 	<td >Walli Nagar,Brooklane,garden Reach,kolkata-700024</td>
 	<td >TOTAL PAYBALE AMOUNT</td>
-	<td >14030.00</td>
+	<td ><%= @client_work_details[0].payable_amount.to_f.round %></td>
 	
 </tr>
 <tr >

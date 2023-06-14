@@ -121,65 +121,12 @@ class BillDetailsController < ApplicationController
 		end 
 		return columndef_arr 
 	end
-	
-	# def generate_pdf_bill
-		# html_content = render_to_string(template: "bill_details/generate_pdf_bill.html.erb", layout: false)
-		# respond_to do |format|
-			# format.html
-			# format.pdf do
-				# begin
-					# pdf = WickedPdf.new.pdf_from_string(html_content)
-					# send_data pdf,
-					# filename: 'report.pdf',
-					# type: 'application/pdf',
-					# disposition: 'attachment',
-					# page_size: 'A4',
-					# orientation: 'Portrait'
-				# rescue => e
-					# puts "Error generating PDF: #{e.message}"
-					# # Handle the error appropriately
-				# end
-			# end
-		# end
-	# end
-
-	# def generate_pdf_bill
-		# html_string = render_to_string(
-		# {
-		# template: 'bill_details/generate_pdf_bill.html.erb',
-		# locals: { id: params[:id] }
-		# })
-
-		# pdf = Grover.new(html_string, format: 'A4').to_pdf
-
-		# respond_to do |format|
-			# format.html
-			# format.pdf do
-				# send_data(pdf, disposition: 'inline', filename: "Show_ID_#{params[:id]}", type: 'application/pdf')
-			# end
-		# end
-	# end
-	
-
-	# def generate_pdf_bill
-		# temp_directory = Dir.mktmpdir
-		# begin
-			# pdf = WickedPdf.new.pdf_from_string(
-			# render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false),
-			# tmpdir: temp_directory
-			# )
-			# send_data pdf, filename: "report.pdf", type: "application/pdf", disposition: "attachment"
-		# ensure
-			# FileUtils.remove_entry(temp_directory, force: true)
-		# end
-	# end
-
 
 	def generate_pdf_bill
 		@bill_details = BillDetail.where("bill_number='123'")
 		@client_work_details = ClientWorkDetail.where("bill_number='123'")
 		pdf = WickedPdf.new.pdf_from_string(render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false))
-		send_data pdf, :filename => "report.pdf", :type => "application/pdf", :disposition => "attachment"
+		send_data pdf, :filename => "sas/report/1234/009.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 
 end
