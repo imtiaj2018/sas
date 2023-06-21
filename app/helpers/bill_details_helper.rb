@@ -3,8 +3,9 @@ module BillDetailsHelper
 	
 		grid_header_config_arr=[] 
 		grid_header_config_arr <<  {"field" => "id","headerName"=>"ID","width" => 0,"hide" => true}
-		grid_header_config_arr << {"field" => "bill_no","headerName"=>"Bill Number","width" => 150}
-		grid_header_config_arr << {"field" => "bill_generate","headerName"=>"Bill Generated?","width" => 500}
+		grid_header_config_arr << {"field" => "bill_number","headerName"=>"Bill Number","width" => 150}
+		grid_header_config_arr << {"field" => "payable_amount","headerName"=>"Payable Amount","width" => 250}
+		grid_header_config_arr << {"field" => "bill_status","headerName"=>"Bill Status","width" => 300}
 		
 		return grid_header_config_arr
 	end 

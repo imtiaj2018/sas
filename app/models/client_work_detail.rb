@@ -7,4 +7,13 @@ class ClientWorkDetail < ApplicationRecord
 		cwd.save
 		return cwd
 	end
+	
+	def self.get_ag_grid_data_bill_details(limit=nil)
+		if limit != nil
+			uplimit= limit.split('_')[1]
+			lowlimit= limit.split('_')[0]
+			return ClientWorkDetail.find_by_sql("SELECT * FROM client_work_details limit #{lowlimit},#{uplimit}")
+		end
+		return ClientWorkDetail.find_by_sql("SELECT count(*) as cc FROM client_work_details;")
+	end
 end

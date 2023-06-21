@@ -1,7 +1,7 @@
 require 'tmpdir'
 
 class BillDetailsController < ApplicationController
-	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill]
+	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill,:get_bill_details_aggrid_data]
 	def index
 		if current_user
 			@coldef = create_bill_details_coldef
@@ -12,11 +12,32 @@ class BillDetailsController < ApplicationController
 	
 	def createBill
 		if current_user
-			
+			@new_bill_number = generate_bill_number
 		else
 			redirect_to login_url
 		end		
 	end
+	
+	
+	def generate_bill_number
+		# Retrieve the last bill number from the database
+		last_bill_number_obj = ClientWorkDetail.last
+
+		if last_bill_number_obj.nil?
+			# No existing bill number in the database, start from 1
+			new_bill_number = 'SAS00001'
+		else
+			# Extract the numeric part of the last bill number and increment it
+			last_number = last_bill_number_obj.bill_number.scan(/\d+/).first.to_i
+			new_number = last_number + 1
+
+			# Format the new bill number with leading zeros
+			new_bill_number = "SAS#{new_number.to_s.rjust(5, '0')}"
+		end
+		return new_bill_number
+	end
+	
+	
 	
 	def save_bill
 		oper = params[:oper]
@@ -121,6 +142,29 @@ class BillDetailsController < ApplicationController
 		end 
 		return columndef_arr 
 	end
+	
+	def get_bill_details_aggrid_data		
+		@column_data = []
+		@column_names_field=['id','bill_number','payable_amount','bill_status']
+		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
+		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
+		agdata.each do |data|
+			_tempdatahash = {}
+			@column_names_field.each do |fieldname|
+				if fieldname == 'bill_status'
+					_tempdatahash[fieldname] = "Open"
+					_tempdatahash[fieldname] = "Closed" if data.bill_status == 1
+				else
+					_tempdatahash[fieldname] = data[fieldname]
+				end
+			end	
+			@column_data << _tempdatahash 
+		end
+		ag_data={}
+		ag_data["total"]=agdata_count[0]["cc"]
+		ag_data["data"]=@column_data
+		render :plain =>JSON.dump(ag_data)
+	end
 
 	# def generate_pdf_bill
 		# @bill_details = BillDetail.where("bill_number='123'")
@@ -129,9 +173,22 @@ class BillDetailsController < ApplicationController
 		# send_data pdf, :filename => "SAS/2324/0423/B0019.pdf", :type => "application/pdf", :disposition => "attachment"
 	# end
 	
+	def check_generate_pdf_bill
+		bill_number = params[:bill_number]
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+		if @client_work_details[0].bill_status == 1
+			render :plain =>"closed"
+		else
+			render :plain =>"open"
+		end
+		
+	end
+	
 	def generate_pdf_bill
-		@bill_details = BillDetail.where("bill_number='123'")
-		@client_work_details = ClientWorkDetail.where("bill_number='123'")
+		bill_number = params[:bill_number]
+		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+	
 		pdf = WickedPdf.new.pdf_from_string(
 		  render_to_string('bill_details/generate_pdf_bill.html.erb', layout: false),
 		  pdf: {
@@ -139,8 +196,7 @@ class BillDetailsController < ApplicationController
 			font_size: 12
 		  }
 		)
-
-		send_data pdf, :filename => "SAS/2324/0423/B0019.pdf", :type => "application/pdf", :disposition => "attachment"
+		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 
 end
