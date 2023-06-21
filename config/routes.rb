@@ -56,4 +56,6 @@ Rails.application.routes.draw do
   post 'save_bill', to:'bill_details#save_bill'
   post 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
   get 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
+  post 'get_bill_details_aggrid_data', to:'bill_details#get_bill_details_aggrid_data'
+  get 'check_generate_pdf_bill', to:'bill_details#check_generate_pdf_bill'
 end
