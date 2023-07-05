@@ -108,7 +108,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) - client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
-			
+			redirect_to '/bill_generation'
 			
 		end
 	end
@@ -145,7 +145,7 @@ class BillDetailsController < ApplicationController
 	
 	def get_bill_details_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','bill_number','payable_amount','bill_status']
+		@column_names_field=['id','bill_number','payable_amount','gross_amount','bill_date','bill_status']
 		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
 		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
 		agdata.each do |data|
@@ -190,11 +190,7 @@ class BillDetailsController < ApplicationController
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
 	
 		pdf = WickedPdf.new.pdf_from_string(
-		  render_to_string('bill_details/generate_pdf_bill.html.erb', layout: false),
-		  pdf: {
-			font_face: 'Camberia',
-			font_size: 12
-		  }
+		  render_to_string('bill_details/generate_pdf_bill.html.erb', layout: false,print_media_type: true)
 		)
 		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
