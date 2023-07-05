@@ -7,28 +7,64 @@
 
 <style>
 	.button {
-	  background-color: #BE3364; /* Green */
-	  border: none;
-	  color: white;
-	  padding: 15px 32px;
-	  text-align: center;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 16px;
-	  margin: 4px 2px;
-	  cursor: pointer;
-	  -webkit-transition-duration: 0.4s; /* Safari */
-	  transition-duration: 0.4s;
-	  width:50%;
-	}
+        background-color: #4CAF50; /* Green background */
+        border: none;
+        color: white; /* White text */
+        padding: 10px 20px; /* Adjust padding as needed */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px; /* Adjust font size as needed */
+        margin: 4px 2px;
+        cursor: pointer;
+        background-image: linear-gradient(to bottom right, #4CAF50, #45a049); /* Gradient background */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); /* Shadow */
+        width: 100%;
+        transition: background-color 0.3s;
+    }
 
-	.button1 {
-	  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-	}
+    .button:hover {
+        background-color: #45a049; /* New background color on hover */
+    }
 
-	.button2:hover {
-	  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
-	}
+    .button:focus {
+        background-color: #45a049; /* New background color on focus */
+    }
+
+    /* Style for the container div */
+    .container {
+        width: 100%;
+        height: 100vh; /* Adjust to center vertically on the page */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Style for the button wrapper div */
+    .button-wrapper {
+        width: 50%; /* Adjust as needed */
+        text-align: center;
+        border: 0px solid;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    /* Style for the button div */
+    .button-div {
+        width: 50%;
+        height: 100px; /* Adjust as needed */
+        text-align: center;
+        border: 0px solid;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+	
+	
+	
+	
+	
 	
 	.ui-widget-header {
 		background: #d9d9d9 !important; 
@@ -98,10 +134,18 @@
 		text-align:center;
 	}
 	
+	.html_css_class {
+		background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+		color: #fff;
+		height: 100%;
+		overflow: hidden;
+		transition: all 0.35s ease 0s;
+	}
+	
 </style>
-<html style="background-color:#9a497d;">
+<html class="html_css_class">
     <title>Admin Panel</title>
-	<div style="width:100%;text-align:center;border:1px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Welcome to Sunshine Ad Solutions Admin Page</h2></div>
+	<div style="width:100%;text-align:center;border:0px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Welcome to Sunshine Ad Solutions Admin Page</h2></div>
 	<div style="width:100%;text-align:center;border:0px solid;"></div>
 	<div style="width:100%;border:0px solid yellow;">
 		<div style="border:0px solid red; height:10px;width:33%;float:left;"> <a class="logout_css" onclick="logout();" href="javascript:void(0)">Log out</a> </div>
@@ -109,90 +153,21 @@
 		<div style="border:0px solid green;height:10px;width:33%;float:right;"><a class="sign_up_css" onclick="sign_up();" href="javascript:void(0)">Sign up</a></div>
 	</div>
 	
-	<div style="width:100%;">
-		
-			<table  width="100%" style="border:0px solid black;margin-left:auto;margin-right:auto;">  
-				<tr>
-					<td>
-						<div style="width:100%;height:100px;text-align:center;border:0px solid;">
-							
-						</div>
-					</td>
-				</tr> 
-				
-				<tr>
-					<td>
-						<div style="width:100%;text-align:center;border:0px solid;">
-							<button class="button button2" onclick="window.location.href='/bill_generation'">Generate Bill</button>
-						</div>
-					</td>
-				</tr>  
-				
-				<tr>
-					<td>
-						<div style="width:100%;height:25px;text-align:center;border:0px solid;">
-							
-						</div>
-					</td>
-				</tr> 
-				
-				<tr>
-					<td>
-						<div style="width:100%;text-align:center;border:0px solid;">
-							<button class="button button2" onclick="window.location.href='/upload_brochure'">Upload & Download Brochure</button>
-						</div>
-					</td>
-				</tr>  
-				
-				<tr>
-					<td>
-						<div style="width:100%;height:25px;text-align:center;border:0px solid;">
-							
-						</div>
-					</td>
-				</tr> 
-				
-				<tr>
-					<td>
-						<div style="width:100%;text-align:center;border:0px solid;">
-							<button class="button button2" onclick="window.location.href='/upload_clients'">Upload & Download Client Logo</button>
-						</div>
-					</td>
-				</tr>  
-				
-				<tr>
-					<td>
-						<div style="width:100%;height:25px;text-align:center;border:0px solid;">
-							
-						</div>
-					</td>
-				</tr> 
-				
-				<tr>
-					<td>
-						<div style="width:100%;text-align:center;border:0px solid;">
-							<button class="button button2" onclick="window.location.href='/upload_project_images'">Upload & Download Project Images</button>
-						</div>
-					</td>
-				</tr>  
-				
-				<tr>
-					<td>
-						<div style="width:100%;height:25px;text-align:center;border:0px solid;">
-							
-						</div>
-					</td>
-				</tr> 
-				
-				<!-- <tr> -->
-					<!-- <td> -->
-						<!-- <div style="width:100%;text-align:center;border:0px solid;"> -->
-							<!-- <button class="button button2" onclick="window.location.href='/upload_designs'">Upload & Download Our Designs</button> -->
-						<!-- </div> -->
-					<!-- </td> -->
-				<!-- </tr>   -->
-			</table>  
-			
+	<div class="container">
+		<div class="button-wrapper">
+			<div class="button-div">
+				<button class="button button1" onclick="window.location.href='/bill_generation'">Generate Bill</button>
+			</div>
+			<div class="button-div">
+				<button class="button button2" onclick="window.location.href='/upload_brochure'">Upload & Download Brochure</button>
+			</div>
+			<div class="button-div">
+				<button class="button button3" onclick="window.location.href='/upload_clients'">Upload & Download Client Logo</button>
+			</div>
+			<div class="button-div">
+				<button class="button button4" onclick="window.location.href='/upload_project_images'">Upload & Download Project Images</button>
+			</div>
+		</div>
 	</div>
 </html> 
 

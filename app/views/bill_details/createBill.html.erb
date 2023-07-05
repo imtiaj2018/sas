@@ -12,8 +12,10 @@
 	<script src="/js/jquery.js"></script>
 	<script src="/js/jquery.validate.js"></script>
 	<script src="/js/jquery-ui.js"></script>
-
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 	<style>
 		table {
       display: inline-block;
@@ -127,9 +129,23 @@
 			background-color: #fff;
 			padding: 20px;
 		}
+		
+		.ui-datepicker {
+		  font-size: 14px;
+		  width: 170px; /* Adjust the width as desired */
+		  height: 200px; /* Adjust the height as desired */
+		}
+		
+		.html_css_class {
+			background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+			color: #fff;
+			height: 100%;
+			overflow: hidden;
+			transition: all 0.35s ease 0s;
+		}
 	</style>
 </head>
-<body>
+<body class="html_css_class">
 	
 	<form id="bill_generate_form" name="bill_generate_form" method="post" action="/save_bill" target="_parent" style="float:left;width:80%;">
 		<fieldset>
@@ -149,7 +165,7 @@
 			<tbody>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Campaign/Event Duration" name="campaign">
+				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign" readonly>
 				</td>
 				<td>
 				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name">
@@ -157,7 +173,7 @@
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Job Done on" name="job_done_date">
+				  <input type="text" placeholder="Job Done on" name="job_done_date" id="job_done_date">
 				</td>
 				<td>
 				  <input type="text" placeholder="Location(s)" name="locations">
@@ -168,7 +184,7 @@
 				  <input type="text" placeholder="Bill No." name="bill_no" value='<%= @new_bill_number %>' readonly>
 				</td>
 				<td>
-				  <input type="text" placeholder="Bill Date" name="bill_date">
+				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
 				</td>
 			  </tr>
 			</tbody>
@@ -299,4 +315,22 @@
 	function jquery_overlay_stop(){
 		$('#overlay').fadeOut();
 	}
+	
+	// Use the .ready() function to wait for the DOM to be ready
+	$(document).ready(function() {
+		$('#bill_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+		
+		$('#campaign').datepicker({
+			dateFormat: 'MM yy'
+		});
+		
+		$('#job_done_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+	});
+
+	
+	
 </script>

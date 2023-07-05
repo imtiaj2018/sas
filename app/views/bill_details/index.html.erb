@@ -72,44 +72,96 @@
 		border: 0;
 	}
 	
+	.html_css_class {
+		background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+		color: #fff;
+		height: 100%;
+		overflow: hidden;
+		transition: all 0.35s ease 0s;
+	}
+	
 	
 </style>
 <title>Bill Details</title>
-<html style="background-color:#9a497d;">
-	<div id="dialog_form"></div>
-	<div id="iframe_download_div" style="display:none;"></div> 
-	<div style="width:100%;height:60px;">
-			<table  width="65%">
-				<tr>
-					
-					<td>
-						<input type="button" name="create_bill" value="Create" style="width:100px;cursor: pointer;" id="create_bill" onclick="window.location.href='/createBill'"> 
-					</td>
-					<td>
-						<input type="button" name="edit_bill" value="Edit" style="width:100px; background: #459bac;cursor: pointer;" onclick="cancel_upload();">
-					</td>
-					<td>
-						<input type="button" name="generate_bill" value="Generate Bill" style="width:100px; background: #459bac;cursor: pointer;" onclick="call_generate_pdf_bill()">
-					</td>
-					<td>
-						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;cursor: pointer;" onclick="admin_panel();">
-					</td>
-					
-					<td>
-						<input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;cursor: pointer;" onclick="home();">
-					</td>
-				</tr>  
-			</table>  
-			<br>
-			<br>
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html class="html_css_class">
+<head>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 20px;
+		}
+		
+		.button-container {
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+		}
+		
+		.button-container input[type="button"] {
+			width: 100px;
+			background: #459bac;
+			cursor: pointer;
+			margin-right: 10px;
+			border: none;
+			color: #fff;
+			padding: 5px;
+			border-radius: 5px;
+		}
+		
+		.data-grid-container {
+			width: 100%;
+			max-width: 800px;
+			padding-left: 3px;
+			margin-top: 25px;
+		}
+		
+		.ag-theme-balham {
+			height: 400px;
+		}
+
+		@media only screen and (max-width: 768px) {
+			.container {
+				width: 100%;
+			}
+
+			.data-grid-container {
+				width: 100%;
+				padding-left: 3px;
+				
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="button-container">
+			<input type="button" name="create_bill" value="Create" onclick="window.location.href='/createBill'">
+			<input type="button" name="edit_bill" value="Edit" onclick="cancel_upload();">
+			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
+			<input type="button" name="cancelBttn" value="Admin Panel" onclick="admin_panel();">
+			<input type="button" name="cancelBttn" value="Home" onclick="home();">
+		</div>
+		
+		<div class="data-grid-container">
+			<div id="document_gridvw" class="ag-theme-balham"></div>
+		</div>
 	</div>
-	<br>
-<br>
-<br> 
-<div style="width:100%;float:left;">
-	<div id="document_gridvw" class="ag-theme-balham" style="height:400px;float:left;width:60%;padding-left: 3px;"></div>
-	</div> 
-</html> 
+</body>
+</html>
+
+
 
 <script>
 	
