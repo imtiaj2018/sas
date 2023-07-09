@@ -320,6 +320,7 @@ transform: skewY(171.5deg);
     padding: 10px;
     position: absolute;
     width: 100%;
+	cursor: pointer;
 }
 .clr1-a::after {
     background: #08ac0d none repeat scroll 0 0;
@@ -331,6 +332,7 @@ transform: skewY(171.5deg);
     transform: skewY(-5.5deg);
     width: 100%;
     z-index: -1;
+	cursor: pointer;
 }
 .clr1-a {
     background: #fff none repeat scroll 0 0;
@@ -343,6 +345,7 @@ transform: skewY(171.5deg);
     position: absolute;
     width: 101%;
     z-index: 999;
+	cursor: pointer;
 }
 .for-box .clr2
 {
