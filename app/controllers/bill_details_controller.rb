@@ -1,7 +1,7 @@
 require 'tmpdir'
 
 class BillDetailsController < ApplicationController
-	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill,:get_bill_details_aggrid_data]
+	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill,:get_bill_details_aggrid_data,:save_non_tax_bill]
 	def index
 		if current_user
 			@coldef = create_bill_details_coldef
@@ -13,6 +13,14 @@ class BillDetailsController < ApplicationController
 	def createBill
 		if current_user
 			@new_bill_number = generate_bill_number
+		else
+			redirect_to login_url
+		end		
+	end
+	
+	def createNonTaxBill
+		if current_user
+			
 		else
 			redirect_to login_url
 		end		
@@ -108,10 +116,74 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) - client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
-			redirect_to '/bill_generation'
+			redirect_to :action => "index"
 			
 		end
 	end
+	
+	
+	def save_non_tax_bill
+		oper = params[:oper]
+		if oper=="add"
+			client_name_address=params[:client_name_address]
+			campaign_event_duration=params[:campaign]
+			campaign_event_name=params[:campaign_name]
+			job_done_on=params[:job_done_date]
+			location=params[:locations]
+			bill_number=params[:bill_no]
+			bill_date=params[:bill_date]
+			advanced=params[:advanced]
+			additional_or_discount=params[:additinonal_charges]
+			
+			client_work_details_create_arr=[]
+			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
+			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
+			client_work_details_create_arr<<["job_done_on",job_done_on]
+			client_work_details_create_arr<<["location",location]
+			client_work_details_create_arr<<["bill_number",bill_number]
+			client_work_details_create_arr<<["bill_date",bill_date]
+			client_work_details_create_arr<<["advanced",advanced]
+			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["bill_type","Non-TAX"]
+			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
+			
+			if params[:specification].present?
+				(0..params[:specification].length-1).each do |i| 
+				
+					name=params[:name][i]
+					specification=params[:specification][i] 
+					size=params[:size][i]
+					qty=params[:qty][i]
+					cost=params[:cost][i]
+					total=params[:total][i]
+					
+					bill_details_create_arr=[]
+					bill_details_create_arr<<["bill_number",client_work_details_object.bill_number]
+					bill_details_create_arr<<["name",name]
+					bill_details_create_arr<<["specification",specification]
+					bill_details_create_arr<<["size",size]
+					bill_details_create_arr<<["qty",qty]
+					bill_details_create_arr<<["cost",cost]
+					bill_details_create_arr<<["total",total]
+					
+					BillDetail.create_bill_details(bill_details_create_arr) 
+				end
+			end 
+			
+			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
+			
+			total_of_total = bd_obj.collect{|x| x.total}.sum
+			client_work_details_object.gross_amount = (total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
+			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.save
+			redirect_to :action => "index"
+			
+		end
+	end
+	
+	
+	
 	
 	def create_bill_details_coldef 
 		columndef_arr=[]	
@@ -145,7 +217,7 @@ class BillDetailsController < ApplicationController
 	
 	def get_bill_details_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','bill_number','payable_amount','gross_amount','bill_date','bill_status']
+		@column_names_field=['id','bill_number','payable_amount','gross_amount','bill_date','bill_type','bill_status']
 		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
 		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
 		agdata.each do |data|
@@ -166,12 +238,6 @@ class BillDetailsController < ApplicationController
 		render :plain =>JSON.dump(ag_data)
 	end
 
-	# def generate_pdf_bill
-		# @bill_details = BillDetail.where("bill_number='123'")
-		# @client_work_details = ClientWorkDetail.where("bill_number='123'")
-		# pdf = WickedPdf.new.pdf_from_string(render_to_string("bill_details/generate_pdf_bill.html.erb", layout: false))
-		# send_data pdf, :filename => "SAS/2324/0423/B0019.pdf", :type => "application/pdf", :disposition => "attachment"
-	# end
 	
 	def check_generate_pdf_bill
 		bill_number = params[:bill_number]
@@ -188,9 +254,12 @@ class BillDetailsController < ApplicationController
 		bill_number = params[:bill_number]
 		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
-	
+		
+		bill_template_page = 'bill_details/generate_pdf_non_tax_bill.html.erb'
+		bill_template_page = 'bill_details/generate_pdf_bill.html.erb' if @client_work_details[0].bill_type.to_s.downcase == "tax"
+		
 		pdf = WickedPdf.new.pdf_from_string(
-		  render_to_string('bill_details/generate_pdf_bill.html.erb', layout: false,print_media_type: true)
+		  render_to_string("#{bill_template_page}", layout: false,print_media_type: true)
 		)
 		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end

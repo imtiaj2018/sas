@@ -1,0 +1,379 @@
+<%= csrf_meta_tags %>
+<!DOCTYPE html>
+<html>
+	<div id="overlay">
+	  <div id="overlayContent">
+		<h2>Loading...</h2>
+		<p>Please wait while the backend process completes.</p>
+	  </div>
+	</div>
+<head>
+	<title>BILL GENERATE</title>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.validate.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<style>
+		table {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 20px;
+    }
+    
+		/* Styles for mobile devices */
+		@media only screen and (max-width: 480px) {
+			table, thead, tbody, th, td, tr {
+				display: block;
+			}
+			
+			/* Hide table headers */
+			thead tr {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+			
+			td {
+				/* Add some spacing and styling */
+				border: none;
+				position: relative;
+				padding-left: 50%;
+				text-align: right;
+			}
+			
+			td:before {
+				/* Add labels for each input field */
+				position: absolute;
+				top: 6px;
+				left: 6px;
+				width: 45%;
+				padding-right: 10px;
+				white-space: nowrap;
+			}
+			
+			/* Adjust the button and input field widths */
+			td:nth-of-type(13) button {
+				width: 100%;
+			}
+			
+			input[type="text"] {
+				width: 100%;
+				box-sizing: border-box;
+				margin-bottom: 10px;
+				font-family: Camberia;
+			}
+		}
+		
+		th {
+			text-align: left;
+		}
+
+		/* Custom styles for Size, Rate, and Qty inputs */
+		input.small-input {
+			width: 50px;
+		}
+
+		/* Custom styles for icons */
+		.icon-button {
+			border: none;
+			background: none;
+			cursor: pointer;
+		}
+
+		.icon-button:focus {
+			outline: none;
+		}
+		
+		legend {
+			color: #316f9b;
+			font-family: Camberia;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		::placeholder{
+			font-family: Camberia;
+		}
+		
+		.generate-bill{
+			background-image: none !important;
+			background: none !important;
+			background-color: #be3364 !important;
+			border-radius: 0 !important;
+			padding: 5px !important;
+			text-align: center;
+			border:0px;
+			font-weight:normal;
+			font-family: Camberia;
+			color:#ffffff !important;
+		}
+		
+		#overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		#overlayContent {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #fff;
+			padding: 20px;
+		}
+		
+		.ui-datepicker {
+		  font-size: 14px;
+		  width: 170px; /* Adjust the width as desired */
+		  height: 200px; /* Adjust the height as desired */
+		}
+		
+		.html_css_class {
+			background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+			color: #fff;
+			height: 100%;
+			overflow: hidden;
+			transition: all 0.35s ease 0s;
+		}
+	</style>
+</head>
+<body class="html_css_class">
+	
+	<form id="non_tax_bill_generate_form" name="non_tax_bill_generate_form" method="post" action="/save_bill" target="_parent" style="float:left;width:80%;">
+		<fieldset>
+		<legend>Client Details</legend>
+		<input type="hidden" name="oper" id="oper" value="add" />
+		<table>
+			<tbody>
+			  <tr>
+				<td colspan="2">
+				  <textarea rows="5" cols="30" name="client_name_address" id="client_name_address" placeholder="Client Name & Address"></textarea>
+				</td>
+			  </tr>
+			</tbody>
+		</table>
+		  
+		<table>
+			<tbody>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign" readonly>
+				</td>
+				<td>
+				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name">
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Job Done on" name="job_done_date" id="job_done_date">
+				</td>
+				<td>
+				  <input type="text" placeholder="Location(s)" name="locations">
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Bill No." name="bill_no">
+				</td>
+				<td>
+				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
+				</td>
+			  </tr>
+			</tbody>
+		</table>
+		</fieldset>
+		
+		<fieldset>
+		<legend>Bill Details</legend>
+		<table id="myTable">
+			<tbody>
+				<tr>
+					<td><input type="text" name="name[]" placeholder="Name"></td>
+					<td><input type="text" name="specification[]" placeholder="Specification"></td>
+					<td><input type="text" name="size[]" placeholder="Size" class="small-input"></td>
+					<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly"></td>
+					<td><input type="text" name="cost[]" placeholder="Cost" onchange="cost_onchange(this)" class="numericonly"></td>
+					<td><input type="text" name="total[]" placeholder="Total" readonly></td>
+					<td><button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button></td>
+				</tr>
+			</tbody>
+		</table><br>
+		<button type="button" onclick="addRow()" class="icon-button">
+		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
+		</button>
+		<input type="text" name="advanced" placeholder="Advanced" class="numericonly">
+		<input type="text" name="additinonal_charges" placeholder="Additional Charges" class="numericonly">
+		<input type="submit" value="Generate Bill" class="generate-bill">
+		</fieldset>
+	</form>
+</body>
+</html>
+
+<script>
+	// function to add a new row
+	function addRow() {
+		// get the table body
+		var table = document.getElementById("myTable");
+		var tbody = table.getElementsByTagName("tbody")[0];
+		
+		// create a new row and cells
+		var newRow = tbody.insertRow();
+		var cell1 = newRow.insertCell(0);
+		var cell2 = newRow.insertCell(1);
+		var cell3 = newRow.insertCell(2);
+		var cell4 = newRow.insertCell(3);
+		var cell5 = newRow.insertCell(4);
+		var cell6 = newRow.insertCell(5);
+		var cell7 = newRow.insertCell(6);
+		
+		// add content to the cells
+		cell1.innerHTML = '<input type="text" name="name[]" placeholder="Name">';
+		cell2.innerHTML = '<input type="text" name="specification[]" placeholder="Specification">';
+		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
+		cell4.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
+		cell5.innerHTML = '<input type="text" name="cost[]" onchange="cost_onchange(this)" placeholder="Cost">';
+		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
+		cell7.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
+	}
+	
+	// function to delete the current row
+	function deleteRow(btn) {
+		var row = btn.parentNode.parentNode;
+		var table = document.getElementById("myTable");
+		var rows = table.getElementsByTagName("tr");
+		var rowIndex = Array.prototype.indexOf.call(rows, row);
+		if(rowIndex==0){
+			//do nothing
+		}else{
+			row.parentNode.removeChild(row);
+		}
+	}
+	
+	function row_index(){
+		var table = document.getElementById("myTable");
+		var rows = table.getElementsByTagName("tr");
+
+		// Example: Check index of the second row
+		var rowIndex = Array.prototype.indexOf.call(rows, rows[1]);
+		console.log("Index of row: " + rowIndex);
+	
+	
+	}
+	
+	function qty_onchange(input) { 
+		var row = input.parentNode.parentNode; 
+		var qty = row.querySelector('input[name="qty[]"]'); 
+		var cost = row.querySelector('input[name="cost[]"]');
+		var total = row.querySelector('input[name="total[]"]'); 
+		
+		total.value = (parseFloat(cost.value) * parseInt(qty.value)).toFixed(2);
+	}
+	
+	
+	function cost_onchange(input) { 
+		var row = input.parentNode.parentNode; 
+		var qty = row.querySelector('input[name="qty[]"]'); 
+		var cost = row.querySelector('input[name="cost[]"]');
+		var total = row.querySelector('input[name="total[]"]'); 
+		
+		total.value = (parseFloat(cost.value) * parseInt(qty.value)).toFixed(2);
+	}
+
+	$("#non_tax_bill_generate_form").validate({
+		rules: {
+			
+		}, ///// rules block
+		submitHandler : function(form){
+			jquery_overlay_start();
+			create_bill_form_submit();
+		}
+	}); 
+	
+	function create_bill_form_submit(){ 
+		$.ajax({
+			type: "post",
+			url: '/save_non_tax_bill',
+			data: $("#non_tax_bill_generate_form").serialize(),
+			success: function(msg){
+				jquery_overlay_stop();
+			}
+		});
+		
+	}
+
+	
+	function jquery_overlay_start(){
+		$('#overlay').fadeIn();
+	}
+		
+	function jquery_overlay_stop(){
+		$('#overlay').fadeOut();
+	}
+	
+	// Use the .ready() function to wait for the DOM to be ready
+	$(document).ready(function() {
+		call_for_textboxes_data_types();
+		$('#bill_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+		
+		$('#campaign').datepicker({
+			dateFormat: 'MM yy'
+		});
+		
+		$('#job_done_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+	});
+	
+	
+	function call_for_textboxes_data_types(){ 
+		$('.numericonly').keydown(function(event) {keyDownHandler(event, true)});
+		$('.integeronly').keydown(function(event) {keyDownHandler(event, false)});
+		
+		$('.two_digits_after_deci').on('keyup keydown', function(){ 
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 2){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		$('.one_digits_after_deci').on('keyup keydown', function(){ 			
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 1){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		function keyDownHandler(e, allowDecimal) {
+			var key = e.keyCode;
+			if(e.shiftKey == 1) e.preventDefault();
+			if(allowDecimal) {
+				var element = e.target;
+				var value = element.value ? element.value : '';
+				if(value.indexOf('.') < 0 && (key == 190 || key == 110)) {
+					return;
+				}
+			}
+			if(!(key == 8 || key == 9 || key == 13 || key == 46  || key ==35 || //key == 110
+					(key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+				e.preventDefault();
+			}
+		}	
+	}
+
+	
+	
+</script>

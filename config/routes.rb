@@ -53,7 +53,9 @@ Rails.application.routes.draw do
   #bill details
   get 'bill_generation', to:'bill_details#index'
   get 'createBill', to:'bill_details#createBill'
+  get 'createNonTaxBill', to:'bill_details#createNonTaxBill'
   post 'save_bill', to:'bill_details#save_bill'
+  post 'save_non_tax_bill', to:'bill_details#save_non_tax_bill'
   post 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
   get 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
   post 'get_bill_details_aggrid_data', to:'bill_details#get_bill_details_aggrid_data'

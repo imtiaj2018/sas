@@ -101,6 +101,7 @@
 			flex-direction: column;
 			align-items: center;
 			margin-top: 20px;
+			width:70%;
 		}
 		
 		.button-container {
@@ -110,7 +111,6 @@
 		}
 		
 		.button-container input[type="button"] {
-			width: 100px;
 			background: #459bac;
 			cursor: pointer;
 			margin-right: 10px;
@@ -147,11 +147,12 @@
 <body>
 	<div class="container">
 		<div class="button-container">
-			<input type="button" name="create_bill" value="Create" onclick="window.location.href='/createBill'">
+			<input type="button" name="create_bill" value="Create TAX Bill" onclick="window.location.href='/createBill'">
+			<input type="button" name="create_non_tax_bill" value="Create Non-TAX Bill" onclick="window.location.href='/createNonTaxBill'">
 			<input type="button" name="edit_bill" value="Edit" onclick="cancel_upload();">
 			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
 			<input type="button" name="cancelBttn" value="Admin Panel" onclick="admin_panel();">
-			<input type="button" name="cancelBttn" value="Home" onclick="home();">
+			<input type="button" name="cancelBttn" value="Close Bill" onclick="home();">
 		</div>
 		
 		<div class="data-grid-container">
@@ -344,11 +345,18 @@
 	
 	function call_generate_pdf_bill(){
 		var selected_row = get_selected_row_ids(); 
-		if(selected_row.length == 0){
-			alert("Please select at least one bill.");
+		
+		if(selected_row.length ==0){
+			alert("Please select atleast one bill.");
 		}else{
-			check_generate_pdf_bill();
+			if(selected_row.length >1){
+				alert("Please select one bill only.");
+			}else{
+				check_generate_pdf_bill();
+			}
 		}
+		
+		
 	}
 	
 	function check_generate_pdf_bill(){
