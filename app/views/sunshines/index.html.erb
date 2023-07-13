@@ -104,7 +104,7 @@
                             <a class="page-scroll" href="#Services">Services</a>
                         </li>
                         <li>
-                            <a class="page-scroll" onclick="go_to_gallery();">Works</a>
+                            <a class="page-scroll" href="#Gallery">Works</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#clients">Clients</a>
@@ -146,7 +146,7 @@
 				</div>
 				 <div>
 				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Committed and professional <span>THIS</span> FOR <br/>YOUR BRAND</h2>
+                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Committed and professional FOR <br/><span>YOUR BRAND</span></h2>
                     <p class="wow bounceIn animated" data-wow-delay=".01s">Let's start the Branding & Fabrication era and make something extra</p>
 					</div>               
 				</div>
@@ -154,7 +154,7 @@
 				
 				<div>
 				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Harmonious and cozy <span>THIS</span> FOR <br/>YOUR BRAND</h2>
+                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Harmonious and cozy FOR <br/><span>YOUR BRAND</span></h2>
                     <!-- <h3 class="wow bounceIn animated" data-wow-delay=".50s">FOR YOUR WEBSITE </h3> -->
                     <p class="wow bounceIn animated" data-wow-delay=".01s">Let's start the Branding & Fabrication era and make something extra</p>
 					</div>               
@@ -469,7 +469,7 @@
 			</div>
 
 
-			<div class="grid baguetteBoxFive gallery">
+			<div class="grid baguetteBoxThree gallery">
 				<% (0..@image_large.length-1).each do |i| %>
 				<div class="element-item transition " data-category="post-transition">
 					<a href="/project_images/<%= @image_large[i] %>">	 
@@ -546,7 +546,13 @@
     </div><!-- =============== container end =============== -->
 	</footer> 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -567,7 +573,31 @@
       </div>
     </div>
   </div>
-</div>	
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	<!-- =============== jQuery =============== -->
     <script src="../..//js/jquery-3.5.1.js"></script>
 	 <script src="../..//js/isotope-docs.min.js"></script>
@@ -667,10 +697,6 @@ function contact_form_message_send(){
 	$('#closeDialogButton').click(function() {
 		$('#dialogAlert').fadeOut();
 	});
-	
-	function go_to_gallery(){
-		window.location.href="#Gallery";
-	}
 
 </script>
 </body>

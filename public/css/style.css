@@ -585,8 +585,8 @@ padding:10px;
     transition: all 0.3s ease 0s;
 }
 .element-item {
-	width:25%;
-	/*height:320px;*/
+width:25%;
+height:320px;
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;
 }
 /*----------- blog single ------------*/
