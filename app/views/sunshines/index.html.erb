@@ -104,7 +104,7 @@
                             <a class="page-scroll" href="#Services">Services</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#Gallery">Works</a>
+                            <a class="page-scroll" onclick="go_to_gallery();">Works</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#clients">Clients</a>
@@ -667,6 +667,10 @@ function contact_form_message_send(){
 	$('#closeDialogButton').click(function() {
 		$('#dialogAlert').fadeOut();
 	});
+	
+	function go_to_gallery(){
+		window.location.href="#Gallery";
+	}
 
 </script>
 </body>
