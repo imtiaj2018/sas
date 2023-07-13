@@ -874,7 +874,8 @@ two columns for large devices
 }
 .element-item  img
 {
-width:100%;
+width:95%;
+height:95%;
 }
 .element-item > * {
   margin: 0;
