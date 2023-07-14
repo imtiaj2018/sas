@@ -119,7 +119,7 @@ class ImagePdfController < ApplicationController
 		Rails.logger.info "=====directory====#{directory}"
 		Rails.logger.info "=====Rails.root====#{Rails.root}"
 		name =  params[:upload]['datafile'].original_filename   
-		image_size =  params[:image_type]
+		# image_size =  params[:image_type]
 		file_extention = File.extname(name)
 		file_name = name.split(file_extention)[0]
 		new_file_name = "#{file_name}_#{time}#{file_extention}"
@@ -130,7 +130,8 @@ class ImagePdfController < ApplicationController
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
 		File.chmod(0777, final_file_name)
 		# ProjectImage.save_project_image_file(new_file_name,name,image_size) 
-		ProjectImage.save_project_image_file(new_file_name,name,image_size,final_file_name) 
+		# ProjectImage.save_project_image_file(new_file_name,name,image_size,final_file_name) 
+		ProjectImage.save_project_image_file(new_file_name,name,final_file_name) 
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_project_images'		
 	end
@@ -140,7 +141,7 @@ class ImagePdfController < ApplicationController
 		grid_header_config_arr <<  {"field" => "id","headerName"=>"ID","width" => 0,"hide" => true}
 		grid_header_config_arr << {"field" => "file_name","headerName"=>"File Path","width" => 150,"hide" => true}
 		grid_header_config_arr << {"field" => "display_name","headerName"=>"File Name","width" => 500}
-		grid_header_config_arr << {"field" => "image_size","headerName"=>"Image Size","width" => 100}
+		# grid_header_config_arr << {"field" => "image_size","headerName"=>"Image Size","width" => 100}
 		grid_header_config_arr << {"field" => "download_button","headerName"=>"","width" => 100,"cellRenderer" => "simpleRenderer","suppressFilter"=>true,"suppressSorting" => true}
 		grid_header_config_arr << {"field" => "delete_button","headerName"=>"","width" => 100,"cellRenderer" => "simpleRenderer","suppressFilter"=>true,"suppressSorting" => true} 
 		
@@ -149,8 +150,10 @@ class ImagePdfController < ApplicationController
 	
 	def get_project_images_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','file_name','display_name','image_size','download_button','delete_button']
-		customfileds = ['download_button','delete_button','image_size']
+		# @column_names_field=['id','file_name','display_name','image_size','download_button','delete_button']
+		@column_names_field=['id','file_name','display_name','download_button','delete_button']
+		# customfileds = ['download_button','delete_button','image_size']
+		customfileds = ['download_button','delete_button']
 		agdata = ProjectImage.get_project_image_grid_data_details(params[:limit])
 		agdata_count = ProjectImage.get_project_image_grid_data_details()
 		agdata.each do |data|
@@ -161,12 +164,12 @@ class ImagePdfController < ApplicationController
 						_tempdatahash[fieldname]="<center><input type='button' id='download_file_'#{data.id}' value='Download' onclick=download_file('#{data.id}'); class='corner_border_div_100_green_ag'></center>"	
 					elsif fieldname == 'delete_button'
 						_tempdatahash[fieldname]="<center><input type='button' id='delete_file_'#{data.id}' class='corner_border_div_100_red_ag' value='Delete' onclick=delete_file('#{data.id}');></center>"	
-					elsif fieldname == 'image_size'
-						if data.image_size.downcase =='l'
-							_tempdatahash[fieldname]="Large"
-						else
-							_tempdatahash[fieldname]="Small"
-						end
+					# elsif fieldname == 'image_size'
+						# if data.image_size.downcase =='l'
+							# _tempdatahash[fieldname]="Large"
+						# else
+							# _tempdatahash[fieldname]="Small"
+						# end
 					end
 				else
 					_tempdatahash[fieldname] = data[fieldname]

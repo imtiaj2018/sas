@@ -10,8 +10,9 @@ class SunshinesController < ApplicationController
 		render :plain => "SITE_UP"
 	end
 	def index
-		@image_small = ProjectImage.get_project_images["s"]
-		@image_large = ProjectImage.get_project_images["l"]
+		# @image_small = ProjectImage.get_project_images["s"]
+		# @image_large = ProjectImage.get_project_images["l"]
+		@image_arr = ProjectImage.get_project_images
 		@clients_logo = Client.get_client_images
 		@active_status_home="active"
 		@active_status_about=""
@@ -19,8 +20,9 @@ class SunshinesController < ApplicationController
 		@active_status_contact=""
 	end
 	def home
-		@image_small = ProjectImage.get_project_images["s"]
-		@image_large = ProjectImage.get_project_images["l"]
+		# @image_small = ProjectImage.get_project_images["s"]
+		# @image_large = ProjectImage.get_project_images["l"]
+		@image_arr = ProjectImage.get_project_images
 		@clients_logo = Client.get_client_images
 		@active_status_home="active"
 		@active_status_about=""

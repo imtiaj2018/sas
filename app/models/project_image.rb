@@ -1,9 +1,10 @@
 class ProjectImage < ApplicationRecord
-	def self.save_project_image_file(file_name,display_name,image_size,final_file_name)
+	# def self.save_project_image_file(file_name,display_name,image_size,final_file_name)
+	def self.save_project_image_file(file_name,display_name,final_file_name)
 		img_obj=ProjectImage.new
 		img_obj.file_name = file_name
 		img_obj.display_name = display_name
-		img_obj.image_size = image_size
+		# img_obj.image_size = image_size
 		img_obj.image_path = final_file_name
 		img_obj.save
 	end
@@ -21,7 +22,7 @@ class ProjectImage < ApplicationRecord
 		ActiveRecord::Base.connection.execute("delete from project_images where id = #{id};")
 	end
 	
-	def self.get_project_images
+	def self.get_project_images_old
 		# project_images_obj= ProjectImage.all
 		project_images_obj= ProjectImage.find_by_sql("select * from project_images order by display_name")
 		_hash={}
@@ -31,5 +32,15 @@ class ProjectImage < ApplicationRecord
 			# _hash[poi["image_size"]] <<poi["image_path"]
 		end
 		return _hash
+	end
+	
+	def self.get_project_images
+		# project_images_obj= ProjectImage.all
+		project_images_obj= ProjectImage.find_by_sql("select * from project_images order by display_name")
+		_arr=[]
+		project_images_obj.each do|poi|
+			_arr <<poi["file_name"]
+		end
+		return _arr
 	end
 end

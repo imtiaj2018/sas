@@ -75,7 +75,7 @@
         <!-- </div> -->
     <!-- </div> -->
     <!-- =============== nav =============== -->
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="background-color: #111110 !important;">
         <div class="container">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -470,10 +470,10 @@
 
 
 			<div class="grid baguetteBoxThree gallery">
-				<% (0..@image_large.length-1).each do |i| %>
+				<% (0..@image_arr.length-1).each do |i| %>
 				<div class="element-item transition " data-category="post-transition">
-					<a href="/project_images/<%= @image_large[i] %>">	 
-					<img src="/project_images/<%= @image_large[i] %>"/>      
+					<a href="/project_images/<%= @image_arr[i] %>">	 
+					<img src="/project_images/<%= @image_arr[i] %>"/>      
 					<div class="hover-img">
 						<i class="fa fa-camera camera"></i>
 					</div>
