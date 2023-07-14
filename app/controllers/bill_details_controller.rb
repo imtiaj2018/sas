@@ -29,7 +29,7 @@ class BillDetailsController < ApplicationController
 	
 	def generate_bill_number
 		# Retrieve the last bill number from the database
-		last_bill_number_obj = ClientWorkDetail.last
+		last_bill_number_obj = ClientWorkDetail.where("bill_type = ?", 'Tax').last
 
 		if last_bill_number_obj.nil?
 			# No existing bill number in the database, start from 1
@@ -251,6 +251,15 @@ class BillDetailsController < ApplicationController
 	end
 	
 	def generate_pdf_bill
+		options = {
+			# Specify the font family you want to use
+			:font_family => 'Camberia',
+			:page_size => 'A4'
+			# Other Wicked PDF options...
+		}
+	
+	
+	
 		bill_number = params[:bill_number]
 		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
@@ -259,8 +268,16 @@ class BillDetailsController < ApplicationController
 		bill_template_page = 'bill_details/generate_pdf_bill.html.erb' if @client_work_details[0].bill_type.to_s.downcase == "tax"
 		
 		pdf = WickedPdf.new.pdf_from_string(
-		  render_to_string("#{bill_template_page}", layout: false,print_media_type: true)
+		  render_to_string("#{bill_template_page}", layout: false,print_media_type: true),options
 		)
+		
+		# # Save or send the PDF as desired
+		# save_path = Rails.root.join('app', 'your_pdf_file.pdf')
+		# File.open(save_path, 'wb') do |file|
+			# file << pdf
+		# end
+		
+		# send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 
