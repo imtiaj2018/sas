@@ -113,6 +113,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.total_cgst = bd_obj.collect{|x| x.cgst}.sum
 			client_work_details_object.total_sgst = bd_obj.collect{|x| x.sgst}.sum
 			client_work_details_object.total_tax = bd_obj.collect{|x| x.tax}.sum
+			client_work_details_object.total_of_total = client_work_details_object.total_cost.to_f + client_work_details_object.total_cgst.to_f + client_work_details_object.total_sgst.to_f + client_work_details_object.total_tax.to_f
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) - client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
@@ -173,8 +174,9 @@ class BillDetailsController < ApplicationController
 			
 			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
 			
-			total_of_total = bd_obj.collect{|x| x.total}.sum
-			client_work_details_object.gross_amount = (total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
+			# total_of_total = bd_obj.collect{|x| x.total}.sum
+			client_work_details_object.total_of_total = bd_obj.collect{|x| x.total}.sum
+			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
 			redirect_to :action => "index"
