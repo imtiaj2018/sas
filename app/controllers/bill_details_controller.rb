@@ -113,11 +113,11 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.total_cgst = bd_obj.collect{|x| x.cgst}.sum
 			client_work_details_object.total_sgst = bd_obj.collect{|x| x.sgst}.sum
 			client_work_details_object.total_tax = bd_obj.collect{|x| x.tax}.sum
-			client_work_details_object.total_of_total = client_work_details_object.total_cost.to_f + client_work_details_object.total_cgst.to_f + client_work_details_object.total_sgst.to_f + client_work_details_object.total_tax.to_f
-			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) - client_work_details_object.additional_or_discount.to_f
+			client_work_details_object.total_of_total = client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f
+			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
-			redirect_to :action => "index"
+			render :plain => "success"
 			
 		end
 	end
@@ -173,13 +173,11 @@ class BillDetailsController < ApplicationController
 			end 
 			
 			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
-			
-			# total_of_total = bd_obj.collect{|x| x.total}.sum
 			client_work_details_object.total_of_total = bd_obj.collect{|x| x.total}.sum
 			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
-			redirect_to :action => "index"
+			render :plain => "success"
 			
 		end
 	end
@@ -253,33 +251,14 @@ class BillDetailsController < ApplicationController
 	end
 	
 	def generate_pdf_bill
-		options = {
-			# Specify the font family you want to use
-			:font_family => 'Camberia',
-			:page_size => 'A4'
-			# Other Wicked PDF options...
-		}
-	
-	
-	
 		bill_number = params[:bill_number]
 		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
-		
 		bill_template_page = 'bill_details/generate_pdf_non_tax_bill.html.erb'
 		bill_template_page = 'bill_details/generate_pdf_bill.html.erb' if @client_work_details[0].bill_type.to_s.downcase == "tax"
-		
 		pdf = WickedPdf.new.pdf_from_string(
-		  render_to_string("#{bill_template_page}", layout: false,print_media_type: true),options
+			render_to_string("#{bill_template_page}", layout: false,print_media_type: true)
 		)
-		
-		# # Save or send the PDF as desired
-		# save_path = Rails.root.join('app', 'your_pdf_file.pdf')
-		# File.open(save_path, 'wb') do |file|
-			# file << pdf
-		# end
-		
-		# send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 

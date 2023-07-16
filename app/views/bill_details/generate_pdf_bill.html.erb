@@ -8,9 +8,9 @@
 	src: url('/fonts/Cambria.ttf') format('truetype');
 }
 
-body{
+/*body{
 	font-family: 'Cambria', sans-serif;
-}
+}*/
 
 table,th,td{
 	border:1px solid black;
@@ -30,7 +30,7 @@ To,<br>
 <%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[3] %><br>
 <%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[4] %><br>
 <%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[5] %>
-<p>
+</p>
 <br><br><br>
 <table style="width:100%" >
 <tr>
@@ -134,7 +134,7 @@ To,<br>
 
 	<td >Account No:</td>
 	<td > 38487714996</td>
-	<td>ADDITIONAL CHARGES:</td>
+	<td>ADDITIONAL/DISCOUNT:</td>
 	<td><%= @client_work_details[0].additional_or_discount.to_f %></td>
 	
 	

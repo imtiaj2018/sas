@@ -126,7 +126,7 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			background-color: #fff;
+			background-color: #000;
 			padding: 20px;
 		}
 		
@@ -168,7 +168,7 @@
 				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign" readonly>
 				</td>
 				<td>
-				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name">
+				  <input type="text" placeholder="Campaign/Event Name" id="campaign_name" name="campaign_name">
 				</td>
 			  </tr>
 			  <tr>
@@ -176,12 +176,12 @@
 				  <input type="text" placeholder="Job Done on" name="job_done_date" id="job_done_date">
 				</td>
 				<td>
-				  <input type="text" placeholder="Location(s)" name="locations">
+				  <input type="text" placeholder="Location(s)" name="locations" id="locations">
 				</td>
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Bill No." name="bill_no" value='<%= @new_bill_number %>' readonly>
+				  <input type="text" placeholder="Bill No." name="bill_no" id="bill_no" value='<%= @new_bill_number %>' readonly>
 				</td>
 				<td>
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
@@ -215,9 +215,9 @@
 		<button type="button" onclick="addRow()" class="icon-button">
 		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
 		</button>
-		<input type="text" name="advanced" placeholder="Advanced" class="numericonly">
-		<input type="text" name="additinonal_charges" placeholder="Additional Charges" class="numericonly">
-		<input type="submit" value="Generate Bill" class="generate-bill">
+		<input type="text" name="advanced" placeholder="Advanced" id="advanced" class="numericonly">
+		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount" >
+		<input type="submit" value="Create" class="generate-bill">
 		</fieldset>
 	</form>
 </body>
@@ -265,7 +265,14 @@
 	// function to delete the current row
 	function deleteRow(btn) {
 		var row = btn.parentNode.parentNode;
-		row.parentNode.removeChild(row);
+		var table = document.getElementById("myTable");
+		var rows = table.getElementsByTagName("tr");
+		var rowIndex = Array.prototype.indexOf.call(rows, row);
+		if(rowIndex==0){
+			//do nothing
+		}else{
+			row.parentNode.removeChild(row);
+		}
 	}
 	
 	function qty_onchange(input) { 
@@ -287,11 +294,16 @@
 
 	$("#bill_generate_form").validate({
 		rules: {
-			
+			// client_name_address: {
+				// required: true,
+			// }
 		}, ///// rules block
 		submitHandler : function(form){
-			jquery_overlay_start();
-			create_bill_form_submit();
+			
+			if(check_form_input_value()){
+				jquery_overlay_start();
+				create_bill_form_submit();
+			}
 		}
 	}); 
 	
@@ -302,9 +314,27 @@
 			data: $("#bill_generate_form").serialize(),
 			success: function(msg){
 				jquery_overlay_stop();
+				window.location.href="bill_generation";
 			}
 		});
 		
+	}
+	
+	function check_form_input_value(){  
+		var flag = true;
+		$("#bill_generate_form").find('input,textarea').each(function() {
+		  var inputName = $(this).attr('name');
+		  var inputValue = $(this).val();
+		  if(inputName =="advanced" || inputName=="additinonal_charges"){
+		  
+		  }else{
+			if(inputValue == ""){
+				flag = false;
+				alert(inputName.toUpperCase().replace(/_/g, ' ').replace(/\[\]/g, ' ')+" this value can not be blank.")
+			}
+		  }
+		});
+		return flag
 	}
 
 	

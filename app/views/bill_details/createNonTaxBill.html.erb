@@ -126,7 +126,7 @@
 			top: 50%;
 			left: 50%;
 			transform: translate(-50%, -50%);
-			background-color: #fff;
+			background-color: #000;
 			padding: 20px;
 		}
 		
@@ -210,8 +210,8 @@
 		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
 		</button>
 		<input type="text" name="advanced" placeholder="Advanced" class="numericonly">
-		<input type="text" name="additinonal_charges" placeholder="Additional Charges" class="numericonly">
-		<input type="submit" value="Generate Bill" class="generate-bill">
+		<input type="text" name="additinonal_charges" placeholder="Additional/Discount" >
+		<input type="submit" value="Create" class="generate-bill">
 		</fieldset>
 	</form>
 </body>
@@ -292,8 +292,10 @@
 			
 		}, ///// rules block
 		submitHandler : function(form){
-			jquery_overlay_start();
-			create_bill_form_submit();
+			if(check_form_input_value()){
+				jquery_overlay_start();
+				create_bill_form_submit();
+			}
 		}
 	}); 
 	
@@ -304,9 +306,32 @@
 			data: $("#non_tax_bill_generate_form").serialize(),
 			success: function(msg){
 				jquery_overlay_stop();
+				//alert(msg);
+				// if(msg == "success"){
+					// alert("Non-Tax Bill generated successfully.");
+					window.location.href="bill_generation";
+				// }
+				
 			}
 		});
 		
+	}
+	
+	function check_form_input_value(){  
+		var flag = true;
+		$("#non_tax_bill_generate_form").find('input,textarea').each(function() {
+		  var inputName = $(this).attr('name');
+		  var inputValue = $(this).val();
+		  if(inputName =="advanced" || inputName=="additinonal_charges"){
+		  
+		  }else{
+			if(inputValue == ""){
+				flag = false;
+				alert(inputName.toUpperCase().replace(/_/g, ' ').replace(/\[\]/g, ' ')+" this value can not be blank.")
+			}
+		  }
+		});
+		return flag
 	}
 
 	
