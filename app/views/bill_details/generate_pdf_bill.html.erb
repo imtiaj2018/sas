@@ -1,215 +1,268 @@
-
 <html>
+	<head>
+		<style>
+			table,th,td{
+				border:1px solid black;
+				border-collapse: collapse;
+				font-family: Camberia;
+			}
+		</style>
 
-<head>
-<style>
-@font-face {
-	font-family: 'Cambria';
-	src: url('/fonts/Cambria.ttf') format('truetype');
-}
+		<style>
+			/* General styles */
+			html, body {
+			  height: 100%;
+			  margin: 0;
+			  padding: 0;
+			}
 
-/*body{
-	font-family: 'Cambria', sans-serif;
-}*/
+			/* Container styles */
+			.container {
+			  display: flex;
+			  flex-direction: column;
+			  min-height: 100vh;
+			}
 
-table,th,td{
-	border:1px solid black;
-	border-collapse: collapse;
-	font-family: Camberia;
-}
+			/* Header styles */
+			.header {
+				background-color: #fff;
+				text-align: left;
+			}
+			.header h1 {
+				margin: 0;
+				font-size: 20px;
+			}
+			
+			.header p {
+				margin: 0;
+				font-size: 12px;
+			}
+
+			/* Footer styles */
+			
+			.footer {
+				border-top: 1px solid #ccc;
+				background-color: #fff;
+				text-align: center;
+				font-size: 12px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+			.footer .website {
+			  text-align: left;
+			}
+			.footer .email {
+			  text-align: right;
+			}
+			
+			.header::after {
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: #ccc;
+				margin-top: 10px;
+			}
+			
+			.header::after {
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: #ccc;
+				margin-top: 10px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div class="container">
+			<div class="header">
+				<h1>SUNSHINE AD SOLUTIONS</h1>
+				<p>267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata-700060</p>
+				<p>GSTIN: 19ADZFS4322F1ZL</p>
+			</div>
+			<div>
+				<p>
+				To,<br>
+				<b><%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[0] %></b><br>
+				<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[1] %><br>
+				<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[2] %><br>
+				<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[3] %><br>
+				<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[4] %><br>
+				<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[5] %>
+				</p>
+				<br><br><br>
+				<table style="width:100%" >
+					<tr>
+						<td colspan="14" style="text-align:center;font-weight:bold;height:30px;font-family: Camberia;">
+							TAX INVOICE
+						</td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td colspan="6.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
+						<td colspan="5.5" >Campaign/Event Name - <%= raw @client_work_details[0].campaign_event_name.to_s %></td>
+						<td colspan="3">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td colspan="6.5">Location(s): <%= raw @client_work_details[0].location.to_s %>.</td>
+						<td colspan="5.5">Bill No: <%= raw @client_work_details[0].bill_number.to_s %></td>
+						<td colspan="3">Bill Date:<%= raw @client_work_details[0].bill_date.to_s %></td>
+					</tr>
+				</table >
+				<table style="width:100%">
+					<tr style="height:20px;font-weight:bold;font-size: 12px;">
+
+						<td>SL NO</td>
+						<td>Name</td>
+						<td style="width:50%">SPECIFICATION</td>
+						<td>SIZE</td>
+						<td>RATE</td>
+						<td>QTY</td>
+						<td>COST</td>
+						<td>CGST</td>
+						<td>SGST</td>
+						<td>GST%</td>
+						<td>#HSN</td>
+						<td>TAX</td>
+						<td>TOTAL</td>
+					</tr>
+					<%
+					 counter = 1
+					%>
+
+					<% @bill_details.each do |bd,index| %>
+						<tr style="font-family: Camberia; font-size:9px;">
+							<td style="width:13%"><%= counter%></td>
+							<td><%= bd.name%></td>
+							<td style="width:50%"><%= bd.specification%></td>
+							<td><%= bd.size%></td>
+							<td><%= bd.rate%></td>
+							<td><%= bd.qty%></td>
+							<td><%= bd.cost%></td>
+							<td><%= bd.cgst%></td>
+							<td><%= bd.sgst%></td>
+							<td><%= bd.gst%></td>
+							<td><%= bd.hsn%></td>
+							<td><%= bd.tax%></td>
+							<td><%= bd.total%></td>
+						</tr>
+					<% counter = counter+1 %>
+					<% end %>
 
 
-</style>
-</head>
-<body>
-<p>
-To,<br>
-<b><%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[0] %></b><br>
-<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[1] %><br>
-<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[2] %><br>
-<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[3] %><br>
-<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[4] %><br>
-<%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[5] %>
-</p>
-<br><br><br>
-<table style="width:100%" >
-<tr>
-<td colspan="14" style="text-align:center;font-weight:bold;height:30px;font-family: Camberia;">
-	TAX INVOICE
-</td>
-</tr>
-<tr style="font-size: 12px;">
+					<tr style="height:20px">
+						<td colspan="2">Total</td>
+						<td colspan="3"></td>
+						<td></td>
+						<td><%= @client_work_details[0].total_cost.to_f %></td>
+						<td><%= @client_work_details[0].total_cgst.to_f %></td>
+						<td><%= @client_work_details[0].total_sgst.to_f %></td>
+						<td></td>
+						<td></td>
+						<td><%= @client_work_details[0].total_tax.to_f %></td>
+						<td><%= @client_work_details[0].total_of_total.to_f %></td>
+					</tr>
+				</table>
+				<br>
+				<table style="width:100%">
+					<tr style="font-size: 12px;">
+						<td >Bank Details:</td>
+						<td ></td>
+						<td>SUBTOTAL:</td>
+						<td><%= @client_work_details[0].total_cost.to_f %></td>
+						<td>ADDITIONAL CHARGES INFO.</td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >Bank Name:</td>
+						<td > STATE BANK OF INDIA</td>
+						<td>TAXABLE AMOUNT:</td>
+						<td><%= @client_work_details[0].total_tax.to_f %></td>
+						<td rowspan="9"></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >Account No:</td>
+						<td > 38487714996</td>
+						<td>ADDITIONAL/DISCOUNT:</td>
+						<% if @client_work_details[0].additional_or_discount.to_f == 0%>
+							<td>0.0</td>
+						<%else%>
+							<td><%= @client_work_details[0].additional_or_discount.to_f>0 ? "(+)"+@client_work_details[0].additional_or_discount.to_f.to_s: "(-)"+@client_work_details[0].additional_or_discount.to_f.abs.to_s%></td>
+						<%end%>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >IFSC CODE:</td>
+						<td > SBIN0003334</td>
+						<td>GROSS AMOUNT:</td>
+						<td style="font-weight: bold;"><%= @client_work_details[0].gross_amount.to_f %></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >Agency Details:</td>
+						<td ></td>
+						<td>ADVANCED:</td>
+						<td><%= @client_work_details[0].advanced.to_f %></td>
+					</tr>
 
-	<td colspan="6.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
-	<td colspan="5.5" >Campaign/Event Name - <%= raw @client_work_details[0].campaign_event_name.to_s %></td>
-	<td colspan="3">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
-</tr>
-<tr style="font-size: 12px;">
+					<tr style="font-size: 12px;">
+						<td >Agency Name:</td>
+						<td >SUNSHINE AD SOLUTIONS</td>
+						<td rowspan="2"></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >License No:</td>
+						<td >15041024823</td>
+					</tr>
+					
+					<tr style="height:30px; font-size: 12px;">
+						<td >Address:</td>
+						<td >267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata-700060</td>
+						<td >TOTAL PAYBALE AMOUNT</td>
+						<td style="font-weight: bold;"><%= @client_work_details[0].payable_amount.to_f %></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >GSTIN:</td>
+						<td >19ADZFS4322F1ZL</td>
+						<td rowspan="2"colspan="2"></td>
+					</tr>
+					
+					<tr style="font-size: 12px;">
+						<td >PAN No:</td>
+						<td >ADZFS4322</td>
+					</tr>
+				</table>
+				<table style="width:100%">
+					<tr style="font-size: 12px;">
 
-	<td colspan="6.5">Location(s): <%= raw @client_work_details[0].location.to_s %>.</td>
-	<td colspan="5.5">Bill No: <%= raw @client_work_details[0].bill_number.to_s %></td>
-	<td colspan="3">Bill Date:<%= raw @client_work_details[0].bill_date.to_s %></td>
-</tr>
-</table >
-<table style="width:100%">
-<tr style="height:20px;font-weight:bold;font-size: 12px;">
-
-	<td>SL NO</td>
-	<td>Name</td>
-	<td style="width:50%">SPECIFICATION</td>
-	<td>SIZE</td>
-	<td>RATE</td>
-	<td>QTY</td>
-	<td>COST</td>
-	<td>CGST</td>
-	<td>SGST</td>
-	<td>GST%</td>
-	<td>#HSN</td>
-	<td>TAX</td>
-	<td>TOTAL</td>
-</tr>
-<%
- counter = 1
-%>
-
-<% @bill_details.each do |bd,index| %>
-<tr style="font-family: Camberia; font-size:9px;">
-
-	<td style="width:13%"><%= counter%></td>
-	<td><%= bd.name%></td>
-	<td style="width:50%"><%= bd.specification%></td>
-	<td><%= bd.size%></td>
-	<td><%= bd.rate%></td>
-	<td><%= bd.qty%></td>
-	<td><%= bd.cost%></td>
-	<td><%= bd.cgst%></td>
-	<td><%= bd.sgst%></td>
-	<td><%= bd.gst%></td>
-	<td><%= bd.hsn%></td>
-	<td><%= bd.tax%></td>
-	<td><%= bd.total%></td>
-</tr>
-<% counter = counter+1 %>
-<% end %>
-
-
-<tr style="height:20px">
-
-	<td colspan="2">Total</td>
-	<td colspan="3"></td>
-	<td></td>
-	<td><%= @client_work_details[0].total_cost.to_f %></td>
-	<td><%= @client_work_details[0].total_cgst.to_f %></td>
-	<td><%= @client_work_details[0].total_sgst.to_f %></td>
-	<td></td>
-	<td></td>
-	<td><%= @client_work_details[0].total_tax.to_f %></td>
-	<td><%= @client_work_details[0].total_of_total.to_f %></td>
-
-</tr>
-</table>
-<br>
-<table style="width:100%">
-<tr style="font-size: 12px;">
-
-	<td >Bank Details:</td>
-	<td ></td>
-	<td>SUBTOTAL:</td>
-	<td><%= @client_work_details[0].total_cost.to_f %></td>
-	<td>ADDITIONAL CHARGES INFO.</td>
-	
-
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >Bank Name:</td>
-	<td > STATE BANK OF INDIA</td>
-	<td>TAXABLE AMOUNT:</td>
-	<td><%= @client_work_details[0].total_tax.to_f %></td>
-	<td rowspan="9"></td>
-	
-
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >Account No:</td>
-	<td > 38487714996</td>
-	<td>ADDITIONAL/DISCOUNT:</td>
-	<td><%= @client_work_details[0].additional_or_discount.to_f %></td>
-	
-	
-
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >IFSC CODE:</td>
-	<td > SBIN0003334</td>
-	<td>GROSS AMOUNT:</td>
-	<td style="font-weight: bold;"><%= @client_work_details[0].gross_amount.to_f %></td>
-	
-	
-
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >Agency Details:</td>
-	<td ></td>
-	<td>ADVANCED:</td>
-	<td><%= @client_work_details[0].advanced.to_f %></td>
-</tr>
-
-<tr style="font-size: 12px;">
-
-	<td >Agency Name:</td>
-	<td >SUNSHINE AD SOLUTIONS</td>
-	<td rowspan="2"></td>
-	
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >License No:</td>
-	<td >15041024823</td>
-	
-</tr>
-<tr style="height:30px; font-size: 12px;">
-
-	<td >Address:</td>
-	<td >267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata-700060</td>
-	<td >TOTAL PAYBALE AMOUNT</td>
-	<td style="font-weight: bold;"><%= @client_work_details[0].payable_amount.to_f %></td>
-	
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >GSTIN:</td>
-	<td >19ADZFS4322F1ZL</td>
-	<td rowspan="2"colspan="2"></td>
-	
-</tr>
-<tr style="font-size: 12px;">
-
-	<td >PAN No:</td>
-	<td >ADZFS4322</td>
-	
-</tr>
-</table>
-<table style="width:100%">
-
-<tr style="font-size: 12px;">
-
-	<td style="width:30%">Contact number of agency person(s):</td>
-	<td >9051637782<br>9836666946</td>
-	
-</tr>
-</table>
-<table style="width:40%;float:right">
-
-<tr style="height:100px">
-	<td style="vertical-align:bottom;text-align:center;font-family: Camberia;">
-		Authorized Signature
-	</td>
-<tr>
-</table>
-
-</body>
+						<td style="width:30%">Contact number of agency person(s):</td>
+						<td >9051637782<br>9836666946</td>
+						
+					</tr>
+				</table>
+				<table style="width:40%;float:right">
+					<tr style="height:100px">
+						<td style="vertical-align:bottom;text-align:center;font-family: Camberia;">
+							Authorized Signature
+						</td>
+					<tr>
+				</table>
+			</div>
+			<div class="footer">
+				<div class="website">
+					<p>www.sunshineadsolutions.com</p>
+				</div>
+				<div class="email">
+					<p>+91 9433508881</p>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

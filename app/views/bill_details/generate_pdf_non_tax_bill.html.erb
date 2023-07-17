@@ -2,23 +2,92 @@
 <html>
 
 <head>
-<style>
-/*@font-face {
-	font-family: 'Camberia';
-	src: url('/fonts/Cambria.ttf') format('truetype');
-}*/
-table,th,td{
-	border:1px solid black;
-	border-collapse: collapse;
-	font-family: Camberia;
-}
+	<style>
+		table,th,td{
+			border:1px solid black;
+			border-collapse: collapse;
+			font-family: Camberia;
+		}
 
-/*body{
-	font-family: Camberia, sans-serif;
-}*/
-</style>
+		/*body{
+			font-family: Camberia, sans-serif;
+		}*/
+	</style>
+
+	<style>
+			/* General styles */
+			html, body {
+			  height: 100%;
+			  margin: 0;
+			  padding: 0;
+			}
+
+			/* Container styles */
+			.container {
+			  display: flex;
+			  flex-direction: column;
+			  min-height: 100vh;
+			}
+
+			/* Header styles */
+			.header {
+				background-color: #fff;
+				text-align: left;
+			}
+			.header h1 {
+				margin: 0;
+				font-size: 20px;
+			}
+			
+			.header p {
+				margin: 0;
+				font-size: 12px;
+			}
+
+			/* Footer styles */
+			
+			.footer {
+				border-top: 1px solid #ccc;
+				background-color: #fff;
+				text-align: center;
+				font-size: 12px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+			}
+			.footer .website {
+			  text-align: left;
+			}
+			.footer .email {
+			  text-align: right;
+			}
+			
+			.header::after {
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: #ccc;
+				margin-top: 10px;
+			}
+			
+			.header::after {
+				content: '';
+				display: block;
+				height: 1px;
+				background-color: #ccc;
+				margin-top: 10px;
+			}
+	</style>
 </head>
 <body>
+<div class="container">
+			<div class="header">
+				<h1>SUNSHINE AD SOLUTIONS</h1>
+				<p>267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata-700060</p>
+			</div>
+
+
 <p>
 To,<br>
 <b><%= raw @client_work_details[0].client_name_address.to_s.split("\r\n")[0] %></b><br>
@@ -112,7 +181,11 @@ To,<br>
 	<td >Account No:</td>
 	<td > 40617104945</td>
 	<td><b>ADDITIONAL/DISCOUNT:</b></td>
-	<td><%= @client_work_details[0].additional_or_discount.to_f %></td>
+	<% if @client_work_details[0].additional_or_discount.to_f == 0%>
+		<td>0.0</td>
+	<%else%>
+		<td><%= @client_work_details[0].additional_or_discount.to_f>0 ? "(+)"+@client_work_details[0].additional_or_discount.to_f.to_s: "(-)"+@client_work_details[0].additional_or_discount.to_f.abs.to_s%></td>
+	<%end%>
 </tr>
 <tr style="font-size: 12px;">
 	<td >IFSC CODE:</td>
@@ -175,6 +248,14 @@ To,<br>
 	</td>
 <tr>
 </table>
-
+<div class="footer">
+	<div class="website">
+		<p>www.sunshineadsolutions.com</p>
+	</div>
+	<div class="email">
+		<p>+91 9433508881</p>
+	</div>
+</div>
+</div>
 </body>
 </html>
