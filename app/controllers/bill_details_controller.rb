@@ -59,9 +59,11 @@ class BillDetailsController < ApplicationController
 			bill_date=params[:bill_date]
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
+			additional_or_discount_info=params[:additional_or_discount_info]
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["additional_or_discount_info",additional_or_discount_info]
 			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
 			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
 			client_work_details_create_arr<<["job_done_on",job_done_on]
@@ -135,9 +137,11 @@ class BillDetailsController < ApplicationController
 			bill_date=params[:bill_date]
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
+			additional_or_discount_info=params[:additional_or_discount_info]
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["additional_or_discount_info",additional_or_discount_info]
 			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
 			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
 			client_work_details_create_arr<<["job_done_on",job_done_on]

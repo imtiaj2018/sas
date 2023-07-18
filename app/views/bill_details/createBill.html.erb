@@ -217,6 +217,7 @@
 		</button>
 		<input type="text" name="advanced" placeholder="Advanced" id="advanced" class="numericonly">
 		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount" >
+		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."></textarea>
 		<input type="submit" value="Create" class="generate-bill">
 		</fieldset>
 	</form>
@@ -325,12 +326,12 @@
 		$("#bill_generate_form").find('input,textarea').each(function() {
 		  var inputName = $(this).attr('name');
 		  var inputValue = $(this).val();
-		  if(inputName =="advanced" || inputName=="additinonal_charges"){
+		  if(inputName =="advanced" || inputName=="additinonal_charges" || inputName=="additional_or_discount_info"){
 		  
 		  }else{
 			if(inputValue == ""){
 				flag = false;
-				alert(inputName.toUpperCase().replace(/_/g, ' ').replace(/\[\]/g, ' ')+" this value can not be blank.")
+				alert(inputName.toUpperCase().replace(/_/g, ' ').replace(/\[\]/g, ' ')+" value can not be blank.")
 			}
 		  }
 		});

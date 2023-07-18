@@ -181,7 +181,14 @@ To,<br>
 	<td> State Bank Of India</td>
 	<td></td>
 	<td></td>
-	<td rowspan="9"></td>
+	<td rowspan="9">
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[0] %><br>
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[1] %><br>
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[2] %><br>
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[3] %><br>
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[4] %><br>
+		<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[5] %>
+	</td>
 </tr>
 <tr style="font-size: 12px;">
 	<td >Account No:</td>

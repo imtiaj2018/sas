@@ -173,7 +173,7 @@
 						<td ></td>
 						<td>SUBTOTAL:</td>
 						<td><%= @client_work_details[0].total_cost.to_f %></td>
-						<td>ADDITIONAL CHARGES INFO.</td>
+						<td>ADDITIONAL/DISCOUNT INFO.</td>
 					</tr>
 					
 					<tr style="font-size: 12px;">
@@ -181,7 +181,14 @@
 						<td > STATE BANK OF INDIA</td>
 						<td>TAXABLE AMOUNT:</td>
 						<td><%= @client_work_details[0].total_tax.to_f %></td>
-						<td rowspan="9"></td>
+						<td rowspan="9">
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[0] %><br>
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[1] %><br>
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[2] %><br>
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[3] %><br>
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[4] %><br>
+						<%= raw @client_work_details[0].additional_or_discount_info.to_s.split("\r\n")[5] %>
+						</td>
 					</tr>
 					
 					<tr style="font-size: 12px;">
