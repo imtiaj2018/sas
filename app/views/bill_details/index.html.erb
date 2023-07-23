@@ -152,7 +152,7 @@
 			<input type="button" name="edit_bill" value="Edit" onclick="edit_bill();">
 			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
 			<input type="button" name="cancelBttn" value="Admin Panel" onclick="admin_panel();">
-			<input type="button" name="cancelBttn" value="Close Bill" onclick="home();">
+			<input type="button" name="cancelBttn" value="Close Bill" onclick="close_bill();">
 		</div>
 		
 		<div class="data-grid-container">
@@ -367,15 +367,46 @@
 			if(selected_row.length >1){
 				alert("Please select one bill only.");
 			}else{
-				var selected_row = get_selected_bill_number();
-				var bill_type = gridOptions.api.getSelectedRows()[0].bill_type;
-				if(bill_type == "Tax"){
-					window.location.href='/editTaxBill?bill_number='+selected_row;
+				var bill_status = gridOptions.api.getSelectedRows()[0].bill_status;
+				if(bill_status == "Open"){
+					var selected_row = get_selected_bill_number();
+					var bill_type = gridOptions.api.getSelectedRows()[0].bill_type;
+					if(bill_type == "Tax"){
+						window.location.href='/editTaxBill?bill_number='+selected_row;
+					}else{
+						window.location.href='/editNonTaxBill?bill_number='+selected_row;
+					}
 				}else{
-					window.location.href='/editNonTaxBill?bill_number='+selected_row;
+					alert("Bill already closed.");
 				}
 			}
 		}
+	}
+	
+	function close_bill(){
+		var selected_row = get_selected_row_ids(); 
+		if(selected_row.length ==0){
+			alert("Please select atleast one bill.");
+		}else{
+			if(selected_row.length >1){
+				alert("Please select one bill only.");
+			}else{
+				var selected_row = get_selected_bill_number();
+				close_bill_and_send_mail(selected_row);
+			}
+		}
+	}
+	
+	
+	function close_bill_and_send_mail(bill_number){
+		$.ajax({
+			type: "get",
+			url: "/close_bill_and_send_mail",
+			data: "bill_number="+bill_number,
+			success: function(msg){
+				alert(msg);
+			}
+		});
 	}
 	
 	function check_generate_pdf_bill(){

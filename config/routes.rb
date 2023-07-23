@@ -64,5 +64,6 @@ Rails.application.routes.draw do
   post 'update_tax_bill', to:'bill_details#update_tax_bill'
   
   get 'editNonTaxBill', to:'bill_details#editNonTaxBill'
+  get 'close_bill_and_send_mail', to:'bill_details#close_bill_and_send_mail'
   post 'update_non_tax_bill', to:'bill_details#update_non_tax_bill'
 end

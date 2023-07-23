@@ -438,7 +438,72 @@ class BillDetailsController < ApplicationController
 			ActiveRecord::Base.connection.execute("delete from  bill_details where bill_number = '#{bill_number}'")
 			ActiveRecord::Base.connection.execute("delete from  client_work_details where bill_number = '#{bill_number}'")
 		end
+	end
+	
+	
+	def close_bill_and_send_mail
+		sunshine_mail="sunshineadsolutions@gmail.com"
+		bill_number=params[:bill_number]
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+		sunshine_message = html_content_for_close_bill(@client_work_details)
+		sunshine_subject = "#{bill_number} : Bill close notification"
+		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		
+		render :plain => "#{bill_number} this bill has been closed. Please check your mail for notification."
+		
+	end
+	
+	
+	def html_content_for_close_bill(client_work_details)
+		html_string=<<-FOO
+			<style>
+				table {
+					width: 50%;
+					border-collapse: collapse;
+					margin: 20px auto;
+				}
+
+				th, td {
+					border: 1px solid black;
+					padding: 10px;
+				}
+
+				th {
+					background-color: #f2f2f2;
+				}
+
+				tr {
+					border: 2px solid black; /* Add border to all table rows */
+				}
+			</style>
+			<table>
+				<tr>
+					<td>BILL NUMBER</td>
+					<td>#{client_work_details[0].bill_number}</td>
+				</tr>
+				<tr>
+					<td>BILL DATE</td>
+					<td>#{client_work_details[0].bill_date}</td>
+				</tr>
+				<tr>
+					<td>CLIENT DETAILS</td>
+					<td>#{client_work_details[0].client_name_address}</td>
+				</tr>
+				<tr>
+					<td>BILL TYPE</td>
+					<td>#{client_work_details[0].bill_type}</td>
+				</tr>
+				<tr>
+					<td>GROSS AMOUNT</td>
+					<td>#{client_work_details[0].gross_amount}</td>
+				</tr>
+				<tr>
+					<td>PAYABLE AMOUNT</td>
+					<td>#{client_work_details[0].payable_amount}</td>
+				</tr>
+			</table>
+		FOO
+		return html_string
 	end
 
 end
