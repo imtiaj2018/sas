@@ -505,5 +505,16 @@ class BillDetailsController < ApplicationController
 		FOO
 		return html_string
 	end
+	
+	def check_bill_number_for_non_tax_bill
+		bill_number=params[:bill_number]
+		client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}' and bill_type ='Non-TAX'").take
+		
+		render_txt = "no"
+		if client_work_details.present?
+			render_txt = "yes"
+		end
+		render :plain => render_txt
+	end
 
 end

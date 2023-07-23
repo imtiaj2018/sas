@@ -181,7 +181,7 @@
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Bill No." name="bill_no">
+				  <input type="text" placeholder="Bill No." name="bill_no" id="bill_no">
 				</td>
 				<td>
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
@@ -295,7 +295,7 @@
 		submitHandler : function(form){
 			if(check_form_input_value()){
 				jquery_overlay_start();
-				create_bill_form_submit();
+				check_bill_number_for_non_tax_bill();
 			}
 		}
 	}); 
@@ -307,16 +307,33 @@
 			data: $("#non_tax_bill_generate_form").serialize(),
 			success: function(msg){
 				jquery_overlay_stop();
-				//alert(msg);
-				// if(msg == "success"){
-					// alert("Non-Tax Bill generated successfully.");
-					window.location.href="bill_generation";
-				// }
+				window.location.href="bill_generation";
+			}
+		});
+		
+	}
+	
+	function check_bill_number_for_non_tax_bill(){
+		var bill_number = $("#bill_no").val();
+		$.ajax({
+			type: "get",
+			url: 'check_bill_number_for_non_tax_bill',
+			data: "bill_number="+bill_number,
+			success: function(msg){
+				jquery_overlay_stop();
+				if(msg == "no"){
+					jquery_overlay_start()
+					create_bill_form_submit()
+				}else{
+					alert("This Non-TAX bill number "+bill_number+"already exist.")
+				}
+				
 				
 			}
 		});
 		
 	}
+	
 	
 	function check_form_input_value(){  
 		var flag = true;
