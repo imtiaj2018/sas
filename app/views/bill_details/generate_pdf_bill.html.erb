@@ -18,11 +18,12 @@
 
 			/* Container styles */
 			.container {
-			  display: flex;
-			  flex-direction: column;
-			  min-height: 100vh;
-			  margin-right:30px;
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+				margin-right:30px;
 			}
+			
 
 			/* Header styles */
 			.header {
@@ -96,17 +97,26 @@
 				position: absolute;
 				top: 0;
 				right: 0;
-				/* height: 100%; */
-				/* width: 30px; */
-				/* background-image: url('http://www.sunshineadsolutions.com/images/side.png'); */
 				background-size: cover;
-				/* margin-top: 150px; */
 			}
 			
 			.vertical-bar img {
 				height: 1600px;
 				width: 20px;
 				margin-top: 170px;
+			}
+			
+			.middle_css {
+				position: absolute;
+				top: 250;
+				left: 180;
+				right: 0;
+				/* object-fit: cover; */
+				height: 800px;
+				width: 800px;
+				filter: blur(25px) !important; /* Adjust the blur radius as needed */
+				z-index: 0; /* Place the blur layer behind the content */
+				/* background-size: cover; */
 			}
 		</style>
 
@@ -117,6 +127,7 @@
 			<img src="http://www.sunshineadsolutions.com/images/side.png">
 		</div>
 		<div class="container">
+			<img class='middle_css' src="http://www.sunshineadsolutions.com/images/middle.png">
 			<div class="header">
 				<img class="name_and_address_css" src="http://www.sunshineadsolutions.com/images/name_and_details.png">
 				<img class="bill_logo" src="http://www.sunshineadsolutions.com/images/logo_bill.png">
@@ -296,7 +307,7 @@
 					<tr style="font-size: 12px;">
 
 						<td style="width:30%">Contact number of agency person(s):</td>
-						<td >9051637782<br>9836666946</td>
+						<td >9051637782<br>7980911026</td>
 						
 					</tr>
 				</table>
