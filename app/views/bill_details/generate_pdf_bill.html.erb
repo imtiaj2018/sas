@@ -57,15 +57,15 @@
 			
 			.website img {
 				height: 20px;
-				width: 200px;
+				width: 250px;
 				
 			}
-			.email {
+			.phone_no_css {
 				float: right;
 				
 			}
 			
-			.email img {
+			.phone_no_css img {
 				height: 15px;
 				width: 150px;
 				
@@ -131,11 +131,6 @@
 			<div class="header">
 				<img class="name_and_address_css" src="http://www.sunshineadsolutions.com/images/name_and_details.png">
 				<img class="bill_logo" src="http://www.sunshineadsolutions.com/images/logo_bill.png">
-				<!-- <h1>SUNSHINE AD SOLUTIONS</h1> -->
-				<!-- <p>267, Sarat Chatterjee Rd, Parnasree Palli, Behala</p> -->
-				<!-- <p>Kolkata-700060</p> -->
-				<!-- <p>Email- sunshineadsolutions@gmail.com</p> -->
-				<!-- <p>GSTIN: 19ADZFS4322F1ZL</p> -->
 			</div>
 			
 				<img class="top_line_css" src="http://www.sunshineadsolutions.com/images/top_line.png">
@@ -193,7 +188,7 @@
 
 					<% @bill_details.each do |bd,index| %>
 						<tr style="font-family: Camberia; font-size:9px;">
-							<td style="width:13%"><%= counter%></td>
+							<td style="width:8%"><%= counter%></td>
 							<td><%= bd.name%></td>
 							<td style="width:50%"><%= bd.specification%></td>
 							<td><%= bd.size%></td>
@@ -325,7 +320,7 @@
 				<div class="website">
 					<img src="http://www.sunshineadsolutions.com/images/buttom_left.png">
 				</div>
-				<div class="email">
+				<div class="phone_no_css">
 					<img src="http://www.sunshineadsolutions.com/images/buttom_right.png">
 				</div>
 			</div>

@@ -1,0 +1,409 @@
+<%= csrf_meta_tags %>
+<!DOCTYPE html>
+<html>
+	<div id="overlay">
+	  <div id="overlayContent">
+		<h2>Loading...</h2>
+		<p>Please wait while the backend process completes.</p>
+	  </div>
+	</div>
+<head>
+	<title>BILL GENERATE</title>
+	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.validate.js"></script>
+	<script src="/js/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<style>
+		table {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 20px;
+    }
+    
+		/* Styles for mobile devices */
+		@media only screen and (max-width: 480px) {
+			table, thead, tbody, th, td, tr {
+				display: block;
+			}
+			
+			/* Hide table headers */
+			thead tr {
+				position: absolute;
+				top: -9999px;
+				left: -9999px;
+			}
+			
+			td {
+				/* Add some spacing and styling */
+				border: none;
+				position: relative;
+				padding-left: 50%;
+				text-align: right;
+			}
+			
+			td:before {
+				/* Add labels for each input field */
+				position: absolute;
+				top: 6px;
+				left: 6px;
+				width: 45%;
+				padding-right: 10px;
+				white-space: nowrap;
+			}
+			
+			/* Adjust the button and input field widths */
+			td:nth-of-type(13) button {
+				width: 100%;
+			}
+			
+			input[type="text"] {
+				width: 100%;
+				box-sizing: border-box;
+				margin-bottom: 10px;
+				font-family: Camberia;
+			}
+		}
+		
+		th {
+			text-align: left;
+		}
+
+		/* Custom styles for Size, Rate, and Qty inputs */
+		input.small-input {
+			width: 50px;
+		}
+
+		/* Custom styles for icons */
+		.icon-button {
+			border: none;
+			background: none;
+			cursor: pointer;
+		}
+
+		.icon-button:focus {
+			outline: none;
+		}
+		
+		legend {
+			color: #316f9b;
+			font-family: Camberia;
+			font-size: 15px;
+			font-weight: bold;
+		}
+		::placeholder{
+			font-family: Camberia;
+		}
+		
+		.generate-bill{
+			background-image: none !important;
+			background: none !important;
+			background-color: #be3364 !important;
+			border-radius: 0 !important;
+			padding: 5px !important;
+			text-align: center;
+			border:0px;
+			font-weight:normal;
+			font-family: Camberia;
+			color:#ffffff !important;
+		}
+		
+		#overlay {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 9999;
+		}
+
+		#overlayContent {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: #000;
+			padding: 20px;
+		}
+		
+		.ui-datepicker {
+		  font-size: 14px;
+		  width: 170px; /* Adjust the width as desired */
+		  height: 200px; /* Adjust the height as desired */
+		}
+		
+		.html_css_class {
+			background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+			color: #fff;
+			height: 100%;
+			overflow: hidden;
+			transition: all 0.35s ease 0s;
+		}
+	</style>
+</head>
+<body class="html_css_class">
+	<form id="edit_tax_bill_form" name="edit_tax_bill_form" method="post" action="/update_tax_bill" target="_parent" style="float:left;width:80%;">
+		<fieldset>
+		<legend>Client Details</legend>
+		<input type="hidden" name="oper" id="oper" value="edit" />
+		<table>
+			<tbody>
+			  <tr>
+				<td colspan="2">
+				  <textarea rows="5" cols="30" name="client_name_address" id="client_name_address" placeholder="Client Name & Address"><%= @client_work_details[0].client_name_address %></textarea>
+				</td>
+			  </tr>
+			</tbody>
+		</table>
+		  
+		<table>
+			<tbody>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign" value='<%= @client_work_details[0].campaign_event_duration %>' readonly>
+				</td>
+				<td>
+				  <input type="text" placeholder="Campaign/Event Name" id="campaign_name" name="campaign_name" value='<%= @client_work_details[0].campaign_event_name %>'>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Job Done on" name="job_done_date" id="job_done_date" value='<%= @client_work_details[0].job_done_on %>'>
+				</td>
+				<td>
+				  <input type="text" placeholder="Location(s)" name="locations" id="locations" value='<%= @client_work_details[0].location %>'>
+				</td>
+			  </tr>
+			  <tr>
+				<td>
+				  <input type="text" placeholder="Bill No." name="bill_no" id="bill_no" value='<%= @client_work_details[0].bill_number %>' readonly>
+				</td>
+				<td>
+				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date" value='<%= @client_work_details[0].bill_date %>' >
+				</td>
+			  </tr>
+			</tbody>
+		</table>
+		</fieldset>
+		
+		<fieldset>
+		<legend>Bill Details</legend>
+		<table id="myTable">
+			<tbody>
+				<% @bill_details.each do|bd|%>
+					<tr>
+						<td><input type="text" name="name[]" placeholder="Name" value='<%= bd.name %>'></td>
+						<td><input type="text" name="specification[]" placeholder="Specification" value='<%= bd.specification %>'></td>
+						<td><input type="text" name="size[]" placeholder="Size" class="small-input" value='<%= bd.size %>'></td>
+						<td><input type="text" name="rate[]" placeholder="Rate" class="small-input numericonly" value='<%= bd.rate %>'></td>
+						<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly" value='<%= bd.qty %>'></td>
+						<td><input type="text" name="cost[]" placeholder="Cost" class="numericonly" value='<%= bd.cost %>'></td>
+						<td><input type="text" name="cgst[]" placeholder="CGST" value='<%= bd.cgst %>' readonly></td>
+						<td><input type="text" name="sgst[]" placeholder="SGST" value='<%= bd.sgst %>' readonly></td>
+						<td><input type="text" name="gst[]" value="18" readonly class="small-input" value='<%= bd.gst %>'></td>
+						<td><input type="text" name="hsn[]" placeholder="HSN" value='<%= bd.hsn %>'></td>
+						<td><input type="text" name="tax[]" placeholder="TAX" readonly value='<%= bd.tax %>'></td>
+						<td><input type="text" name="total[]" placeholder="Total" readonly value='<%= bd.total %>'></td>
+						<td><button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button></td>
+					</tr>
+				<%end%>
+			</tbody>
+		</table>
+		<button type="button" onclick="addRow()" class="icon-button">
+		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
+		</button>
+		<input type="text" name="advanced" placeholder="Advanced" id="advanced" class="numericonly" value='<%= @client_work_details[0].advanced %>'>
+		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount" value='<%= @client_work_details[0].additional_or_discount %>'>
+		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."><%= @client_work_details[0].additional_or_discount_info %></textarea>
+		<input type="submit" value="Edit" class="generate-bill">
+		</fieldset>
+	</form>
+</body>
+</html>
+
+<script>
+	// function to add a new row
+	function addRow() {
+		// get the table body
+		var table = document.getElementById("myTable");
+		var tbody = table.getElementsByTagName("tbody")[0];
+		
+		// create a new row and cells
+		var newRow = tbody.insertRow();
+		var cell1 = newRow.insertCell(0);
+		var cell2 = newRow.insertCell(1);
+		var cell3 = newRow.insertCell(2);
+		var cell4 = newRow.insertCell(3);
+		var cell5 = newRow.insertCell(4);
+		var cell6 = newRow.insertCell(5);
+		var cell7 = newRow.insertCell(6);
+		var cell8 = newRow.insertCell(7);
+		var cell9 = newRow.insertCell(8);
+		var cell10 = newRow.insertCell(9);
+		var cell11 = newRow.insertCell(10);
+		var cell12 = newRow.insertCell(11);
+		var cell13 = newRow.insertCell(12);
+		
+		// add content to the cells
+		cell1.innerHTML = '<input type="text" name="name[]" placeholder="Name">';
+		cell2.innerHTML = '<input type="text" name="specification[]" placeholder="Specification">';
+		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
+		cell4.innerHTML = '<input type="text" name="rate[]" placeholder="Rate" class="small-input">';
+		cell5.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
+		cell6.innerHTML = '<input type="text" name="cost[]" placeholder="Cost">';
+		cell7.innerHTML = '<input type="text" name="cgst[]" placeholder="CGST" readonly>';
+		cell8.innerHTML = '<input type="text" name="sgst[]" placeholder="SGST" readonly>';
+		cell9.innerHTML = '<input type="text" name="gst[]" value="18" class="small-input" readonly>';
+		cell10.innerHTML = '<input type="text" name="hsn[]" placeholder="HSN">';
+		cell11.innerHTML = '<input type="text" name="tax[]" placeholder="TAX" readonly>';
+		cell12.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
+		cell13.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
+	}
+	
+	// function to delete the current row
+	function deleteRow(btn) {
+		var row = btn.parentNode.parentNode;
+		var table = document.getElementById("myTable");
+		var rows = table.getElementsByTagName("tr");
+		var rowIndex = Array.prototype.indexOf.call(rows, row);
+		if(rowIndex==0){
+			//do nothing
+		}else{
+			row.parentNode.removeChild(row);
+		}
+	}
+	
+	function qty_onchange(input) { 
+		var row = input.parentNode.parentNode; 
+		var rate = row.querySelector('input[name="rate[]"]'); 
+		var qty = row.querySelector('input[name="qty[]"]'); 
+		var cost = row.querySelector('input[name="cost[]"]'); 
+		var cgst = row.querySelector('input[name="cgst[]"]'); 
+		var sgst = row.querySelector('input[name="sgst[]"]'); 
+		var tax = row.querySelector('input[name="tax[]"]'); 
+		var total = row.querySelector('input[name="total[]"]'); 
+		
+		cost.value = (parseFloat(rate.value) * parseInt(qty.value)).toFixed(2);
+		cgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
+		sgst.value = (parseFloat(cost.value) * (0.09)).toFixed(2);
+		tax.value = (parseFloat(cgst.value) + parseFloat(sgst.value)).toFixed(2);
+		total.value = (parseFloat(tax.value) + parseFloat(cost.value)).toFixed(2);
+	}
+
+	$("#edit_tax_bill_form").validate({
+		rules: {
+			// client_name_address: {
+				// required: true,
+			// }
+		}, ///// rules block
+		submitHandler : function(form){
+			
+			if(check_form_input_value()){
+				jquery_overlay_start();
+				create_bill_form_submit();
+			}
+		}
+	}); 
+	
+	function create_bill_form_submit(){ 
+		$.ajax({
+			type: "post",
+			url: '/update_tax_bill',
+			data: $("#edit_tax_bill_form").serialize(),
+			success: function(msg){
+				jquery_overlay_stop();
+				window.location.href="bill_generation";
+			}
+		});
+		
+	}
+	
+	function check_form_input_value(){  
+		var flag = true;
+		$("#edit_tax_bill_form").find('input,textarea').each(function() {
+		  var inputName = $(this).attr('name');
+		  var inputValue = $(this).val();
+		  if(inputName =="advanced" || inputName=="additinonal_charges" || inputName=="additional_or_discount_info"){
+		  
+		  }else{
+			if(inputValue == ""){
+				flag = false;
+				alert(inputName.toUpperCase().replace(/_/g, ' ').replace(/\[\]/g, ' ')+" value can not be blank.")
+			}
+		  }
+		});
+		return flag
+	}
+
+	
+	function jquery_overlay_start(){
+		$('#overlay').fadeIn();
+	}
+		
+	function jquery_overlay_stop(){
+		$('#overlay').fadeOut();
+	}
+	
+	// Use the .ready() function to wait for the DOM to be ready
+	$(document).ready(function() {
+		call_for_textboxes_data_types();
+		$('#bill_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+		
+		$('#campaign').datepicker({
+			dateFormat: 'MM yy'
+		});
+		
+		$('#job_done_date').datepicker({
+			dateFormat: 'dd/mm/yy'
+		});
+	});
+	
+	
+	function call_for_textboxes_data_types(){ 
+		$('.numericonly').keydown(function(event) {keyDownHandler(event, true)});
+		$('.integeronly').keydown(function(event) {keyDownHandler(event, false)});
+		
+		$('.two_digits_after_deci').on('keyup keydown', function(){ 
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 2){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		$('.one_digits_after_deci').on('keyup keydown', function(){ 			
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 1){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		function keyDownHandler(e, allowDecimal) {
+			var key = e.keyCode;
+			if(e.shiftKey == 1) e.preventDefault();
+			if(allowDecimal) {
+				var element = e.target;
+				var value = element.value ? element.value : '';
+				if(value.indexOf('.') < 0 && (key == 190 || key == 110)) {
+					return;
+				}
+			}
+			if(!(key == 8 || key == 9 || key == 13 || key == 46  || key ==35 || //key == 110
+					(key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+				e.preventDefault();
+			}
+		}	
+	}
+
+	
+	
+</script>

@@ -1,7 +1,7 @@
 require 'tmpdir'
 
 class BillDetailsController < ApplicationController
-	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill,:get_bill_details_aggrid_data,:save_non_tax_bill]
+	protect_from_forgery with: :exception, :except => [:save_bill,:generate_pdf_bill,:get_bill_details_aggrid_data,:save_non_tax_bill,:update_tax_bill, :update_non_tax_bill]
 	def index
 		if current_user
 			@coldef = create_bill_details_coldef
@@ -264,6 +264,181 @@ class BillDetailsController < ApplicationController
 			render_to_string("#{bill_template_page}", layout: false,print_media_type: true)
 		)
 		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
+	end
+	
+	
+	def editTaxBill
+		bill_number = params[:bill_number]
+		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+	end
+	
+	def editNonTaxBill
+		bill_number = params[:bill_number]
+		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+	end
+	
+	
+	def update_tax_bill
+		oper = params[:oper]
+		if oper=="edit"
+			client_name_address=params[:client_name_address]
+			campaign_event_duration=params[:campaign]
+			campaign_event_name=params[:campaign_name]
+			job_done_on=params[:job_done_date]
+			location=params[:locations]
+			bill_number=params[:bill_no]
+			bill_date=params[:bill_date]
+			advanced=params[:advanced]
+			additional_or_discount=params[:additinonal_charges]
+			additional_or_discount_info=params[:additional_or_discount_info]
+			
+			client_work_details_create_arr=[]
+			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["additional_or_discount_info",additional_or_discount_info]
+			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
+			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
+			client_work_details_create_arr<<["job_done_on",job_done_on]
+			client_work_details_create_arr<<["location",location]
+			client_work_details_create_arr<<["bill_number",bill_number]
+			client_work_details_create_arr<<["bill_date",bill_date]
+			client_work_details_create_arr<<["advanced",advanced]
+			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			
+			generic_method_to_truncate_bill_details(bill_number,"incomplete")
+			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
+			
+			if params[:specification].present?
+				(0..params[:specification].length-1).each do |i| 
+				
+					name=params[:name][i]
+					specification=params[:specification][i] 
+					size=params[:size][i] 
+					rate=params[:rate][i]
+					qty=params[:qty][i]
+					cost=params[:cost][i]
+					cgst=params[:cgst][i]
+					sgst=params[:sgst][i]
+					gst=params[:gst][i]
+					hsn=params[:hsn][i]
+					tax=params[:tax][i]
+					total=params[:total][i]
+					
+					bill_details_create_arr=[]
+					bill_details_create_arr<<["bill_number",client_work_details_object.bill_number]
+					bill_details_create_arr<<["name",name]
+					bill_details_create_arr<<["specification",specification]
+					bill_details_create_arr<<["size",size]
+					bill_details_create_arr<<["rate",rate]
+					bill_details_create_arr<<["qty",qty]
+					bill_details_create_arr<<["cost",cost]
+					bill_details_create_arr<<["cgst",cgst]
+					bill_details_create_arr<<["sgst",sgst]
+					bill_details_create_arr<<["gst",gst]
+					bill_details_create_arr<<["hsn",hsn]
+					bill_details_create_arr<<["tax",tax]
+					bill_details_create_arr<<["total",total]
+					
+					BillDetail.create_bill_details(bill_details_create_arr) 
+				end
+			end 
+			
+			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
+			
+			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
+			client_work_details_object.total_cgst = bd_obj.collect{|x| x.cgst}.sum
+			client_work_details_object.total_sgst = bd_obj.collect{|x| x.sgst}.sum
+			client_work_details_object.total_tax = bd_obj.collect{|x| x.tax}.sum
+			client_work_details_object.total_of_total = client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f
+			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) + client_work_details_object.additional_or_discount.to_f
+			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.save
+			generic_method_to_truncate_bill_details(bill_number,"complete")
+			render :plain => "success"
+			
+		end
+	end
+	
+	
+	def update_non_tax_bill
+		oper = params[:oper]
+		if oper=="edit"
+			client_name_address=params[:client_name_address]
+			campaign_event_duration=params[:campaign]
+			campaign_event_name=params[:campaign_name]
+			job_done_on=params[:job_done_date]
+			location=params[:locations]
+			bill_number=params[:bill_no]
+			bill_date=params[:bill_date]
+			advanced=params[:advanced]
+			additional_or_discount=params[:additinonal_charges]
+			additional_or_discount_info=params[:additional_or_discount_info]
+			
+			client_work_details_create_arr=[]
+			client_work_details_create_arr<<["client_name_address",client_name_address]
+			client_work_details_create_arr<<["additional_or_discount_info",additional_or_discount_info]
+			client_work_details_create_arr<<["campaign_event_duration",campaign_event_duration]
+			client_work_details_create_arr<<["campaign_event_name",campaign_event_name]
+			client_work_details_create_arr<<["job_done_on",job_done_on]
+			client_work_details_create_arr<<["location",location]
+			client_work_details_create_arr<<["bill_number",bill_number]
+			client_work_details_create_arr<<["bill_date",bill_date]
+			client_work_details_create_arr<<["advanced",advanced]
+			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["bill_type","Non-TAX"]
+			
+			generic_method_to_truncate_bill_details(bill_number,"incomplete")
+			
+			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
+			
+			if params[:specification].present?
+				(0..params[:specification].length-1).each do |i| 
+				
+					name=params[:name][i]
+					specification=params[:specification][i] 
+					size=params[:size][i]
+					qty=params[:qty][i]
+					cost=params[:cost][i]
+					total=params[:total][i]
+					
+					bill_details_create_arr=[]
+					bill_details_create_arr<<["bill_number",client_work_details_object.bill_number]
+					bill_details_create_arr<<["name",name]
+					bill_details_create_arr<<["specification",specification]
+					bill_details_create_arr<<["size",size]
+					bill_details_create_arr<<["qty",qty]
+					bill_details_create_arr<<["cost",cost]
+					bill_details_create_arr<<["total",total]
+					
+					BillDetail.create_bill_details(bill_details_create_arr) 
+				end
+			end 
+			
+			bd_obj = BillDetail.where("bill_number='#{client_work_details_object.bill_number}'")
+			client_work_details_object.total_of_total = bd_obj.collect{|x| x.total}.sum
+			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
+			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.save
+			generic_method_to_truncate_bill_details(bill_number,"complete")
+			render :plain => "success"
+			
+		end
+	end
+	
+	def generic_method_to_truncate_bill_details(bill_number,status)
+		temp_table_bill_details = "bill_details_#{bill_number.gsub('/','_')}"
+		temp_table_client_work_details = "client_work_details_#{bill_number.gsub('/','_')}"
+		ActiveRecord::Base.connection.execute("drop table if exists #{temp_table_bill_details};")
+		ActiveRecord::Base.connection.execute("drop table if exists #{temp_table_client_work_details};")
+		if(status == "incomplete")
+			ActiveRecord::Base.connection.execute("create table #{temp_table_bill_details} as select * from bill_details where bill_number = '#{bill_number}'")
+			ActiveRecord::Base.connection.execute("create table #{temp_table_client_work_details} as select * from client_work_details where bill_number = '#{bill_number}'")
+			
+			ActiveRecord::Base.connection.execute("delete from  bill_details where bill_number = '#{bill_number}'")
+			ActiveRecord::Base.connection.execute("delete from  client_work_details where bill_number = '#{bill_number}'")
+		end
+		
 	end
 
 end

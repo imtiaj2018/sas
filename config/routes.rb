@@ -60,4 +60,9 @@ Rails.application.routes.draw do
   get 'generate_pdf_bill', to:'bill_details#generate_pdf_bill'
   post 'get_bill_details_aggrid_data', to:'bill_details#get_bill_details_aggrid_data'
   get 'check_generate_pdf_bill', to:'bill_details#check_generate_pdf_bill'
+  get 'editTaxBill', to:'bill_details#editTaxBill'
+  post 'update_tax_bill', to:'bill_details#update_tax_bill'
+  
+  get 'editNonTaxBill', to:'bill_details#editNonTaxBill'
+  post 'update_non_tax_bill', to:'bill_details#update_non_tax_bill'
 end

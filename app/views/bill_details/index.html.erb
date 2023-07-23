@@ -149,7 +149,7 @@
 		<div class="button-container">
 			<input type="button" name="create_bill" value="Create TAX Bill" onclick="window.location.href='/createBill'">
 			<input type="button" name="create_non_tax_bill" value="Create Non-TAX Bill" onclick="window.location.href='/createNonTaxBill'">
-			<input type="button" name="edit_bill" value="Edit" onclick="cancel_upload();">
+			<input type="button" name="edit_bill" value="Edit" onclick="edit_bill();">
 			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
 			<input type="button" name="cancelBttn" value="Admin Panel" onclick="admin_panel();">
 			<input type="button" name="cancelBttn" value="Close Bill" onclick="home();">
@@ -355,8 +355,27 @@
 				check_generate_pdf_bill();
 			}
 		}
+	}
+	
+	
+	function edit_bill(){
+		var selected_row = get_selected_row_ids(); 
 		
-		
+		if(selected_row.length ==0){
+			alert("Please select atleast one bill.");
+		}else{
+			if(selected_row.length >1){
+				alert("Please select one bill only.");
+			}else{
+				var selected_row = get_selected_bill_number();
+				var bill_type = gridOptions.api.getSelectedRows()[0].bill_type;
+				if(bill_type == "Tax"){
+					window.location.href='/editTaxBill?bill_number='+selected_row;
+				}else{
+					window.location.href='/editNonTaxBill?bill_number='+selected_row;
+				}
+			}
+		}
 	}
 	
 	function check_generate_pdf_bill(){
