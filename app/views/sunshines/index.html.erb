@@ -108,7 +108,7 @@
                             <a class="page-scroll" href="#Services">Services</a>
                         </li>
                         <li>
-                            <a class="page-scroll" href="#Gallery">Works</a>
+                            <a class="page-scroll"  onclick="call_gallery();" style="cursor: pointer;">Works</a>
                         </li>
                         <li>
                             <a class="page-scroll" href="#clients">Clients</a>
@@ -483,7 +483,7 @@
 					<img src="/project_images/<%= @image_arr[i] %>" style="width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important; "/>  
 					</div>
 					<div class="hover-img">
-						<i class="fa fa-camera camera">123</i>
+						<i class="fa fa-camera camera">S<%= i+1 %></i>
 					</div>
 					</a>
 				</div>  
@@ -534,6 +534,7 @@
 					<ul class="social-links">
 						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/profile.php?id=100064167275659" style="visibility: visible; animation-name: fadeInUp;"><i class="fa fa-facebook"></i></a></li>
 						<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9433508881&text=Hello" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-whatsapp"></i></a></li>
+						<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://instagram.com/sunshineadsolutions?igshid=MzRlODBiNWFlZA==" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-instagram"></i></a></li>
 					</ul>
 
                     <p class="copyright">
@@ -673,7 +674,7 @@ function contact_form_message_send(){
 		data: "name="+customer_name+"&email="+customer_email+"&message="+customer_message,
 		success: function(msg){
 			alert(msg);
-			window.location.href="sas";
+			window.location.href="/";
 		}
 	});
 } 
@@ -705,6 +706,10 @@ function contact_form_message_send(){
 	$('#closeDialogButton').click(function() {
 		$('#dialogAlert').fadeOut();
 	});
+	
+	function call_gallery(){
+		window.location.href="#Gallery";
+	}
 
 </script>
 </body>

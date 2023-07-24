@@ -972,7 +972,7 @@ blockquote {
     width: 50px;
 }
 #footer::before {
-    background: orange none repeat scroll 0 0;
+    background: black none repeat scroll 0 0;
     content: "";
     height: 100%;
     position: absolute;
