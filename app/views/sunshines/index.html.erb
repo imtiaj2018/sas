@@ -479,9 +479,11 @@
 				<% (0..@image_arr.length-1).each do |i| %>
 				<div class="element-item transition " data-category="post-transition">
 					<a href="/project_images/<%= @image_arr[i] %>">	 
-					<img src="/project_images/<%= @image_arr[i] %>"/>      
+					<div style="border: 2px solid #ff8400;">
+					<img src="/project_images/<%= @image_arr[i] %>" style="width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important; "/>  
+					</div>
 					<div class="hover-img">
-						<i class="fa fa-camera camera"></i>
+						<i class="fa fa-camera camera">123</i>
 					</div>
 					</a>
 				</div>  
