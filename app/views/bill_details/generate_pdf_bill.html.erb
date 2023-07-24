@@ -155,14 +155,15 @@
 					</tr>
 					
 					<tr style="font-size: 12px;">
-						<td colspan="6.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
+						<td colspan="3.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
 						<td colspan="5.5" >Campaign/Event Name - <%= raw @client_work_details[0].campaign_event_name.to_s %></td>
 						<td colspan="3">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
+						<td colspan="3">Job No.: <b><%= raw @client_work_details[0].job_number.to_s %></b></td>
 					</tr>
 					
 					<tr style="font-size: 12px;">
 						<td colspan="6.5">Location(s): <%= raw @client_work_details[0].location.to_s %>.</td>
-						<td colspan="5.5">Bill No: <%= raw @client_work_details[0].bill_number.to_s %></td>
+						<td colspan="5.5">Bill No: <b><%= raw @client_work_details[0].bill_number.to_s %></b></td>
 						<td colspan="3">Bill Date:<%= raw @client_work_details[0].bill_date.to_s %></td>
 					</tr>
 				</table >

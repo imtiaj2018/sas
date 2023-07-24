@@ -112,14 +112,15 @@ To,<br>
 	</tr>
 	
 	<tr style="font-size: 12px;">
-		<td colspan="2.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
+		<td colspan="1.5">Campaign/Event Duration - <%= raw @client_work_details[0].campaign_event_duration.to_s %></td>
 		<td colspan="2.5" >Campaign/Event Name - <%= raw @client_work_details[0].campaign_event_name.to_s %></td>
-		<td colspan="2">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
+		<td colspan="1">Job Done On: <%= raw @client_work_details[0].job_done_on.to_s %></td>
+		<td colspan="2">Job No.: <b><%= raw @client_work_details[0].job_number.to_s %></b></td>
 	</tr>
 
 	<tr style="font-size: 12px;">
 		<td colspan="2.5">Location(s): <%= raw @client_work_details[0].location.to_s %>.</td>
-		<td colspan="2.5">Bill No: <%= raw @client_work_details[0].bill_number.to_s %></td>
+		<td colspan="2.5">Bill No: <b><%= raw @client_work_details[0].bill_number.to_s %></b></td>
 		<td colspan="2">Bill Date:<%= raw @client_work_details[0].bill_date.to_s %></td>
 	</tr>
 </table >
@@ -169,9 +170,9 @@ To,<br>
 
 	<td ><b>Bank Details:</b></td>
 	<td >Rajarshi Sarkar</td>
-	<td><b>SUBTOTAL:</b></td>
-	<td><%= @client_work_details[0].total_of_total.to_f %></td>
-	<td>ADDITIONAL CHARGES INFO.</td>
+	<td style="width:10%"><b>SUBTOTAL:</b></td>
+	<td style="width:10%"><%= @client_work_details[0].total_of_total.to_f %></td>
+	<td style="width:20%">ADDITIONAL CHARGES INFO.</td>
 	
 
 </tr>

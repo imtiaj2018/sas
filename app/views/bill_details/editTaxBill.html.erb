@@ -185,6 +185,9 @@
 				<td>
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date" value='<%= @client_work_details[0].bill_date %>' >
 				</td>
+				<td>
+				  <input type="text" placeholder="Job Number" name="job_number" id="job_number" value='<%= @client_work_details[0].job_number %>' >
+				</td>
 			  </tr>
 			</tbody>
 		</table>
@@ -267,14 +270,14 @@
 	// function to delete the current row
 	function deleteRow(btn) {
 		var row = btn.parentNode.parentNode;
-		var table = document.getElementById("myTable");
-		var rows = table.getElementsByTagName("tr");
-		var rowIndex = Array.prototype.indexOf.call(rows, row);
-		if(rowIndex==0){
-			//do nothing
-		}else{
+		// var table = document.getElementById("myTable");
+		// var rows = table.getElementsByTagName("tr");
+		// var rowIndex = Array.prototype.indexOf.call(rows, row);
+		// if(rowIndex==0){
+			// //do nothing
+		// }else{
 			row.parentNode.removeChild(row);
-		}
+		// }
 	}
 	
 	function qty_onchange(input) { 

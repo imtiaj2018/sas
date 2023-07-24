@@ -60,6 +60,7 @@ class BillDetailsController < ApplicationController
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
+			job_number=params[:job_number]
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -72,6 +73,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["bill_date",bill_date]
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["job_number",job_number]
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
 			
 			if params[:specification].present?
@@ -138,6 +140,7 @@ class BillDetailsController < ApplicationController
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
+			job_number=params[:job_number]
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -151,6 +154,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
 			client_work_details_create_arr<<["bill_type","Non-TAX"]
+			client_work_details_create_arr<<["job_number",job_number]
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
 			
 			if params[:specification].present?
@@ -293,6 +297,8 @@ class BillDetailsController < ApplicationController
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
+			job_number=params[:job_number]
+			
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -305,6 +311,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["bill_date",bill_date]
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["job_number",job_number]
 			
 			generic_method_to_truncate_bill_details(bill_number,"incomplete")
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
@@ -374,6 +381,7 @@ class BillDetailsController < ApplicationController
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
+			job_number=params[:job_number]
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -387,6 +395,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
 			client_work_details_create_arr<<["bill_type","Non-TAX"]
+			client_work_details_create_arr<<["job_number",job_number]
 			
 			generic_method_to_truncate_bill_details(bill_number,"incomplete")
 			
@@ -456,50 +465,30 @@ class BillDetailsController < ApplicationController
 	
 	def html_content_for_close_bill(client_work_details)
 		html_string=<<-FOO
-			<style>
-				table {
-					width: 50%;
-					border-collapse: collapse;
-					margin: 20px auto;
-				}
-
-				th, td {
-					border: 1px solid black;
-					padding: 10px;
-				}
-
-				th {
-					background-color: #f2f2f2;
-				}
-
-				tr {
-					border: 2px solid black; /* Add border to all table rows */
-				}
-			</style>
-			<table>
-				<tr>
-					<td>BILL NUMBER</td>
-					<td>#{client_work_details[0].bill_number}</td>
+			<table style="width: 60%; border-collapse: collapse; margin: 20px auto;">
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">BILL NUMBER</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].bill_number}</td>
 				</tr>
-				<tr>
-					<td>BILL DATE</td>
-					<td>#{client_work_details[0].bill_date}</td>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">BILL DATE</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].bill_date}</td>
 				</tr>
-				<tr>
-					<td>CLIENT DETAILS</td>
-					<td>#{client_work_details[0].client_name_address}</td>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">CLIENT DETAILS</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].client_name_address}</td>
 				</tr>
-				<tr>
-					<td>BILL TYPE</td>
-					<td>#{client_work_details[0].bill_type}</td>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">BILL TYPE</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].bill_type}</td>
 				</tr>
-				<tr>
-					<td>GROSS AMOUNT</td>
-					<td>#{client_work_details[0].gross_amount}</td>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">GROSS AMOUNT</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].gross_amount}</td>
 				</tr>
-				<tr>
-					<td>PAYABLE AMOUNT</td>
-					<td>#{client_work_details[0].payable_amount}</td>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">PAYABLE AMOUNT</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].payable_amount}</td>
 				</tr>
 			</table>
 		FOO
