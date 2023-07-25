@@ -13,6 +13,7 @@ class BillDetailsController < ApplicationController
 	def createBill
 		if current_user
 			@new_bill_number = generate_bill_number
+			@job_number = generate_job_number("tax")
 		else
 			redirect_to login_url
 		end		
@@ -20,7 +21,7 @@ class BillDetailsController < ApplicationController
 	
 	def createNonTaxBill
 		if current_user
-			
+			@job_number = generate_job_number("non-tax")
 		else
 			redirect_to login_url
 		end		
@@ -45,6 +46,17 @@ class BillDetailsController < ApplicationController
 		return new_bill_number
 	end
 	
+	def generate_job_number(bill_type)
+		job_number_str = ""
+		current_year = Time.now.strftime("%y")
+		current_month = Time.now.strftime("%m")
+		next_year = current_year.to_i + 1
+		
+		job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/"
+		job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/B" if bill_type=="tax"
+		return job_number_str
+	end
+	
 	
 	
 	def save_bill
@@ -60,7 +72,10 @@ class BillDetailsController < ApplicationController
 			advanced=params[:advanced]
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
+			
+			prefix_job_number=params[:prefix_job_number]
 			job_number=params[:job_number]
+			exact_job_number = "#{prefix_job_number}#{job_number}"
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -73,7 +88,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["bill_date",bill_date]
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
-			client_work_details_create_arr<<["job_number",job_number]
+			client_work_details_create_arr<<["job_number",exact_job_number]
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
 			
 			if params[:specification].present?
@@ -141,6 +156,9 @@ class BillDetailsController < ApplicationController
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
 			job_number=params[:job_number]
+			prefix_job_number=params[:prefix_job_number]
+			job_number=params[:job_number]
+			exact_job_number = "#{prefix_job_number}#{job_number}"
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -154,7 +172,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
 			client_work_details_create_arr<<["bill_type","Non-TAX"]
-			client_work_details_create_arr<<["job_number",job_number]
+			client_work_details_create_arr<<["job_number",exact_job_number]
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
 			
 			if params[:specification].present?
@@ -225,7 +243,7 @@ class BillDetailsController < ApplicationController
 	
 	def get_bill_details_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','bill_number','payable_amount','gross_amount','bill_date','bill_type','bill_status']
+		@column_names_field=['id','bill_number','job_number','payable_amount','gross_amount','bill_date','bill_type','bill_status']
 		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
 		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
 		agdata.each do |data|
@@ -502,6 +520,18 @@ class BillDetailsController < ApplicationController
 		render_txt = "no"
 		if client_work_details.present?
 			render_txt = "yes"
+		end
+		render :plain => render_txt
+	end
+	
+	def check_job_number
+		prefix_job_number=params[:prefix_job_number]
+		job_number=params[:job_number]
+		client_work_details = ClientWorkDetail.where("job_number='#{prefix_job_number}#{job_number}'").take
+		
+		render_txt = "no"
+		if client_work_details.present?
+			render_txt = "yes@#{client_work_details.bill_number}"
 		end
 		render :plain => render_txt
 	end

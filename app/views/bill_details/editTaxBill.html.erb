@@ -143,6 +143,12 @@
 			overflow: hidden;
 			transition: all 0.35s ease 0s;
 		}
+		
+		input[readonly] {
+			background-color: #f2f2f2; /* Light gray background color */
+			color: #777; /* Gray text color */
+			cursor: not-allowed; /* Show the "not-allowed" cursor when hovering over the readonly field */
+		}
 	</style>
 </head>
 <body class="html_css_class">
@@ -186,7 +192,7 @@
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date" value='<%= @client_work_details[0].bill_date %>' >
 				</td>
 				<td>
-				  <input type="text" placeholder="Job Number" name="job_number" id="job_number" value='<%= @client_work_details[0].job_number %>' >
+				  <input type="text" placeholder="Job Number" name="job_number" id="job_number" value='<%= @client_work_details[0].job_number %>' readonly>
 				</td>
 			  </tr>
 			</tbody>

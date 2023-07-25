@@ -143,6 +143,12 @@
 			overflow: hidden;
 			transition: all 0.35s ease 0s;
 		}
+		
+		input[readonly] {
+			background-color: #f2f2f2; /* Light gray background color */
+			color: #777; /* Gray text color */
+			cursor: not-allowed; /* Show the "not-allowed" cursor when hovering over the readonly field */
+		}
 	</style>
 </head>
 <body class="html_css_class">
@@ -165,7 +171,7 @@
 			<tbody>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign" readonly>
+				  <input type="text" placeholder="Campaign/Event Duration" name="campaign" id="campaign">
 				</td>
 				<td>
 				  <input type="text" placeholder="Campaign/Event Name" name="campaign_name">
@@ -187,7 +193,8 @@
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
 				</td>
 				<td>
-				  <input type="text" placeholder="Job Number" name="job_number" id="job_number">
+				  <b style="font-size:18px;"><%= @job_number %></b><input type="text" placeholder="Job Number" name="job_number" id="job_number" style="width:25%;">
+				  <input type="text" name="prefix_job_number" id="prefix_job_number" value="<%= @job_number %>" style="display:none;"/>
 				</td>
 			  </tr>
 			</tbody>
@@ -325,8 +332,8 @@
 			success: function(msg){
 				jquery_overlay_stop();
 				if(msg == "no"){
-					jquery_overlay_start()
-					create_bill_form_submit()
+					jquery_overlay_start();
+					check_job_number()
 				}else{
 					alert("This Non-TAX bill number "+bill_number+"already exist.")
 				}
@@ -335,6 +342,26 @@
 			}
 		});
 		
+	}
+	
+	function check_job_number(){
+		var job_number = $("#job_number").val();
+		var prefix_job_number = $("#prefix_job_number").val();
+		var actual_job_number = prefix_job_number+job_number;
+		$.ajax({
+			type: "get",
+			url: 'check_job_number',
+			data: "prefix_job_number="+prefix_job_number+"&job_number="+job_number,
+			success: function(msg){
+				jquery_overlay_stop();
+				if(msg.split("@")[0] == "no"){
+					jquery_overlay_start()
+					create_bill_form_submit()
+				}else{
+					alert("This Job number "+actual_job_number+" already attached with this "+msg.split("@")[1]+" bill.");
+				}
+			}
+		});
 	}
 	
 	
