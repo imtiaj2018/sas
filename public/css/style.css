@@ -338,10 +338,10 @@ transform: skewY(171.5deg);
     background: #fff none repeat scroll 0 0;
     color: #fff;
     float: left;
-    font-size: 31px;
+    font-size: 16px;
     left: 0;
     overflow: hidden;
-    padding: 10px;
+    padding: 19px;
     position: absolute;
     width: 101%;
     z-index: 999;
@@ -383,10 +383,10 @@ transform: skewY(171.5deg);
     background: #fff none repeat scroll 0 0;
     color: #fff;
     float: left;
-    font-size: 31px;
+    font-size: 16px;
     left: 0;
     overflow: hidden;
-    padding: 10px;
+    padding: 19px;
     position: absolute;
     width: 101%;
     z-index: 999;
@@ -427,10 +427,10 @@ transform: skewY(171.5deg);
     background: #fff none repeat scroll 0 0;
     color: #fff;
     float: left;
-    font-size: 31px;
+    font-size: 16px;
     left: 0;
     overflow: hidden;
-    padding: 10px;
+    padding: 19px;
     position: absolute;
     width: 101%;
     z-index: 999;
@@ -470,14 +470,114 @@ transform: skewY(171.5deg);
     background: #fff none repeat scroll 0 0;
     color: #fff;
     float: left;
-    font-size: 31px;
+    font-size: 16px;
     left: 0;
     overflow: hidden;
-    padding: 10px;
+    padding: 19px;
     position: absolute;
     width: 101%;
     z-index: 999;
 }
+
+/*----------*/
+
+.for-box .clr5
+{
+background:#4f0;
+color:#fff;
+padding: 50px 0 50px;
+text-align:center;
+overflow:hidden;
+position:relative;
+}
+.for-box .clr5::before
+{
+position:absolute;
+content:"";
+width:100%;
+height:40%;
+background:#31cf05;
+left:0;
+top: -20px;
+transform: skewY(171.5deg);
+}
+.clr5-a::after {
+    background: #38ff00 none repeat scroll 0 0;
+    content: "";
+    height: 137%;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    transform: skewY(-5.5deg);
+    width: 100%;
+    z-index: -1;
+}
+.clr5-a {
+    background: #fff none repeat scroll 0 0;
+    color: #fff;
+    float: left;
+    font-size: 16px;
+    left: 0;
+    overflow: hidden;
+    padding: 19px;
+    position: absolute;
+    width: 101%;
+    z-index: 999;
+}
+
+
+/*----------*/
+/*----------*/
+.for-box .clr6
+{
+background:#ffe300;
+color:#fff;
+padding: 50px 0 50px;
+text-align:center;
+overflow:hidden;
+position:relative;
+}
+.for-box .clr6::before
+{
+position:absolute;
+content:"";
+width:100%;
+height:40%;
+background:#ffff6c;
+left:0;
+top: -20px;
+transform: skewY(171.5deg);
+}
+.clr6-a::after {
+    background: #ffe300 none repeat scroll 0 0;
+    content: "";
+    height: 137%;
+    position: absolute;
+    right: 0;
+    top: 15px;
+    transform: skewY(-5.5deg);
+    width: 100%;
+    z-index: -1;
+}
+.clr6-a {
+    background: #fff none repeat scroll 0 0;
+    color: #fff;
+    float: left;
+    font-size: 16px;
+    left: 0;
+    overflow: hidden;
+    padding: 19px;
+    position: absolute;
+    width: 101%;
+    z-index: 999;
+}
+
+
+
+/*----------*/
+
+
+
 .wbox {
     background: #fff none repeat scroll 0 0;
     margin-bottom: 100px;
@@ -1016,6 +1116,14 @@ width:100%;
 .for-box .clr4::before {
     top: -26px;
 }
+
+.for-box .clr6::before {
+    top: -26px;
+}
+
+.for-box .clr5::before {
+    top: -26px;
+}
 .element-item {
 width:50%;
 }
@@ -1120,6 +1228,12 @@ width:100%;
 .for-box .clr4::before {
     top: -26px;
 }
+.for-box .clr6::before {
+    top: -26px;
+}
+.for-box .clr5::before {
+    top: -26px;
+}
 .element-item {
 width:100%;
 }
@@ -1202,6 +1316,13 @@ width:100%;
 .for-box .clr4::before {
     top: -26px;
 }
+
+.for-box .clr6::before {
+    top: -26px;
+}
+.for-box .clr5::before {
+    top: -26px;
+}
 .element-item {
 width:100%;
 }
@@ -1280,6 +1401,13 @@ width:100%;
     top: -26px;
 }
 .for-box .clr4::before {
+    top: -26px;
+}
+
+.for-box .clr6::before {
+    top: -26px;
+}
+.for-box .clr5::before {
     top: -26px;
 }
 .element-item {
