@@ -454,7 +454,7 @@
                   </div>    
 				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".6s">
                             <i class="fa fa-rocket size"></i>
-							<h2>77</h2>
+							<h2>100+</h2>
 							<span>Projects Delivered</span>
                   </div>  
             </div>
@@ -701,6 +701,7 @@ function contact_form_message_send(){
 	});
 	
 	function call_gallery_project_images(image_arr){
+		
 		var html_content="<div class='grid baguetteBoxThree gallery'>";
 		for (let i = 0; i < image_arr.length; i++) {
 			html_content = html_content + "<div class='element-item transition' data-category='post-transition'>";
@@ -716,6 +717,9 @@ function contact_form_message_send(){
 		}
 		html_content = html_content + "</div> ";
 		$("#gallery_div").html(html_content);
+		baguetteBox.run('.baguetteBoxThree', {
+			// Customize options as needed (if you have any)
+		});
 	}
 
 </script>
