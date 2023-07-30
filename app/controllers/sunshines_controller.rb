@@ -5,14 +5,18 @@ require 'turbolinks'
 
 class SunshinesController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:mail_send_to_customer]
+	# $image_arr=[]
 	def site_ok
 		User.check_db()
 		render :plain => "SITE_UP"
 	end
 	def index
+		puts "=================index====page========calling====="
 		# @image_small = ProjectImage.get_project_images["s"]
 		# @image_large = ProjectImage.get_project_images["l"]
-		@image_arr = ProjectImage.get_project_images
+		
+			@image_arr = ProjectImage.get_project_images
+			
 		@clients_logo = Client.get_client_images
 		@active_status_home="active"
 		@active_status_about=""
@@ -75,5 +79,16 @@ class SunshinesController < ApplicationController
 		else
 			redirect_to login_url
 		end
+	end
+	
+	def get_gallery_type_wise_images
+		type_img = params[:type]
+		_hash_map = {"1"=>"gsb","2"=>"vinyl"}
+		image_type=_hash_map[type_img]
+		puts "$type_img=======> #{type_img.inspect}"
+		puts "$image_type=======> #{image_type.inspect}"
+		image_arr = ProjectImage.get_project_images_gallery_wise(image_type)
+		puts "$image_arr=======> #{image_arr.inspect}"
+		render :plain => image_arr.to_json
 	end
 end

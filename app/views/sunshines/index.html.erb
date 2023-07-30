@@ -11,6 +11,12 @@
         background-color: transparent;
         
     }
+	
+	
+	
+	
+	
+	
 </style>
 
 <style>
@@ -144,25 +150,22 @@
 				<div id="owl-demo" class="owl-carousel header1">
 				  <div>
 				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Innovative <span>and</span> Affordable <span>solution for</span> <br/><span>your</span> BRAND</h2>
-                    <p class="wow bounceIn animated" data-wow-delay=".01s">Let's start the Branding & Fabrication era and make something extra</p>
+                    <h2 class="wow slideInLeft animated" data-wow-delay="">Innovative <span>and</span> Affordable <span>solution for</span> <br/><span>your</span> BRAND</h2>
+                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
 					</div>               
 				</div>
 				 <div>
 				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Committed<span> and </span>Professional</h2>
-                    <!-- <h2 class="wow bounceIn animated" data-wow-delay=".01s">Committed and professional FOR <br/><span>YOUR BRAND</span></h2> -->
-                    <p class="wow bounceIn animated" data-wow-delay=".01s">Let's start the Branding & Fabrication era and make something extra</p>
+                    <h2 class="wow slideInLeft animated" data-wow-delay="">Committed<br><span> and </span><br>Professional</h2>
+                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
 					</div>               
 				</div>
 				
 				
 				<div>
 				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <!-- <h2 class="wow bounceIn animated" data-wow-delay=".01s">Harmonious and cozy FOR <br/><span>YOUR BRAND</span></h2> -->
-                    <h2 class="wow bounceIn animated" data-wow-delay=".01s">Harmonious<span> and </span>Cozy</h2>
-                    <!-- <h3 class="wow bounceIn animated" data-wow-delay=".50s">FOR YOUR WEBSITE </h3> -->
-                    <p class="wow bounceIn animated" data-wow-delay=".01s">Let's start the Branding & Fabrication era and make something extra</p>
+                    <h2 class="wow slideInLeft animated" data-wow-delay="">Harmonious<br><span> and </span><br>Cozy</h2>
+                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
 					</div>               
 				</div>
 				</div>				 
@@ -304,7 +307,8 @@
 				</div>
 				<div class="wbox">
 					<p>We are connecting the world of Branding and Fabrication.</p>
-					<a onclick="dialog_alert('<ul><li>Glow Sign Board (GSB) </li><li>Banner & Flex</li><li>Vinyl</li><li> Vinyl on Sunboard</li><li> Aluminum Composite Panel ( ACP)</li><li>One Way Vision (OWV)</li><li> Clip-on Translite (TLS)</li><li>Acrylic Signage & Letters</li><li>Metal Signage & Letters</li><li>Standee</li></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a>
+					<a onclick="dialog_alert('<ul><li><a onclick=call_specific_gallery(1); style=cursor:pointer >Glow Sign Board (GSB)</a></li><li>Banner & Flex</li><li><a onclick=call_specific_gallery(2); style=cursor:pointer >Vinyl</a></li><li> Vinyl on Sunboard</li><li> Aluminum Composite Panel ( ACP)</li><li>One Way Vision (OWV)</li><li> Clip-on Translite (TLS)</li><li>Acrylic Signage & Letters</li><li>Metal Signage & Letters</li><li>Standee</li></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a>
+					<!-- <a onclick="dialog_alert('<ul><li><a onclick=call_gsb_gallery(); style=cursor:pointer >Glow Sign Board (GSB)</a></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a> -->
 				</div>
 				
 			</div>
@@ -474,20 +478,8 @@
 				</div>
 			</div>
 
-
-			<div class="grid baguetteBoxThree gallery">
-				<% (0..@image_arr.length-1).each do |i| %>
-				<div class="element-item transition " data-category="post-transition">
-					<a href="/project_images/<%= @image_arr[i] %>">	 
-					<div style="border: 2px solid #ff8400;">
-					<img src="/project_images/<%= @image_arr[i] %>" style="width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important; "/>  
-					</div>
-					<div class="hover-img">
-						<i class="fa fa-camera camera">S<%= i+1 %></i>
-					</div>
-					</a>
-				</div>  
-				<% end %>
+			<div id="gallery_div">
+			
 			</div>
 		</div>
 	</section>
@@ -584,47 +576,24 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	<!-- =============== jQuery =============== -->
-    <script src="../..//js/jquery-3.5.1.js"></script>
-	 <script src="../..//js/isotope-docs.min.js"></script>
-    <!-- =============== Bootstrap Core JavaScript =============== -->
-    <script src="../..//js/bootstrap.min.js"></script>
-    <!-- =============== Plugin JavaScript =============== -->
-    <script src="../..//js/jquery.easing.min.js"></script>
-    <script src="../..//js/jquery.fittext.js"></script>
-    <script src="../..//js/wow.min.js"></script> 
-	<!-- =============== owl carousel =============== -->
-    <script src="../..//owl-carousel/owl.carousel.js"></script>  
-	<!-- Isotope does NOT require jQuery. But it does make things easier -->
+<!-- =============== jQuery =============== -->
+<script src="../..//js/jquery-3.5.1.js"></script>
+<script src="../..//js/isotope-docs.min.js"></script>
+<!-- =============== Bootstrap Core JavaScript =============== -->
+<script src="../..//js/bootstrap.min.js"></script>
+<!-- =============== Plugin JavaScript =============== -->
+<script src="../..//js/jquery.easing.min.js"></script>
+<script src="../..//js/jquery.fittext.js"></script>
+<script src="../..//js/wow.min.js"></script> 
+<!-- =============== owl carousel =============== -->
+<script src="../..//owl-carousel/owl.carousel.js"></script>  
+<!-- Isotope does NOT require jQuery. But it does make things easier -->
 
 <script src="../..//js/baguetteBox.js" async></script>
 <script src="../..//js/plugins.js" async></script>
- 
-    <!-- =============== Custom Theme JavaScript =============== -->
-    <script src="../..//js/creative.js">	</script> 
+
+<!-- =============== Custom Theme JavaScript =============== -->
+<script src="../..//js/creative.js">	</script> 
 <script src="../..//js/jquery.nicescroll.min.js"></script>
 
 <script>
@@ -696,6 +665,18 @@ function contact_form_message_send(){
 		});	 
 	}
 	
+	function call_specific_gallery(type){
+		$.ajax({
+			type: "get",
+			url: "get_gallery_type_wise_images?type="+type, 
+			success: function(msg){ 
+				img_arr = JSON.parse(msg);
+				call_gallery_project_images(img_arr);
+				call_gallery();
+			}
+		});	 
+	}
+	
 	
 	
 	function dialog_alert(message) {
@@ -709,6 +690,32 @@ function contact_form_message_send(){
 	
 	function call_gallery(){
 		window.location.href="#Gallery";
+	}
+	
+	$(document).ready(function(){
+		var img_arr = <%= raw @image_arr.to_json %>;
+		call_gallery_project_images(img_arr);
+		baguetteBox.run('.baguetteBoxThree', {
+			// Customize options as needed (if you have any)
+		});
+	});
+	
+	function call_gallery_project_images(image_arr){
+		var html_content="<div class='grid baguetteBoxThree gallery'>";
+		for (let i = 0; i < image_arr.length; i++) {
+			html_content = html_content + "<div class='element-item transition' data-category='post-transition'>";
+			html_content = html_content + "<a href='/project_images/"+image_arr[i]+"' target='_blank'>";
+			html_content = html_content + "<div style='border: 2px solid #ff8400;'>";
+			html_content = html_content + "<img src='/project_images/"+image_arr[i]+"' style='width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important;'/> ";
+			html_content = html_content + "</div>";
+			html_content = html_content + "<div class='hover-img'>";
+			html_content = html_content + "<i class='fa fa-camera camera'>S"+i+"</i>";
+			html_content = html_content + "</div>";
+			html_content = html_content + "</a>";
+			html_content = html_content + "</div> ";
+		}
+		html_content = html_content + "</div> ";
+		$("#gallery_div").html(html_content);
 	}
 
 </script>

@@ -280,12 +280,13 @@ class BillDetailsController < ApplicationController
 		bill_number = params[:bill_number]
 		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+		client_name = @client_work_details[0].client_name_address.to_s.split("\r\n")[0]
 		bill_template_page = 'bill_details/generate_pdf_non_tax_bill.html.erb'
 		bill_template_page = 'bill_details/generate_pdf_bill.html.erb' if @client_work_details[0].bill_type.to_s.downcase == "tax"
 		pdf = WickedPdf.new.pdf_from_string(
 			render_to_string("#{bill_template_page}", layout: false,print_media_type: true)
 		)
-		send_data pdf, :filename => "#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
+		send_data pdf, :filename => "#{client_name}_#{bill_number}.pdf", :type => "application/pdf", :disposition => "attachment"
 	end
 	
 	

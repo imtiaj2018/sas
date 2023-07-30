@@ -68,4 +68,5 @@ Rails.application.routes.draw do
   post 'update_non_tax_bill', to:'bill_details#update_non_tax_bill'
   get 'check_bill_number_for_non_tax_bill', to:'bill_details#check_bill_number_for_non_tax_bill'
   get 'check_job_number', to:'bill_details#check_job_number'
+  get 'get_gallery_type_wise_images', to:'sunshines#get_gallery_type_wise_images'
 end

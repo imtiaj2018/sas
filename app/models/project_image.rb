@@ -43,4 +43,14 @@ class ProjectImage < ApplicationRecord
 		end
 		return _arr
 	end
+	
+	def self.get_project_images_gallery_wise(image_type)
+		# project_images_obj= ProjectImage.all
+		project_images_obj= ProjectImage.find_by_sql("select * from project_images where image_type='#{image_type}' order by display_name")
+		_arr=[]
+		project_images_obj.each do|poi|
+			_arr <<poi["file_name"]
+		end
+		return _arr
+	end
 end
