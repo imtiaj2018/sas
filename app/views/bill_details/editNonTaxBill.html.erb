@@ -149,6 +149,28 @@
 			color: #777; /* Gray text color */
 			cursor: not-allowed; /* Show the "not-allowed" cursor when hovering over the readonly field */
 		}
+		
+		.tot_bill{
+			text-align: center;
+			font-weight: bold;
+			color: rgb(255, 0, 0);
+			background: transparent;
+			border: 0;
+			font-size: 20px;
+		}
+		
+		.calculate-bill{
+			background-image: none !important;
+			background: none !important;
+			background-color: #33be83 !important;
+			border-radius: 0 !important;
+			padding: 5px !important;
+			text-align: center;
+			border:0px;
+			font-weight:normal;
+			font-family: Camberia;
+			color:#ffffff !important;
+		}
 	</style>
 </head>
 <body class="html_css_class">
@@ -211,7 +233,7 @@
 						<td><input type="text" name="size[]" placeholder="Size" class="small-input" value='<%= bd.size %>'></td>
 						<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly" value='<%= bd.qty %>'></td>
 						<td><input type="text" name="cost[]" placeholder="Cost" onchange="cost_onchange(this)" class="numericonly" value='<%= bd.cost %>'></td>
-						<td><input type="text" name="total[]" placeholder="Total" readonly value='<%= bd.total %>'></td>
+						<td><input type="text" name="total[]" placeholder="Total" class="total_amount" readonly value='<%= bd.total %>'></td>
 						<td><button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button></td>
 					</tr>
 				<%end%>
@@ -220,10 +242,12 @@
 		<button type="button" onclick="addRow()" class="icon-button">
 		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
 		</button>
-		<input type="text" name="advanced" placeholder="Advanced" class="numericonly" value='<%= @client_work_details[0].advanced %>'>
-		<input type="text" name="additinonal_charges" placeholder="Additional/Discount"  value='<%= @client_work_details[0].additional_or_discount %>'>
+		<input type="text" name="advanced" id="advanced" placeholder="Advanced" class="numericonly" value='<%= @client_work_details[0].advanced %>'>
+		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount"  value='<%= @client_work_details[0].additional_or_discount %>'>
 		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."><%= @client_work_details[0].additional_or_discount_info %></textarea>
-		<input type="submit" value="Edit" class="generate-bill">
+		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Total Amount </button>
+		<input type="submit" value="Update Bill" class="generate-bill">
+		<input type="text" id="total_bill_amount" placeholder="Calculated Bill Amount" class="tot_bill" value='<%= @client_work_details[0].payable_amount %>' disabled>
 		</fieldset>
 	</form>
 </body>
@@ -252,7 +276,7 @@
 		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
 		cell4.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
 		cell5.innerHTML = '<input type="text" name="cost[]" onchange="cost_onchange(this)" placeholder="Cost">';
-		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
+		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" class="total_amount" readonly>';
 		cell7.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
 	}
 	
@@ -409,6 +433,31 @@
 				e.preventDefault();
 			}
 		}	
+	}
+	
+	function calculate_total_amount(){
+		var advanced = $("#advanced").val();
+		var additional_charges = $("#additinonal_charges").val();
+		// Calculate the total amount
+		let totalAmount = 0;
+		$('.total_amount').each(function() {
+			const amount = parseFloat($(this).val());
+			if (!isNaN(amount)) {
+				totalAmount += amount;
+			}
+		});
+		
+		if(advanced!=""){
+			advanced = parseFloat(advanced);
+			totalAmount -= advanced;
+		}
+		if(additional_charges !=""){
+			additional_charges = parseFloat(additional_charges);
+			totalAmount += additional_charges;
+		}
+		
+		// Update the total amount in the HTML
+		$('#total_bill_amount').val(totalAmount);
 	}
 
 	

@@ -476,6 +476,7 @@ class BillDetailsController < ApplicationController
 		sunshine_message = html_content_for_close_bill(@client_work_details)
 		sunshine_subject = "#{bill_number} : Bill close notification"
 		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
+		ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
 		
 		render :plain => "#{bill_number} this bill has been closed. Please check your mail for notification."
 		

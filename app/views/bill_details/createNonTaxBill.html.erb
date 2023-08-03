@@ -149,6 +149,28 @@
 			color: #777; /* Gray text color */
 			cursor: not-allowed; /* Show the "not-allowed" cursor when hovering over the readonly field */
 		}
+		
+		.tot_bill{
+			text-align: center;
+			font-weight: bold;
+			color: rgb(255, 0, 0);
+			background: transparent;
+			border: 0;
+			font-size: 20px;
+		}
+		
+		.calculate-bill{
+			background-image: none !important;
+			background: none !important;
+			background-color: #33be83 !important;
+			border-radius: 0 !important;
+			padding: 5px !important;
+			text-align: center;
+			border:0px;
+			font-weight:normal;
+			font-family: Camberia;
+			color:#ffffff !important;
+		}
 	</style>
 </head>
 <body class="html_css_class">
@@ -211,7 +233,7 @@
 					<td><input type="text" name="size[]" placeholder="Size" class="small-input"></td>
 					<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly"></td>
 					<td><input type="text" name="cost[]" placeholder="Cost" onchange="cost_onchange(this)" class="numericonly"></td>
-					<td><input type="text" name="total[]" placeholder="Total" readonly></td>
+					<td><input type="text" name="total[]" placeholder="Total" class="total_amount" readonly></td>
 					<td><button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button></td>
 				</tr>
 			</tbody>
@@ -219,10 +241,12 @@
 		<button type="button" onclick="addRow()" class="icon-button">
 		<i class="fas fa-plus" style="color:green;"></i> <!-- Font Awesome plus icon -->
 		</button>
-		<input type="text" name="advanced" placeholder="Advanced" class="numericonly">
-		<input type="text" name="additinonal_charges" placeholder="Additional/Discount" >
+		<input type="text" name="advanced" placeholder="Advanced" id="advanced" class="numericonly">
+		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount" >
 		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."></textarea>
-		<input type="submit" value="Create" class="generate-bill">
+		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Total Amount </button>
+		<input type="submit" value="Save Bill" class="generate-bill">
+		<input type="text" id="total_bill_amount" placeholder="Calculated Bill Amount" class="tot_bill" disabled>
 		</fieldset>
 	</form>
 </body>
@@ -251,7 +275,7 @@
 		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
 		cell4.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
 		cell5.innerHTML = '<input type="text" name="cost[]" onchange="cost_onchange(this)" placeholder="Cost">';
-		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" readonly>';
+		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" class="total_amount" readonly>';
 		cell7.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
 	}
 	
@@ -446,6 +470,35 @@
 			}
 		}	
 	}
+	
+	
+	function calculate_total_amount(){
+		var advanced = $("#advanced").val();
+		var additional_charges = $("#additinonal_charges").val();
+		// Calculate the total amount
+		let totalAmount = 0;
+		$('.total_amount').each(function() {
+			const amount = parseFloat($(this).val());
+			if (!isNaN(amount)) {
+				totalAmount += amount;
+			}
+		});
+		
+		if(advanced!=""){
+			advanced = parseFloat(advanced);
+			totalAmount -= advanced;
+		}
+		if(additional_charges !=""){
+			additional_charges = parseFloat(additional_charges);
+			totalAmount += additional_charges;
+		}
+		
+		// Update the total amount in the HTML
+		$('#total_bill_amount').val(totalAmount);
+		alert(totalAmount);
+	}
+
+	
 
 	
 	

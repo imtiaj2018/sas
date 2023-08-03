@@ -417,7 +417,9 @@
 				alert("Please select one bill only.");
 			}else{
 				var selected_row = get_selected_bill_number();
-				close_bill_and_send_mail(selected_row);
+				if(confirm("Are you sure you want to close this bill?")){
+					close_bill_and_send_mail(selected_row);
+				}
 			}
 		}
 	}
@@ -445,13 +447,13 @@
 			url: "/check_generate_pdf_bill",
 			data: "bill_number="+selected_row,
 			success: function(msg){
-				if(msg == "closed"){
-					alert("Bill already closed.")
-					reload_page();
-					return;
-				}else{
+				// if(msg == "closed"){
+					// alert("Bill already closed.")
+					// reload_page();
+					// return;
+				// }else{
 					generate_pdf_bill();
-				}
+				// }
 			}
 		});
 	}
