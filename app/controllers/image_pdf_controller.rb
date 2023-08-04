@@ -8,9 +8,9 @@ class ImagePdfController < ApplicationController
 		end		
 	end
 	
-	def upload_documentation_file
+	def upload_documentation_file #brochure
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
-		directory="#{Rails.root}/public"  
+		directory="/mnt/misc_files"  
 		if !(File.directory? directory) 	#if directory is not present then creating
 			FileUtils.mkdir_p directory, :mode => 0777	rescue nil
 		end
@@ -27,15 +27,21 @@ class ImagePdfController < ApplicationController
 		redirect_to '/upload_brochure'		
 	end
 	
-	def download_documentation  
-		puts "ashdgfdgdasgd"
+	def download_documentation  #brochure
 		file_name=BrochurePdf.download_document_file
-		directory="#{Rails.root}/public"  
-		# directory="/public"  
+		directory="/mnt/misc_files"
 		final_file_name=""
 		final_file_name = "#{directory}/#{file_name}" if file_name.strip != "" 
 		render :plain => final_file_name		
 	end  
+	
+	def download_brochure #calling from grid Download button
+		id=params[:id]
+		file_name=BrochurePdf.find(id.to_i).file_name  
+		directory="/mnt/misc_files"  
+		final_file_name = "#{directory}/#{file_name}" 
+		send_file final_file_name, :type=>"application/csv", :disposition => "attachment", :stream => false
+	end
 	
 	def download_file 
 		file_name = params[:file_name] if params[:file_name].present? 

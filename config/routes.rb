@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get 'admin_panel', to:'sunshines#admin_panel'
   
   get 'upload_brochure', to:'image_pdf#upload_brochure'
+  get 'download_brochure', to:'image_pdf#download_brochure'
   get 'download_documentation', to:'image_pdf#download_documentation'
   get 'download_documentation_admin', to:'image_pdf#download_documentation_admin'
   get 'download_file', to:'image_pdf#download_file'

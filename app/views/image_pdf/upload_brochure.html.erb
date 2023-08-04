@@ -84,7 +84,8 @@
 			<table  width="100%">  
 				<tr>
 					<td>
-						<input type="file" id="upload_datafile" accept=".pdf,.docx,.doc" name="upload[datafile]" required >
+						<!-- <input type="file" id="upload_datafile" accept=".pdf,.docx,.doc" name="upload[datafile]" required > -->
+						<input type="file" id="upload_datafile"  name="upload[datafile]" required >
 					</td> 
 					<td>
 						<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
@@ -138,24 +139,24 @@
 		init_grid();
 	 });
 	 
-	upload_datafile.onchange = function(e){
-		e.preventDefault();
-		console.log(this.files)
-		allowed_file_types=["pdf","doc","docx"];
-		var files=this.files;
-		var flag=true;
-		for(i=0;i<files.length;i++){
-			console.log(files[i]['name']);
-			var fileName=files[i]['name']
-			fileExtension = fileName.replace(/^.*\./, '');
-			console.log(fileExtension);
-			console.log(allowed_file_types.indexOf(fileExtension));
-			if(allowed_file_types.indexOf(fileExtension)<0){
-				this.value = null;
-				alert("Only word or pdf format file(s) are allowed.");
-			} 
-		}
-	}
+	// upload_datafile.onchange = function(e){
+		// e.preventDefault();
+		// console.log(this.files)
+		// allowed_file_types=["pdf","doc","docx"];
+		// var files=this.files;
+		// var flag=true;
+		// for(i=0;i<files.length;i++){
+			// console.log(files[i]['name']);
+			// var fileName=files[i]['name']
+			// fileExtension = fileName.replace(/^.*\./, '');
+			// console.log(fileExtension);
+			// console.log(allowed_file_types.indexOf(fileExtension));
+			// if(allowed_file_types.indexOf(fileExtension)<0){
+				// this.value = null;
+				// alert("Only word or pdf format file(s) are allowed.");
+			// } 
+		// }
+	// }
 	  
 </script>
 
@@ -234,7 +235,7 @@
 	
 	
 	function download_file(file_id){
-		window.location.href= '/download_documentation_admin?id='+file_id;  
+		window.location.href= '/download_brochure?id='+file_id;  
 	}	
 	
 	function delete_file(file_id){

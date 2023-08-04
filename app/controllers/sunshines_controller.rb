@@ -11,12 +11,8 @@ class SunshinesController < ApplicationController
 		render :plain => "SITE_UP"
 	end
 	def index
-		puts "=================index====page========calling====="
-		# @image_small = ProjectImage.get_project_images["s"]
-		# @image_large = ProjectImage.get_project_images["l"]
-		
-			@image_arr = ProjectImage.get_project_images
-			
+		@image_arr = ProjectImage.get_project_images
+		@banner_image_arr = BrochurePdf.get_banner_image
 		@clients_logo = Client.get_client_images
 		@active_status_home="active"
 		@active_status_about=""
