@@ -1,41 +1,58 @@
 <!DOCTYPE html>
-
-<div id="iframe_download_div" style="display:none;"></div> 
-<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!-- =============== jQuery =============== -->
-<script src="../..//js/jquery-3.5.1.js"></script>
-<script src="../..//js/isotope-docs.min.js"></script>
-<!-- =============== Bootstrap Core JavaScript =============== -->
-<script src="../..//js/bootstrap.min.js"></script>
-<!-- =============== Plugin JavaScript =============== -->
-<script src="../..//js/jquery.easing.min.js"></script>
-<script src="../..//js/jquery.fittext.js"></script>
-<script src="../..//js/wow.min.js"></script> 
-<!-- =============== owl carousel =============== -->
-<script src="../..//owl-carousel/owl.carousel.js"></script>  
-<!-- Isotope does NOT require jQuery. But it does make things easier -->
-
-<script src="../..//js/baguetteBox.js" async></script>
-<script src="../..//js/plugins.js" async></script>
-
-<!-- =============== Custom Theme JavaScript =============== -->
-<script src="../..//js/creative.js">	</script> 
-<script src="../..//js/jquery.nicescroll.min.js"></script>
-
 <html lang="en">
-<div id="dialog_alert"></div>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Sunshine Ad Solutions</title>
+
+    <!-- =============== Bootstrap Core CSS =============== -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <!-- =============== fonts awesome =============== -->
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <!-- =============== Plugin CSS =============== -->
+    <link rel="stylesheet" href="/css/animate.min.css" type="text/css">
+    <!-- =============== Custom CSS =============== -->
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <!-- =============== Owl Carousel ../../ =============== -->
+    <link href="/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <link href="/owl-carousel/owl.theme.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="../../css/isotope-docs.css" media="screen">
+	<link rel="stylesheet" href="../../css/baguetteBox.css">
+	
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<!-- =============== jQuery =============== -->
+	<script src="../..//js/jquery-3.5.1.js"></script>
+	<script src="../..//js/isotope-docs.min.js"></script>
+	<!-- =============== Bootstrap Core JavaScript =============== -->
+	<script src="../..//js/bootstrap.min.js"></script>
+	<!-- =============== Plugin JavaScript =============== -->
+	<script src="../..//js/jquery.easing.min.js"></script>
+	<script src="../..//js/jquery.fittext.js"></script>
+	<script src="../..//js/wow.min.js"></script> 
+	<!-- =============== owl carousel =============== -->
+	<script src="../..//owl-carousel/owl.carousel.js"></script>  
+	<!-- Isotope does NOT require jQuery. But it does make things easier -->
+
+	<script src="../..//js/baguetteBox.js" async></script>
+	<script src="../..//js/plugins.js" async></script>
+
+	<!-- =============== Custom Theme JavaScript =============== -->
+	<script src="../..//js/creative.js">	</script> 
+	<script src="../..//js/jquery.nicescroll.min.js"></script>
+	
+</head>
 <style>
 	.brochure_class {
         cursor: pointer;
         border: 0px solid #3498db;
         background-color: transparent;
-        
     }
 	
-</style>
-
-<style>
     .dialog-overlay {
       position: fixed;
       top: 0;
@@ -59,10 +76,7 @@
 	.services_css{
 		font-size: 22px !important;
 	}
-</style>
-
-
-<style>
+	/*=====banner=====style====start====*/
 	body {
 		margin: 0;
 		padding: 0;
@@ -98,680 +112,666 @@
 		scrollbar-width: none;  /* Firefox */
 	}
 
+	.close-btn {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		font-size: 35px;
+		cursor: pointer;
+		color: #555;
+	}
+
+	.close-btn:hover {
+		color: #f00; /* Change color on hover for a more realistic effect */
+	}
+	/*=====banner=====style====end====*/
 </style>
 
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Sunshine Ad Solutions</title>
-
-    <!-- =============== Bootstrap Core CSS =============== -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <!-- =============== fonts awesome =============== -->
-    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
-    <!-- =============== Plugin CSS =============== -->
-    <link rel="stylesheet" href="/css/animate.min.css" type="text/css">
-    <!-- =============== Custom CSS =============== -->
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
-    <!-- =============== Owl Carousel ../../ =============== -->
-    <link href="/owl-carousel/owl.carousel.css" rel="stylesheet">
-    <link href="/owl-carousel/owl.theme.css" rel="stylesheet">
-	
-	<link rel="stylesheet" href="../../css/isotope-docs.css" media="screen">
-	<link rel="stylesheet" href="../../css/baguetteBox.css">
-	
-</head>
-
-<body>
-	<div class="banner-overlay">
-		<img src="/misc_files/<%= @banner_image_arr[0] %>" alt="Banner Image">
-	</div>
-	<div id="dialogAlert" class="dialog-overlay" style="display: none;">
-		<div class="dialog-box">
-			<p id="dialogMessage"></p>
-			<button id="closeDialogButton">OK</button>
-		</div>
-	</div>
-	
-	
-    <!-- =============== Preloader =============== -->
-    <!-- <div id="preloader"> -->
-        <!-- <div id="loading"> -->
-		<!-- <img width="256" height="32" src="/images/loading-cylon-red.svg">	 -->
-        <!-- </div> -->
-    <!-- </div> -->
-    <!-- =============== nav =============== -->
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="background-color: #111110 !important;">
-        <div class="container">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#"><img src="/images/logo.png" alt="Logo">
-                    </a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-						<li>
-                            <a class="page-scroll" href="#home">Home</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#about">About</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#Services">Services</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll"  onclick="call_gallery();" style="cursor: pointer;">Works</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#clients">Clients</a>
-                        </li>
-						
-						<li>
-                            <a class="page-scroll" href="#team">Team</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Contact</a>
-                        </li>
-						<li>
-                            <button class="page-scroll brochure_class" onclick="download_brochure();" title="Download our latest brochure.">
-							<img width="25" height="32" src="/images/download.png" style="margin-top:42px;">
-							</button>
-                        </li>
-                    </ul>
-					
-                </div>
-                <!-- =============== navbar-collapse =============== -->
-				
-            </div>
-        </div>
-        <!-- =============== container-fluid =============== -->
-    </nav>
-    <!-- =============== header =============== -->
-    <header id="home" class="header">
-		<!-- =============== container =============== -->
-        <div class="container">
-            <div class="header-content row">
-				
-
-				<div id="owl-demo" class="owl-carousel header1">
-				  <div>
-				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow slideInLeft animated" data-wow-delay="">Innovative <span>and</span> Affordable <span>solution for</span> <br/><span>your</span> BRAND</h2>
-                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
-					</div>               
-				</div>
-				 <div>
-				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow slideInLeft animated" data-wow-delay="">Committed<br><span> and </span><br>Professional</h2>
-                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
-					</div>               
-				</div>
-				
-				
-				<div>
-				  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
-                    <h2 class="wow slideInLeft animated" data-wow-delay="">Harmonious<br><span> and </span><br>Cozy</h2>
-                    <p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
-					</div>               
-				</div>
-				</div>				 
-				</div>
-
-
-                
-        </div>
-		<!-- =============== container end =============== -->
-    </header>
-    <!-- =============== About =============== -->
-    <section id="about" class="" style="background-color:#222222;">
-		<!-- =============== container =============== -->
-        <div class="container">            
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6 wow fadeInDown animated" data-wow-delay=".01s">
-                   <h2 style="color:#fff;">About Us</h2>
-				   <p style="color:#fff;">We are connecting the world of Branding and Fabrication. Here we provide new concepts and various kinds of idea and it's beyond the usual thinking and to become the creator you are the source of the creation. </p>
-				   <p style="color:#fff;">Here we at the Sunshine Ad Solutions we know how to behave with our employees and how to take care of them because they are the wheels of our success. We know how to deal with the hazardous condition and sudden challenges.</p>
-				   <p style="color:#fff;">With the harmony of the heart we welcomes our client not only for the business need but also for the relations and through some endless relations we are always waits to serve them better in the future.</p>
-                  </div>
-                  <div class="col-xs-12 col-sm-12 col-md-6 wow fadeInRight animated" data-wow-delay=".01s">
-                     <img src="../images/about-img.jpg"/>
-                  </div>     
-            </div>
-        </div>   
-		<!-- =============== container end =============== -->		
-    </section>
-	<section id="team" class="">
-		<!-- =============== container =============== -->
-        <div class="container">            
-            <div class="row">
-				<div class="title">
-				
-				<h2>Our Team</h2>
-				<br>
-				<br>
-				<br>
-				</div>
-                <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".01s">
-                   <div class="timg"><img src="../images/taj.jpg"/></div>
-				    <div class="t-box">
-				   <h3>Syed Mustaque</h3>
-				   <span>CEO and Founder</span><br>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/profile.php?id=100072540634807&mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9051637782&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>
-                  </div>
-				  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".02s">
-                    <div class="timg"><img src="../images/rana.jpg"/></div>
-				   <div class="t-box">
-				   <h3>Syed Iftikar</h3>
-				   <span>Co-Founder<br>Marketing Head</span>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/syed.i.ali.129?mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9836666946&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>				   
-                  </div>
-				  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".03s">
-                    <div class="timg"><img src="../images/kaif.jpg"/></div>
-				   <div class="t-box">
-				   <h3>Chowdhury Kaif</h3>
-				   <span>Media Operation Manager</span><br>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/kaif.izazul?mibextid=ZbWKwL"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=7074445954&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>
-                  </div> 
-				  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".04s">
-                    <div class="timg"><img src="../images/rajo.jpg"/></div>
-				    <div class="t-box">
-				   <h3>Rajarshi Sarkar</h3>
-				   <span>Accounts & Management Head</span><br>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/Rajarshi.Sarkar.1992?mibextid=ZbWKwL"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=8981872987&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>
-                  </div>
-
-				
-				  
-				  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".01s">
-                    <div class="timg"><img src="../images/shovon.jpg"/></div>
-				    <div class="t-box">
-				   <h3>Syed Yousuf</h3>
-				   <span>Web Developer<br>IT Head</span><br>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/IMTIAJ87"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9732138251&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>
-                  </div>
-				  
-				  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".01s">
-                    <div class="timg"><img src="../images/ranoj.jpg"/></div>
-				    <div class="t-box">
-				   <h3>Afroz Amin</h3>
-				   <span>Marketing Executive</span><br>
-				   <ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/IMTIAJ87"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9038249672&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
-					</ul>
-				   </div>
-                  </div>
-            </div>
-			<br>
-			<br>
-			<br>
-        </div>   
-		<!-- =============== container end =============== -->		
-    </section>	
-	<!-- =============== Services =============== -->
-	<section class="for-box" id="Services">
-	
-	 <div class="container">
-		<div class="row">
-			<br>
-			<div class="title">
-				<h2 style="color:#fff;">Services</h2>
+	<div id="iframe_download_div" style="display:none;"></div> 
+	<div id="dialog_alert"></div>
+	<body>
+		<% if @banner_image_arr.length > 0%>
+			<div class="banner-overlay">
+				<img src="/misc_files/<%= @banner_image_arr[0] %>" alt="Banner Image">
+				<span class="close-btn"><i class="fas fa-times"></i></span>
 			</div>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".1s">
-				<div class="for-box-crecl">
-					<i class="fa fa-star"></i>
-				</div>
-				<div class="clr1">				
-				<h2 class="services_css">
-					Branding &<br/>Fabrication
-				</h2>
-				</div>
-				<div class="wbox">
-					<p>We are connecting the world of Branding and Fabrication.</p>
-					<a onclick="dialog_alert('<ul><li><a onclick=call_specific_gallery(1); style=cursor:pointer >Glow Sign Board (GSB)</a></li><li>Banner & Flex</li><li><a onclick=call_specific_gallery(2); style=cursor:pointer >Vinyl</a></li><li> Vinyl on Sunboard</li><li> Aluminum Composite Panel ( ACP)</li><li>One Way Vision (OWV)</li><li> Clip-on Translite (TLS)</li><li>Acrylic Signage & Letters</li><li>Metal Signage & Letters</li><li>Standee</li></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a>
-					<!-- <a onclick="dialog_alert('<ul><li><a onclick=call_gsb_gallery(); style=cursor:pointer >Glow Sign Board (GSB)</a></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a> -->
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".2s">
-				<div class="for-box-crecl">
-					<i class="fa fa-home"></i>
-				</div>
-				<div class="clr2">				
-				<h2 class="services_css">
-					Interior &<br/>Exterior Branding
-				</h2>
-				</div>
-				<div class="wbox">
-					<p>We execute your interior and exterior need.</p>
-					<a onclick="dialog_alert('<ul><li>ACP Cladding</li><li>Vinyl on Sunboard</li><li>One Way Vision </li><li>Frosted Vinyl</li><li>Plotter Vinyl</li><li>Lollypop Flunge </li><li>Interior Design</li></ul>');" style='cursor:pointer' class="clr2-a">Know more</a>
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".3s">
-				<div class="for-box-crecl">
-					<i class="fa fa-code"></i>
-				</div>
-				<div class="clr3">				
-				<h2 class="services_css">
-					Web<br/>Design
-				</h2>
-				</div>
-				<div class="wbox">
-					<p>We create your digital world and elaborate your brand worldwide.</p>
-					<a onclick="dialog_alert('<ul><li>Website Design</li><li>Domain & Hosting</li><li>Static & Dynamic </li><li>Maintenance</li></ul>');" style='cursor:pointer' class="clr3-a">Know more</a>
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".4s">
-				<div class="for-box-crecl">
-					<i class="fa fa-wechat"></i>
-				</div>
-				<div class="clr4">				
-				<h2 class="services_css">
-					Consultations &<br/>Executions
-				</h2>	
-				</div>
-				<div class="wbox">
-					<p>Our specialists are ready to consult and execute your branding needs.</p>
-					<a onclick="dialog_alert('<ul><li>Design & Material Suggestion </li><li>Space Management</li><li>Print Solutions</li></ul>');" style='cursor:pointer' class="clr4-a" >Know more</a>
-				</div>
-			
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".5s">
-				<div class="for-box-crecl">
-					<i class="fa fa-font"></i>
-				</div>
-				<div class="clr5">				
-				<h2 class="services_css">
-					Logo &<br/>Card Design
-				</h2>
-				</div>
-				<div class="wbox">
-					<p>We can full-fill your logo and any type of card design.</p>
-					<a onclick="dialog_alert('<ul><li>Logo</li><li>Graphic Design</li><li>Visiting Card</li><li>Tent Card</li><li>Dangler</li><li>Leaflet</li><li>Sticker</li><li>Design</li><li>Photo Print</li></ul>');" style='cursor:pointer' class="clr5-a" title="click here...">Know more</a>
-				</div>
-				
-			</div>
-			
-			<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".6s">
-				<div class="for-box-crecl">
-					<i class="fa fa-gift"></i>
-				</div>
-				<div class="clr6">				
-				<h2 class="services_css">
-					Corporate<br/>Gifts
-				</h2>
-				</div>
-				<div class="wbox">
-					<p>We full-fill your wishs to give you total satisfactions.</p>
-					<a onclick="dialog_alert('<ul><li>Acrylic Memento </li><li>Key Ring</li><li>Custom Gifts and many more ...</li></ul>');" style='cursor:pointer' class="clr6-a" title="click here...">Know more</a>
-				</div>
-				
+		<% end %>
+		<div id="dialogAlert" class="dialog-overlay" style="display: none;">
+			<div class="dialog-box">
+				<p id="dialogMessage"></p>
+				<button id="closeDialogButton">OK</button>
 			</div>
 		</div>
-	 </div>
-	</section>
-	<!-- =============== clients =============== -->
-	<section id="clients" class="" style="background-color:#222222;">
-		<!-- =============== container =============== -->
-        <div class="container">            
-            <div class="row">
-				<div class="title">
-					<h2 style="color:#fff;">Our Clients</h2>
-				</div>
-				<% (0..@clients_logo.length-1).each do |i| %>
-				<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".1s">
-					<div class="timg"><img src="/client_images/<%= @clients_logo[i] %>"></div>
-					<div class="t-box" style="background-color:#222222;"></div>
-				</div>
-				 <% end %>
-            </div>
-        </div>   
-		<!-- =============== container end =============== -->		
-    </section>	
-	
-	
-	
-	
-	
-	
-	<!-- =============== Counter =============== -->
-    <section class="counter">
-		<!-- =============== container =============== -->
-        <div class="container">            
-            <div class="row">
-			<div class="title">
-				<h2>we are   awesome,   check some interesting facts</h2>				
-				</div>
-			 <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".1s">
-                            <i class="fa fa-clock-o size"></i>
-							<h2>24x7</h2>
-							<span>Service</span>
-                  </div>     
-               <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".2s">
-                            <i class="fa fa-cube size"></i>
-							<h2>10*</h2>
-							<span>Departments</span>
-                  </div>  
-				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".3s">
-                            <i class="fa fa-male size"></i>
-							<h2>20+</h2>
-							<span>Strength</span>
-                  </div>  
-				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
-                            <i class="fa fa-smile-o size"></i>
-							<h2>100%</h2>
-							<span>After sale service</span>
-                  </div>  
-				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
-                            <i class="fa fa-thumbs-up size"></i>
-							<h2>99.9%</h2>
-							<span>Client satisfaction</span>
-                  </div>    
-				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".6s">
-                            <i class="fa fa-rocket size"></i>
-							<h2>100+</h2>
-							<span>Projects Delivered</span>
-                  </div>  
-            </div>
-        </div>   
-		<!-- =============== container end =============== -->		
-    </section>	
-    
-<!-- =============== Gallery =============== -->
-    <!-- <section id="Gallery" class="wow flipInX animated" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;"> -->
-    <section id="Gallery" class="" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;">
-		<div class="title" style="background-color:#222222; padding-top:10px;">
-			<h2 style="color:#fff;">Our Works</h2>				
-			<p style="color:#fff;">In our portfolio you can browse the latest branding works florished in various places and for different branding purposes.<br>Our qualified designers, professionals are always ready to execute something spectacular for you and beyond your thinking.</p>
-		</div>
-
-		<div class="big-demo go-wide" data-js-module="filtering-demo">
-			<div class="container" style="background-color:#222222;">            
-				<div class="row">
-					<div class="filter-button-group button-group js-radio-button-group">
-					</div>
-				</div>
-			</div>
-
-			<div id="gallery_div">
-			
-			</div>
-		</div>
-	</section>
-	
-	<section id="contact">
-	<!-- =============== container =============== -->
-		<div class="container">
-			    <div class="row">
-                <div class="title">
-				<h2>Contact</h2>
-				<p>Meet some of our lovely, passionate, positive people.</p>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-xs-12 col-sm-12 col-md-12 wow bounceIn animated" data-wow-delay=".1s">
-					<div>
-						<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
-							<label for="c_name" class="sr-only">Name</label>
-							<input type="text" placeholder="Name" name="customer_name" class="form-control" id="customer_name" required="">
-						</div>
-
-						<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
-							<label for="c_email" class="sr-only">Email</label>
-							<input type="email" placeholder="E-mail" name="customer_email" class="form-control" id="customer_email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" placeholder="e.g. info@envato.com" required="">
-						</div>
-
-						<div class="col-xs-12 col-sm-12 col-md-12 form-group wow fadeInUp animated">
-							<textarea placeholder="Message" rows="7" name="customer_message" id="customer_message" class="form-control" required=""></textarea>
-						</div>
-						<button class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button>
-					</div>
-				</div>              
-			</div>
-		</div><!-- =============== container end =============== -->
-	</section>
-    <!-- Footer -->
-    <footer id="footer">
-	<!-- =============== container =============== -->
-    <div class="container">
-			    <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6">
-
-					<ul class="social-links">
-						<li><a class="wow fadeInUp animated" href="https://www.facebook.com/profile.php?id=100064167275659" style="visibility: visible; animation-name: fadeInUp;"><i class="fa fa-facebook"></i></a></li>
-						<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9433508881&text=Hello" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-whatsapp"></i></a></li>
-						<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://instagram.com/sunshineadsolutions?igshid=MzRlODBiNWFlZA==" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-instagram"></i></a></li>
-					</ul>
-
-                    <p class="copyright">
-                        &copy; 2023 , All rights reserved. Created By <a href="http://www.sunshineadsolutions.com">SAS</a>
-					</p>
-
-				</div>
-				<div data-wow-delay=".6s" class="col-xs-12 col-sm-6 col-md-6 wow bounceIn  animated" style="visibility: visible; animation-delay: 0.6s; animation-name: bounceIn;">
-
-					  <section class="widget widget_text" id="text-15">
-                         <h3 class="widget-title">West Bengal, India</h3> <div class="textwidget"> 267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata, West Bengal 700060<br>
-                        <p>Mobile: +91 9433508881<br>
-                        E-mail: <a href="#" style="color:#fff">sunshineadsolutions@gmail.com</a></p>
-                        <a href="https://www.google.com/maps/place/Sunshine+Ad+Solutions/@22.5046306,88.3048092,17z/data=!3m1!4b1!4m6!3m5!1s0x3a02799a26b61973:0xb06f85a547fdb1d3!8m2!3d22.5046306!4d88.3048092!16s%2Fg%2F11jgdw7vmb?entry=ttu" style="color:#fff">Get directions on the map</a> →</div>
-                    </section>
-				</div>
-			</div>
-    </div><!-- =============== container end =============== -->
-	</footer> 
-
-<div
-  class="modal fade"
-  id="exampleModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-mdb-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">...</div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  $(document).ready(function() {
-  
-	var nice = $("html").niceScroll();  // The document page (body)
-	
-	$("#div1").html($("#div1").html()+' '+nice.version);
-    
-    $("#boxscroll").niceScroll({cursorborder:"",cursorcolor:"#00F",boxzoom:true}); // First scrollable DIV
-
-    $("#boxscroll2").niceScroll("#contentscroll2",{cursorcolor:"#F00",cursoropacitymax:0.7,boxzoom:true,touchbehavior:true});  // Second scrollable DIV
-    $("#boxframe").niceScroll("#boxscroll3",{cursorcolor:"#0F0",cursoropacitymax:0.7,boxzoom:true,touchbehavior:true});  // This is an IFrame (iPad compatible)
-	
-    $("#boxscroll4").niceScroll("#boxscroll4 .wrapper",{boxzoom:true});  // hw acceleration enabled when using wrapper
-    
-  });
-</script>
-<script>
-window.onload = function() {
-    if(typeof oldIE === 'undefined' && Object.keys)
-        hljs.initHighlighting();
-
-    baguetteBox.run('.baguetteBoxOne');
-    baguetteBox.run('.baguetteBoxTwo');
-    baguetteBox.run('.baguetteBoxThree', {
-        animation: 'fadeIn'
-    });
-    baguetteBox.run('.baguetteBoxFour', {
-        buttons: false
-    });
-    baguetteBox.run('.baguetteBoxFive', {
-        captions: function(element) {
-            return element.getElementsByTagName('img')[0].alt;
-        }
-    });
-};
-
-
-function contact_form_message_send(){
-	var customer_name = $("#customer_name").val();
-	var customer_email = $("#customer_email").val();
-	var customer_message = $("#customer_message").val();
-	$.ajax({
-		type: "post",
-		url: "/mail_send_to_customer",
-		data: "name="+customer_name+"&email="+customer_email+"&message="+customer_message,
-		success: function(msg){
-			alert(msg);
-			window.location.href="/";
-		}
-	});
-} 
-
-	function download_brochure(){
-		$.ajax({
-			type: "get",
-			url: "/download_documentation", 
-			success: function(msg){ 
-				if(msg.trim() == ""){
-					alert("Brochure File not available.");
-					return;
-				}
-				url="/download_file?file_name="+encodeURIComponent(msg); 
-				$("#iframe_download_div").html("");
-				var iframe='<iframe name="file_download" id="file_download" style="display:none;" src="'+url +'"  ></iframe>'
-				$("#iframe_download_div").html(iframe);   
-			}
-		});	 
-	}
-	
-	function call_specific_gallery(type){
-		$.ajax({
-			type: "get",
-			url: "get_gallery_type_wise_images?type="+type, 
-			success: function(msg){ 
-				img_arr = JSON.parse(msg);
-				call_gallery_project_images(img_arr);
-				call_gallery();
-			}
-		});	 
-	}
-	
-	
-	
-	function dialog_alert(message) {
-		$('#dialogMessage').html(message);
-		$('#dialogAlert').fadeIn();
-	}
-
-	$('#closeDialogButton').click(function() {
-		$('#dialogAlert').fadeOut();
-	});
-	
-	function call_gallery(){
-		window.location.href="#Gallery";
-	}
-	
-	$(document).ready(function(){
-		banner_load();
-		var img_arr = <%= raw @image_arr.to_json %>;
-		call_gallery_project_images(img_arr);
-		baguetteBox.run('.baguetteBoxThree', {
-			// Customize options as needed (if you have any)
-		});
-	});
-	
-	function call_gallery_project_images(image_arr){
 		
-		var html_content="<div class='grid baguetteBoxThree gallery'>";
-		for (let i = 0; i < image_arr.length; i++) {
-			html_content = html_content + "<div class='element-item transition' data-category='post-transition'>";
-			html_content = html_content + "<a href='/project_images/"+image_arr[i]+"' target='_blank'>";
-			html_content = html_content + "<div style='border: 2px solid #ff8400;'>";
-			html_content = html_content + "<img src='/project_images/"+image_arr[i]+"' style='width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important;'/> ";
-			html_content = html_content + "</div>";
-			html_content = html_content + "<div class='hover-img'>";
-			html_content = html_content + "<i class='fa fa-camera camera'>S"+i+"</i>";
-			html_content = html_content + "</div>";
-			html_content = html_content + "</a>";
-			html_content = html_content + "</div> ";
-		}
-		html_content = html_content + "</div> ";
-		$("#gallery_div").html(html_content);
-		baguetteBox.run('.baguetteBoxThree', {
-			// Customize options as needed (if you have any)
-		});
-	}
-	
-	function banner_load(){
-		$("body").css("overflow","hidden"); // Disable scrolling
-		$('.banner-overlay').on('click', function() {
-			$(this).fadeOut();
-			$("body").css("overflow","visible"); // Enable scrolling
-		});
-	}
+		
+		<!-- =============== Preloader =============== -->
+		<!-- <div id="preloader"> -->
+			<!-- <div id="loading"> -->
+			<!-- <img width="256" height="32" src="/images/loading-cylon-red.svg">	 -->
+			<!-- </div> -->
+		<!-- </div> -->
+		<!-- =============== nav =============== -->
+		<nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="background-color: #111110 !important;">
+			<div class="container">
+				<div class="container-fluid">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"><img src="/images/logo.png" alt="Logo">
+						</a>
+					</div>
 
-</script>
-</body>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+
+					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a class="page-scroll" href="#home">Home</a>
+							</li>
+							<li>
+								<a class="page-scroll" href="#about">About</a>
+							</li>
+							<li>
+								<a class="page-scroll" href="#Services">Services</a>
+							</li>
+							<li>
+								<a class="page-scroll"  onclick="call_gallery();" style="cursor: pointer;">Works</a>
+							</li>
+							<li>
+								<a class="page-scroll" href="#clients">Clients</a>
+							</li>
+							
+							<li>
+								<a class="page-scroll" href="#team">Team</a>
+							</li>
+							<li>
+								<a class="page-scroll" href="#contact">Contact</a>
+							</li>
+							<li>
+								<button class="page-scroll brochure_class" onclick="download_brochure();" title="Download our latest brochure.">
+								<img width="25" height="32" src="/images/download.png" style="margin-top:42px;">
+								</button>
+							</li>
+						</ul>
+						
+					</div>
+					<!-- =============== navbar-collapse =============== -->
+					
+				</div>
+			</div>
+			<!-- =============== container-fluid =============== -->
+		</nav>
+		<!-- =============== header =============== -->
+		<header id="home" class="header">
+			<!-- =============== container =============== -->
+			<div class="container">
+				<div class="header-content row">
+					
+
+					<div id="owl-demo" class="owl-carousel header1">
+					  <div>
+					  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
+						<h2 class="wow slideInLeft animated" data-wow-delay="">Innovative <span>and</span> Affordable <span>solution for</span> <br/><span>your</span> BRAND</h2>
+						<p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
+						</div>               
+					</div>
+					 <div>
+					  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
+						<h2 class="wow slideInLeft animated" data-wow-delay="">Committed<br><span> and </span><br>Professional</h2>
+						<p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
+						</div>               
+					</div>
+					
+					
+					<div>
+					  <div class="col-xs-12 col-sm-6 col-md-6 header-text">
+						<h2 class="wow slideInLeft animated" data-wow-delay="">Harmonious<br><span> and </span><br>Cozy</h2>
+						<p class="wow slideInLeft animated" data-wow-delay="">Let's start the Branding & Fabrication era and make something extra</p>
+						</div>               
+					</div>
+					</div>				 
+					</div>
+
+
+					
+			</div>
+			<!-- =============== container end =============== -->
+		</header>
+		<!-- =============== About =============== -->
+		<section id="about" class="" style="background-color:#222222;">
+			<!-- =============== container =============== -->
+			<div class="container">            
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-6 wow fadeInDown animated" data-wow-delay=".01s">
+					   <h2 style="color:#fff;">About Us</h2>
+					   <p style="color:#fff;">We are connecting the world of Branding and Fabrication. Here we provide new concepts and various kinds of idea and it's beyond the usual thinking and to become the creator you are the source of the creation. </p>
+					   <p style="color:#fff;">Here we at the Sunshine Ad Solutions we know how to behave with our employees and how to take care of them because they are the wheels of our success. We know how to deal with the hazardous condition and sudden challenges.</p>
+					   <p style="color:#fff;">With the harmony of the heart we welcomes our client not only for the business need but also for the relations and through some endless relations we are always waits to serve them better in the future.</p>
+					  </div>
+					  <div class="col-xs-12 col-sm-12 col-md-6 wow fadeInRight animated" data-wow-delay=".01s">
+						 <img src="../images/about-img.jpg"/>
+					  </div>     
+				</div>
+			</div>   
+			<!-- =============== container end =============== -->		
+		</section>
+		<section id="team" class="">
+			<!-- =============== container =============== -->
+			<div class="container">            
+				<div class="row">
+					<div class="title">
+					
+					<h2>Our Team</h2>
+					<br>
+					<br>
+					<br>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".01s">
+					   <div class="timg"><img src="../images/taj.jpg"/></div>
+						<div class="t-box">
+					   <h3>Syed Mustaque</h3>
+					   <span>CEO and Founder</span><br>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/profile.php?id=100072540634807&mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9051637782&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>
+					  </div>
+					  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".02s">
+						<div class="timg"><img src="../images/rana.jpg"/></div>
+					   <div class="t-box">
+					   <h3>Syed Iftikar</h3>
+					   <span>Co-Founder<br>Marketing Head</span>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/syed.i.ali.129?mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9836666946&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>				   
+					  </div>
+					  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".03s">
+						<div class="timg"><img src="../images/kaif.jpg"/></div>
+					   <div class="t-box">
+					   <h3>Chowdhury Kaif</h3>
+					   <span>Media Operation Manager</span><br>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/kaif.izazul?mibextid=ZbWKwL"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=7074445954&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>
+					  </div> 
+					  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".04s">
+						<div class="timg"><img src="../images/rajo.jpg"/></div>
+						<div class="t-box">
+					   <h3>Rajarshi Sarkar</h3>
+					   <span>Accounts & Management Head</span><br>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/Rajarshi.Sarkar.1992?mibextid=ZbWKwL"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=8981872987&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>
+					  </div>
+
+					
+					  
+					  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".01s">
+						<div class="timg"><img src="../images/shovon.jpg"/></div>
+						<div class="t-box">
+					   <h3>Syed Yousuf</h3>
+					   <span>Web Developer<br>IT Head</span><br>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/IMTIAJ87"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9732138251&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>
+					  </div>
+					  
+					  <div class="col-xs-12 col-sm-6 col-md-2 wow fadeInUp animated" data-wow-delay=".01s">
+						<div class="timg"><img src="../images/ranoj.jpg"/></div>
+						<div class="t-box">
+					   <h3>Afroz Amin</h3>
+					   <span>Marketing Executive</span><br>
+					   <ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/IMTIAJ87"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".01s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9038249672&text=Hello"><i class="fa fa-whatsapp"></i></a></li>
+						</ul>
+					   </div>
+					  </div>
+				</div>
+				<br>
+				<br>
+				<br>
+			</div>   
+			<!-- =============== container end =============== -->		
+		</section>	
+		<!-- =============== Services =============== -->
+		<section class="for-box" id="Services">
+		
+		 <div class="container">
+			<div class="row">
+				<br>
+				<div class="title">
+					<h2 style="color:#fff;">Services</h2>
+				</div>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".1s">
+					<div class="for-box-crecl">
+						<i class="fa fa-star"></i>
+					</div>
+					<div class="clr1">				
+					<h2 class="services_css">
+						Branding &<br/>Fabrication
+					</h2>
+					</div>
+					<div class="wbox">
+						<p>We are connecting the world of Branding and Fabrication.</p>
+						<a onclick="dialog_alert('<ul><li><a onclick=call_specific_gallery(1); style=cursor:pointer >Glow Sign Board (GSB)</a></li><li>Banner & Flex</li><li><a onclick=call_specific_gallery(2); style=cursor:pointer >Vinyl</a></li><li> Vinyl on Sunboard</li><li> Aluminum Composite Panel ( ACP)</li><li>One Way Vision (OWV)</li><li> Clip-on Translite (TLS)</li><li>Acrylic Signage & Letters</li><li>Metal Signage & Letters</li><li>Standee</li></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a>
+						<!-- <a onclick="dialog_alert('<ul><li><a onclick=call_gsb_gallery(); style=cursor:pointer >Glow Sign Board (GSB)</a></li></ul>');" style='cursor:pointer' class="clr1-a">Know more</a> -->
+					</div>
+					
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".2s">
+					<div class="for-box-crecl">
+						<i class="fa fa-home"></i>
+					</div>
+					<div class="clr2">				
+					<h2 class="services_css">
+						Interior &<br/>Exterior Branding
+					</h2>
+					</div>
+					<div class="wbox">
+						<p>We execute your interior and exterior need.</p>
+						<a onclick="dialog_alert('<ul><li>ACP Cladding</li><li>Vinyl on Sunboard</li><li>One Way Vision </li><li>Frosted Vinyl</li><li>Plotter Vinyl</li><li>Lollypop Flunge </li><li>Interior Design</li></ul>');" style='cursor:pointer' class="clr2-a">Know more</a>
+					</div>
+					
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".3s">
+					<div class="for-box-crecl">
+						<i class="fa fa-code"></i>
+					</div>
+					<div class="clr3">				
+					<h2 class="services_css">
+						Web<br/>Design
+					</h2>
+					</div>
+					<div class="wbox">
+						<p>We create your digital world and elaborate your brand worldwide.</p>
+						<a onclick="dialog_alert('<ul><li>Website Design</li><li>Domain & Hosting</li><li>Static & Dynamic </li><li>Maintenance</li></ul>');" style='cursor:pointer' class="clr3-a">Know more</a>
+					</div>
+					
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".4s">
+					<div class="for-box-crecl">
+						<i class="fa fa-wechat"></i>
+					</div>
+					<div class="clr4">				
+					<h2 class="services_css">
+						Consultations &<br/>Executions
+					</h2>	
+					</div>
+					<div class="wbox">
+						<p>Our specialists are ready to consult and execute your branding needs.</p>
+						<a onclick="dialog_alert('<ul><li>Design & Material Suggestion </li><li>Space Management</li><li>Print Solutions</li></ul>');" style='cursor:pointer' class="clr4-a" >Know more</a>
+					</div>
+				
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownLeft animated" data-wow-delay=".5s">
+					<div class="for-box-crecl">
+						<i class="fa fa-font"></i>
+					</div>
+					<div class="clr5">				
+					<h2 class="services_css">
+						Logo &<br/>Card Design
+					</h2>
+					</div>
+					<div class="wbox">
+						<p>We can full-fill your logo and any type of card design.</p>
+						<a onclick="dialog_alert('<ul><li>Logo</li><li>Graphic Design</li><li>Visiting Card</li><li>Tent Card</li><li>Dangler</li><li>Leaflet</li><li>Sticker</li><li>Design</li><li>Photo Print</li></ul>');" style='cursor:pointer' class="clr5-a" title="click here...">Know more</a>
+					</div>
+					
+				</div>
+				
+				<div class="col-xs-12 col-sm-6 col-md-2 wow rotateInDownRight animated" data-wow-delay=".6s">
+					<div class="for-box-crecl">
+						<i class="fa fa-gift"></i>
+					</div>
+					<div class="clr6">				
+					<h2 class="services_css">
+						Corporate<br/>Gifts
+					</h2>
+					</div>
+					<div class="wbox">
+						<p>We full-fill your wishs to give you total satisfactions.</p>
+						<a onclick="dialog_alert('<ul><li>Acrylic Memento </li><li>Key Ring</li><li>Custom Gifts and many more ...</li></ul>');" style='cursor:pointer' class="clr6-a" title="click here...">Know more</a>
+					</div>
+					
+				</div>
+			</div>
+		 </div>
+		</section>
+		<!-- =============== clients =============== -->
+		<section id="clients" class="" style="background-color:#222222;">
+			<!-- =============== container =============== -->
+			<div class="container">            
+				<div class="row">
+					<div class="title">
+						<h2 style="color:#fff;">Our Clients</h2>
+					</div>
+					<% (0..@clients_logo.length-1).each do |i| %>
+					<div class="col-xs-12 col-sm-6 col-md-2 wow fadeInDown animated" data-wow-delay=".1s">
+						<div class="timg"><img src="/client_images/<%= @clients_logo[i] %>"></div>
+						<div class="t-box" style="background-color:#222222;"></div>
+					</div>
+					 <% end %>
+				</div>
+			</div>   
+			<!-- =============== container end =============== -->		
+		</section>	
+		
+		
+		
+		
+		
+		
+		<!-- =============== Counter =============== -->
+		<section class="counter">
+			<!-- =============== container =============== -->
+			<div class="container">            
+				<div class="row">
+				<div class="title">
+					<h2>we are   awesome,   check some interesting facts</h2>				
+					</div>
+				 <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".1s">
+								<i class="fa fa-clock-o size"></i>
+								<h2>24x7</h2>
+								<span>Service</span>
+					  </div>     
+				   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".2s">
+								<i class="fa fa-cube size"></i>
+								<h2>10*</h2>
+								<span>Departments</span>
+					  </div>  
+					   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".3s">
+								<i class="fa fa-male size"></i>
+								<h2>20+</h2>
+								<span>Strength</span>
+					  </div>  
+					   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
+								<i class="fa fa-smile-o size"></i>
+								<h2>100%</h2>
+								<span>After sale service</span>
+					  </div>  
+					   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".4s">
+								<i class="fa fa-thumbs-up size"></i>
+								<h2>99.9%</h2>
+								<span>Client satisfaction</span>
+					  </div>    
+					   <div class="col-xs-12 col-sm-2 col-md-2 wow fadeInUp animated" data-wow-delay=".6s">
+								<i class="fa fa-rocket size"></i>
+								<h2>100+</h2>
+								<span>Projects Delivered</span>
+					  </div>  
+				</div>
+			</div>   
+			<!-- =============== container end =============== -->		
+		</section>	
+		
+	<!-- =============== Gallery =============== -->
+		<!-- <section id="Gallery" class="wow flipInX animated" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;"> -->
+		<section id="Gallery" class="" data-wow-delay=".0s" style="padding:0 0 0;background-color:#222222;">
+			<div class="title" style="background-color:#222222; padding-top:10px;">
+				<h2 style="color:#fff;">Our Works</h2>				
+				<p style="color:#fff;">In our portfolio you can browse the latest branding works florished in various places and for different branding purposes.<br>Our qualified designers, professionals are always ready to execute something spectacular for you and beyond your thinking.</p>
+			</div>
+
+			<div class="big-demo go-wide" data-js-module="filtering-demo">
+				<div class="container" style="background-color:#222222;">            
+					<div class="row">
+						<div class="filter-button-group button-group js-radio-button-group">
+						</div>
+					</div>
+				</div>
+
+				<div id="gallery_div">
+				
+				</div>
+			</div>
+		</section>
+		
+		<section id="contact">
+		<!-- =============== container =============== -->
+			<div class="container">
+					<div class="row">
+					<div class="title">
+					<h2>Contact</h2>
+					<p>Meet some of our lovely, passionate, positive people.</p>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 wow bounceIn animated" data-wow-delay=".1s">
+						<div>
+							<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
+								<label for="c_name" class="sr-only">Name</label>
+								<input type="text" placeholder="Name" name="customer_name" class="form-control" id="customer_name" required="">
+							</div>
+
+							<div class="col-xs-12 col-sm-6 col-md-6 form-group wow fadeInUp animated">
+								<label for="c_email" class="sr-only">Email</label>
+								<input type="email" placeholder="E-mail" name="customer_email" class="form-control" id="customer_email" pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$" placeholder="e.g. info@envato.com" required="">
+							</div>
+
+							<div class="col-xs-12 col-sm-12 col-md-12 form-group wow fadeInUp animated">
+								<textarea placeholder="Message" rows="7" name="customer_message" id="customer_message" class="form-control" required=""></textarea>
+							</div>
+							<button class="btn btn-sm btn-block wow fadeInUp animated" onclick="contact_form_message_send();">Send Message</button>
+						</div>
+					</div>              
+				</div>
+			</div><!-- =============== container end =============== -->
+		</section>
+		<!-- Footer -->
+		<footer id="footer">
+		<!-- =============== container =============== -->
+		<div class="container">
+					<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6">
+
+						<ul class="social-links">
+							<li><a class="wow fadeInUp animated" href="https://www.facebook.com/profile.php?id=100064167275659" style="visibility: visible; animation-name: fadeInUp;"><i class="fa fa-facebook"></i></a></li>
+							<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://api.whatsapp.com/send?phone=9433508881&text=Hello" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-whatsapp"></i></a></li>
+							<li><a data-wow-delay=".1s" class="wow fadeInUp animated" href="https://instagram.com/sunshineadsolutions?igshid=MzRlODBiNWFlZA==" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;"><i class="fa fa-instagram"></i></a></li>
+						</ul>
+
+						<p class="copyright">
+							&copy; 2023 , All rights reserved. Created By <a href="http://www.sunshineadsolutions.com">SAS</a>
+						</p>
+
+					</div>
+					<div data-wow-delay=".6s" class="col-xs-12 col-sm-6 col-md-6 wow bounceIn  animated" style="visibility: visible; animation-delay: 0.6s; animation-name: bounceIn;">
+
+						  <section class="widget widget_text" id="text-15">
+							 <h3 class="widget-title">West Bengal, India</h3> <div class="textwidget"> 267, Sarat Chatterjee Rd, Parnasree Palli, Behala, Kolkata, West Bengal 700060<br>
+							<p>Mobile: +91 9433508881<br>
+							E-mail: <a href="#" style="color:#fff">sunshineadsolutions@gmail.com</a></p>
+							<a href="https://www.google.com/maps/place/Sunshine+Ad+Solutions/@22.5046306,88.3048092,17z/data=!3m1!4b1!4m6!3m5!1s0x3a02799a26b61973:0xb06f85a547fdb1d3!8m2!3d22.5046306!4d88.3048092!16s%2Fg%2F11jgdw7vmb?entry=ttu" style="color:#fff">Get directions on the map</a> →</div>
+						</section>
+					</div>
+				</div>
+		</div><!-- =============== container end =============== -->
+		</footer> 
+
+	<div
+	  class="modal fade"
+	  id="exampleModal"
+	  tabindex="-1"
+	  aria-labelledby="exampleModalLabel"
+	  aria-hidden="true"
+	>
+	  <div class="modal-dialog">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			<button
+			  type="button"
+			  class="btn-close"
+			  data-mdb-dismiss="modal"
+			  aria-label="Close"
+			></button>
+		  </div>
+		  <div class="modal-body">...</div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+			  Close
+			</button>
+			<button type="button" class="btn btn-primary">Save changes</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
+	<script>
+		$(document).ready(function() {
+			var nice = $("html").niceScroll();  // The document page (body)
+
+			$("#div1").html($("#div1").html()+' '+nice.version);
+
+			$("#boxscroll").niceScroll({cursorborder:"",cursorcolor:"#00F",boxzoom:true}); // First scrollable DIV
+
+			$("#boxscroll2").niceScroll("#contentscroll2",{cursorcolor:"#F00",cursoropacitymax:0.7,boxzoom:true,touchbehavior:true});  // Second scrollable DIV
+			$("#boxframe").niceScroll("#boxscroll3",{cursorcolor:"#0F0",cursoropacitymax:0.7,boxzoom:true,touchbehavior:true});  // This is an IFrame (iPad compatible)
+
+			$("#boxscroll4").niceScroll("#boxscroll4 .wrapper",{boxzoom:true});  // hw acceleration enabled when using wrapper
+
+			<% if @banner_image_arr.length > 0 %>
+				banner_load();
+			<% end %>
+			var img_arr = <%= raw @image_arr.to_json %>;
+			call_gallery_project_images(img_arr);
+		});
+		
+		window.onload = function() {
+			if(typeof oldIE === 'undefined' && Object.keys)
+				hljs.initHighlighting();
+
+			baguetteBox.run('.baguetteBoxOne');
+			baguetteBox.run('.baguetteBoxTwo');
+			baguetteBox.run('.baguetteBoxThree', {
+				animation: 'fadeIn'
+			});
+			baguetteBox.run('.baguetteBoxFour', {
+				buttons: false
+			});
+			baguetteBox.run('.baguetteBoxFive', {
+				captions: function(element) {
+					return element.getElementsByTagName('img')[0].alt;
+				}
+			});
+		};
+
+
+		function contact_form_message_send(){
+			var customer_name = $("#customer_name").val();
+			var customer_email = $("#customer_email").val();
+			var customer_message = $("#customer_message").val();
+			$.ajax({
+				type: "post",
+				url: "/mail_send_to_customer",
+				data: "name="+customer_name+"&email="+customer_email+"&message="+customer_message,
+				success: function(msg){
+					alert(msg);
+					window.location.href="/";
+				}
+			});
+		} 
+
+		function download_brochure(){
+			$.ajax({
+				type: "get",
+				url: "/download_documentation", 
+				success: function(msg){ 
+					if(msg.trim() == ""){
+						alert("Brochure File not available.");
+						return;
+					}
+					url="/download_file?file_name="+encodeURIComponent(msg); 
+					$("#iframe_download_div").html("");
+					var iframe='<iframe name="file_download" id="file_download" style="display:none;" src="'+url +'"  ></iframe>'
+					$("#iframe_download_div").html(iframe);   
+				}
+			});	 
+		}
+			
+		function call_specific_gallery(type){
+			$.ajax({
+				type: "get",
+				url: "get_gallery_type_wise_images?type="+type, 
+				success: function(msg){ 
+					img_arr = JSON.parse(msg);
+					call_gallery_project_images(img_arr);
+					call_gallery();
+				}
+			});	 
+		}
+			
+			
+			
+		function dialog_alert(message) {
+			$('#dialogMessage').html(message);
+			$('#dialogAlert').fadeIn();
+		}
+
+		$('#closeDialogButton').click(function() {
+			$('#dialogAlert').fadeOut();
+		});
+		
+		function call_gallery(){
+			window.location.href="#Gallery";
+		}
+		
+		function call_gallery_project_images(image_arr){
+			
+			var html_content="<div class='grid baguetteBoxThree gallery'>";
+			for (let i = 0; i < image_arr.length; i++) {
+				html_content = html_content + "<div class='element-item transition' data-category='post-transition'>";
+				html_content = html_content + "<a href='/project_images/"+image_arr[i]+"' target='_blank'>";
+				html_content = html_content + "<div style='border: 2px solid #ff8400;'>";
+				html_content = html_content + "<img src='/project_images/"+image_arr[i]+"' style='width: 407px;height: 307px;object-fit: cover;object-position: center center;filter: blur(10px) !important;'/> ";
+				html_content = html_content + "</div>";
+				html_content = html_content + "<div class='hover-img'>";
+				html_content = html_content + "<i class='fa fa-camera camera'>S"+i+"</i>";
+				html_content = html_content + "</div>";
+				html_content = html_content + "</a>";
+				html_content = html_content + "</div> ";
+			}
+			html_content = html_content + "</div> ";
+			$("#gallery_div").html(html_content);
+			baguetteBox.run('.baguetteBoxThree', {
+				// Customize options as needed (if you have any)
+			});
+		}
+		
+		function banner_load(){
+			$("body").css("overflow","hidden"); // Disable scrolling
+			$('.banner-overlay').on('click', function() {
+				$(this).fadeOut();
+				$("body").css("overflow","visible"); // Enable scrolling
+			});
+		}
+
+	</script>
+	</body>
 </html>
 

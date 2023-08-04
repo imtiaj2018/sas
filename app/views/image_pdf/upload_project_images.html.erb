@@ -81,6 +81,71 @@
 	}
 	
 </style>
+
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 20px;
+		width:70%;
+	}
+	
+	.button-container {
+		display: flex;
+		justify-content: center;
+		height:50px;
+	}
+	
+	.button-container input[type="button"] {
+		background: #459bac;
+		cursor: pointer;
+		margin-right: 10px;
+		border: none;
+		color: #fff;
+		padding: 5px;
+		border-radius: 5px;
+	}
+	
+	.data-grid-container {
+		width: 1000px;
+		padding-left: 3px;
+		margin-top: 25px;
+	}
+	
+	.ag-theme-balham {
+		height: 400px;
+	}
+
+	@media only screen and (max-width: 768px) {
+		.container {
+			width: 100%;
+		}
+
+		.data-grid-container {
+			width: 100%;
+			
+		}
+	}
+	
+	.button-container input[type="submit"] {
+		background: #BE3364;
+		cursor: pointer;
+		margin-right: 10px;
+		border: none;
+		color: #fff;
+		padding: 5px;
+		border-radius: 5px;
+	}
+</style>
 <title>Upload Project Images</title>
 <html class="html_css_class">
 	<div style="width:100%;text-align:center;border:0px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Upload and Download Project Images</h2></div><br>
@@ -88,41 +153,43 @@
 	<!-- <marquee behavior="scroll" direction="right" style="color:#ffd724;" >***Small Image Size should be <b>420x350</b>***</marquee> -->
 	<div id="dialog_form"></div>
 	<div id="iframe_download_div" style="display:none;"></div> 
-	<div style="width:100%;height:60px;">
-		<form  enctype="multipart/form-data" id="upload_project_images" name="upload_project_images" method="post" action="/upload_project_images_form" style="float:left;width:30%;"> 
-			<table  width="100%">
-				<tr>
-					<td>
-						<input type="file" id="upload_datafile" accept=".jpg" name="upload[datafile]" required >
-					</td> 
-					
-					<!-- <td> -->
-						<!-- <select name="image_type" id="image_type" required> -->
-							<!-- <option value="">Select Type</option> -->
-							<!-- <option value="l">Large</option> -->
-							<!-- <option value="s">Small</option> -->
-						<!-- </select> -->
-					<!-- </td>  -->
-					<td>
-						<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
-					</td>
-					<td>
-						<input type="button" name="cancelBttn" value="Cancel" style="width:100px; background: #459bac;" onclick="cancel_upload();">
-					</td>
-					<td>
-						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
-					</td>
-					
-					<td>
-						<input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();">
-					</td>
-				</tr>  
-			</table>  
-		</form>
-	</div>
-<br>
-<div style="width:100%;float:left;">
-	<div id="document_gridvw" class="ag-theme-balham" style="height:400px;float:left;width:60%;padding-left: 3px;"></div>
+	<div class="container">
+		<div class="button-container">
+			<form  enctype="multipart/form-data" id="upload_project_images" name="upload_project_images" method="post" action="/upload_project_images_form" style=""> 
+				<table  width="100%">
+					<tr>
+						<td>
+							<input type="file" id="upload_datafile" accept=".jpg" name="upload[datafile]" required >
+						</td> 
+						
+						<!-- <td> -->
+							<!-- <select name="image_type" id="image_type" required> -->
+								<!-- <option value="">Select Type</option> -->
+								<!-- <option value="l">Large</option> -->
+								<!-- <option value="s">Small</option> -->
+							<!-- </select> -->
+						<!-- </td>  -->
+						<td>
+							<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
+						</td>
+						<td>
+							<input type="button" name="cancelBttn" value="Cancel" style="width:100px; background: #459bac;" onclick="cancel_upload();">
+						</td>
+						<td>
+							<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
+						</td>
+						
+						<!-- <td> -->
+							<!-- <input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();"> -->
+						<!-- </td> -->
+					</tr>  
+				</table>  
+			</form>
+		</div>
+	
+		<div>
+			<div id="document_gridvw" class="ag-theme-balham" style="height:400px;width:900px;"></div>
+		</div> 
 	</div> 
 </html> 
 

@@ -74,55 +74,129 @@
 		border: 0;
 	}
 	
+	.html_css_class {
+		background: rgba(0, 0, 0, 0) url("/images/header.jpg") repeat fixed center 0 / cover  ;
+		color: #fff;
+		height: 100%;
+		overflow: hidden;
+		transition: all 0.35s ease 0s;
+	}
+	
 </style>
-<title>Upload Client Logo</title>
-<html style="background-color:#9a497d;">
-	<div style="width:100%;text-align:center;border:1px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Upload and Download Client Logo</h2></div>
+
+
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	
+	.container {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 20px;
+		width:70%;
+	}
+	
+	.button-container {
+		display: flex;
+		justify-content: center;
+		height:50px;
+	}
+	
+	.button-container input[type="button"] {
+		background: #459bac;
+		cursor: pointer;
+		margin-right: 10px;
+		border: none;
+		color: #fff;
+		padding: 5px;
+		border-radius: 5px;
+	}
+	
+	.button-container input[type="submit"] {
+		background: #BE3364;
+		cursor: pointer;
+		margin-right: 10px;
+		border: none;
+		color: #fff;
+		padding: 5px;
+		border-radius: 5px;
+	}
+	
+	.data-grid-container {
+		width: 1000px;
+		padding-left: 3px;
+		margin-top: 25px;
+	}
+	
+	.ag-theme-balham {
+		height: 400px;
+	}
+
+	@media only screen and (max-width: 768px) {
+		.container {
+			width: 100%;
+		}
+
+		.data-grid-container {
+			width: 100%;
+			
+		}
+	}
+</style>
+<title>Upload & Download Client Logo</title>
+<html class="html_css_class">
+	<div style="width:100%;text-align:center;border:0px solid;"><h2 class="wow fadeInLeft" style="color:#ffffff;align:center;">Upload and Download Client Logo</h2></div>
 	<marquee behavior="scroll" direction="left" style="color:#ffd724;" >***Image Size should be <b>420x308</b>***</marquee>
 	<marquee behavior="scroll" direction="right" style="color:#ffd724;" >***Image Size should be <b>420x308</b>***</marquee>
 	<br>
 	<br>
 	<div id="dialog_form"></div>
 	<div id="iframe_download_div" style="display:none;"></div> 
-	<div style="width:100%;height:60px;">
-		<form  enctype="multipart/form-data" id="upload_client_images" name="upload_client_images" method="post" action="/upload_client_images_form" style="float:left;width:30%;"> 
-			<table  width="100%">
-				<tr>
-					<td>
-						<input type="file" id="upload_datafile" accept=".jpg" name="upload[datafile]" required >
-					</td> 
+	<div class="container">
+		<div class="button-container">
+			<form  enctype="multipart/form-data" id="upload_client_images" name="upload_client_images" method="post" action="/upload_client_images_form"> 
+				<table  width="100%">
+					<tr>
+						<td>
+							<input type="file" id="upload_datafile" accept=".jpg" name="upload[datafile]" required >
+						</td> 
+						
+						<td>
+							<input type="text" id="client_name" name="client_name" placeholder="Client Name" required />
+						</td>
+						
+						<td>
+							<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
+						</td>
+						<td>
+							<input type="button" name="cancelBttn" value="Cancel" style="width:100px; background: #459bac;" onclick="cancel_upload();">
+						</td>
+						<td>
+							<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
+						</td>
+						
+						<!-- <td> -->
+							<!-- <input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();"> -->
+						<!-- </td> -->
+					</tr>  
 					
-					<td>
-						<input type="text" id="client_name" name="client_name" placeholder="Client Name" required />
-					</td>
-					
-					<td>
-						<input type="submit" name="submitBttn" value="Upload" style="width:100px;" id="submit_button"> 
-					</td>
-					<td>
-						<input type="button" name="cancelBttn" value="Cancel" style="width:100px; background: #459bac;" onclick="cancel_upload();">
-					</td>
-					<td>
-						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
-					</td>
-					
-					<td>
-						<input type="button" name="cancelBttn" value="Home" style="width:100px; background: #459bac;" onclick="home();">
-					</td>
-				</tr>  
-				
-			</table>  
-			<br>
-			<br>
-			<br>
-			<br>
-		</form>
-	</div>
-	<br>
-<br>
-<br> 
-<div style="width:100%;float:left;">
-	<div id="document_gridvw" class="ag-theme-balham" style="height:400px;float:left;width:60%;padding-left: 3px;"></div>
+				</table>  
+				<br>
+				<br>
+				<br>
+				<br>
+			</form>
+		</div>
+		
+		<div style="width:100%;float:left;">
+			<div id="document_gridvw" class="ag-theme-balham" style="height:400px;"></div>
+		</div> 
 	</div> 
 </html> 
 
