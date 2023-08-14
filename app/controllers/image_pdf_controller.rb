@@ -22,6 +22,8 @@ class ImagePdfController < ApplicationController
 		final_file_name="#{directory}/#{new_file_name}" 
 		
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
+		# Set permissions on the file
+		File.chmod(0777, final_file_name)
 		BrochurePdf.save_documentation_file(new_file_name,name,file_extention) 
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_brochure'		

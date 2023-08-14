@@ -27,11 +27,10 @@ class BrochurePdf < ApplicationRecord
 	end
 	
 	def self.get_banner_image
-		banner_image_obj= BrochurePdf.find_by_sql("select * from brochure_pdfs where (document_type='.jpeg' OR document_type='.jpg' OR document_type='.png')")
+		# banner_image_obj= BrochurePdf.find_by_sql("select * from brochure_pdfs where (document_type='.jpeg' OR document_type='.jpg' OR document_type='.png')")
+		banner_image_obj= BrochurePdf.where("document_type='.jpeg' OR document_type='.jpg' OR document_type='.png'").last
 		_arr=[]
-		banner_image_obj.each do|boi|
-			_arr <<boi["file_name"]
-		end
+		_arr <<banner_image_obj.file_name
 		return _arr
 	end
 end

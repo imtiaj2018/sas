@@ -1,8 +1,6 @@
 require 'turbolinks'
 # skip_before_action :require_login, only: [:admin_panel]
 
-
-
 class SunshinesController < ApplicationController
 	protect_from_forgery with: :exception, :except => [:mail_send_to_customer]
 	# $image_arr=[]
