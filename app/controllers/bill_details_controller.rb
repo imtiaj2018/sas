@@ -34,14 +34,14 @@ class BillDetailsController < ApplicationController
 
 		if last_bill_number_obj.nil?
 			# No existing bill number in the database, start from 1
-			new_bill_number = 'SAS00001'
+			new_bill_number = 'G00001'
 		else
 			# Extract the numeric part of the last bill number and increment it
 			last_number = last_bill_number_obj.bill_number.scan(/\d+/).first.to_i
 			new_number = last_number + 1
 
 			# Format the new bill number with leading zeros
-			new_bill_number = "SAS#{new_number.to_s.rjust(5, '0')}"
+			new_bill_number = "G#{new_number.to_s.rjust(5, '0')}"
 		end
 		return new_bill_number
 	end
