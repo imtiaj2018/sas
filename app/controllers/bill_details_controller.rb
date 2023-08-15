@@ -12,7 +12,7 @@ class BillDetailsController < ApplicationController
 	
 	def createBill
 		if current_user
-			@new_bill_number = generate_bill_number
+			@new_bill_number = generate_bill_number("Tax")
 			@job_number = generate_job_number("tax")
 		else
 			redirect_to login_url
@@ -21,6 +21,7 @@ class BillDetailsController < ApplicationController
 	
 	def createNonTaxBill
 		if current_user
+			@new_bill_number = generate_bill_number("Non-Tax")
 			@job_number = generate_job_number("non-tax")
 		else
 			redirect_to login_url
@@ -28,20 +29,23 @@ class BillDetailsController < ApplicationController
 	end
 	
 	
-	def generate_bill_number
+	def generate_bill_number(bill_type)
 		# Retrieve the last bill number from the database
-		last_bill_number_obj = ClientWorkDetail.where("bill_type = ?", 'Tax').last
+		# last_bill_number_obj = ClientWorkDetail.where("bill_type = '#{bill_type}'").last
+		last_bill_number_obj = ClientWorkDetail.where("bill_type = '#{bill_type}'").order(bill_number: :asc).last
 
 		if last_bill_number_obj.nil?
 			# No existing bill number in the database, start from 1
 			new_bill_number = 'G00001'
+			new_bill_number = 'S00001' if bill_type == "Non-Tax"
 		else
 			# Extract the numeric part of the last bill number and increment it
 			last_number = last_bill_number_obj.bill_number.scan(/\d+/).first.to_i
-			new_number = last_number + 1
+			new_number = last_number.to_i + 1
 
 			# Format the new bill number with leading zeros
 			new_bill_number = "G#{new_number.to_s.rjust(5, '0')}"
+			new_bill_number = "S#{new_number.to_s.rjust(5, '0')}" if bill_type == "Non-Tax"
 		end
 		return new_bill_number
 	end
@@ -75,7 +79,8 @@ class BillDetailsController < ApplicationController
 			
 			prefix_job_number=params[:prefix_job_number]
 			job_number=params[:job_number]
-			exact_job_number = "#{prefix_job_number}#{job_number}"
+			formatted_job_number = "%04d" % job_number.to_i
+			exact_job_number = "#{prefix_job_number}#{formatted_job_number}"
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -156,9 +161,9 @@ class BillDetailsController < ApplicationController
 			additional_or_discount=params[:additinonal_charges]
 			additional_or_discount_info=params[:additional_or_discount_info]
 			job_number=params[:job_number]
+			formatted_job_number = "%04d" % job_number.to_i
 			prefix_job_number=params[:prefix_job_number]
-			job_number=params[:job_number]
-			exact_job_number = "#{prefix_job_number}#{job_number}"
+			exact_job_number = "#{prefix_job_number}#{formatted_job_number}"
 			
 			client_work_details_create_arr=[]
 			client_work_details_create_arr<<["client_name_address",client_name_address]
@@ -529,7 +534,9 @@ class BillDetailsController < ApplicationController
 	def check_job_number
 		prefix_job_number=params[:prefix_job_number]
 		job_number=params[:job_number]
-		client_work_details = ClientWorkDetail.where("job_number='#{prefix_job_number}#{job_number}'").take
+		bill_type=params[:bill_type]
+		# client_work_details = ClientWorkDetail.where("job_number='#{prefix_job_number}#{job_number}'").take
+		client_work_details = ClientWorkDetail.where("RIGHT(job_number,4)=#{job_number.to_i} and bill_type=#{bill_type}").take
 		
 		render_txt = "no"
 		if client_work_details.present?

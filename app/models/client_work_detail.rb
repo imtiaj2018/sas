@@ -12,7 +12,7 @@ class ClientWorkDetail < ApplicationRecord
 		if limit != nil
 			uplimit= limit.split('_')[1]
 			lowlimit= limit.split('_')[0]
-			return ClientWorkDetail.find_by_sql("SELECT * FROM client_work_details limit #{lowlimit},#{uplimit}")
+			return ClientWorkDetail.find_by_sql("SELECT * FROM client_work_details order by bill_number desc limit #{lowlimit},#{uplimit}")
 		end
 		return ClientWorkDetail.find_by_sql("SELECT count(*) as cc FROM client_work_details;")
 	end

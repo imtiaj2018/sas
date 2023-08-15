@@ -209,13 +209,13 @@
 			  </tr>
 			  <tr>
 				<td>
-				  <input type="text" placeholder="Bill No." name="bill_no" id="bill_no">
+				  <input type="text" placeholder="Bill No." name="bill_no" id="bill_no" value='<%= @new_bill_number %>' readonly>
 				</td>
 				<td>
 				  <input type="text" placeholder="Bill Date" name="bill_date" id="bill_date">
 				</td>
 				<td>
-				  <b style="font-size:18px;"><%= @job_number %></b><input type="text" placeholder="Job Number" name="job_number" id="job_number" style="width:25%;">
+				  <b style="font-size:18px;"><%= @job_number %></b><input type="text" placeholder="Job Number" name="job_number" id="job_number" style="width:25%;"class="numericonly">
 				  <input type="text" name="prefix_job_number" id="prefix_job_number" value="<%= @job_number %>" style="display:none;"/>
 				</td>
 			  </tr>
@@ -375,7 +375,7 @@
 		$.ajax({
 			type: "get",
 			url: 'check_job_number',
-			data: "prefix_job_number="+prefix_job_number+"&job_number="+job_number,
+			data: "prefix_job_number="+prefix_job_number+"&job_number="+job_number+"&bill_type='Non-Tax'",
 			success: function(msg){
 				jquery_overlay_stop();
 				if(msg.split("@")[0] == "no"){
@@ -495,7 +495,6 @@
 		
 		// Update the total amount in the HTML
 		$('#total_bill_amount').val(totalAmount);
-		alert(totalAmount);
 	}
 
 	
