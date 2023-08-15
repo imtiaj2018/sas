@@ -15,8 +15,8 @@
 			puts dump_cmd
 			# Send the email with the dump file attached
 			sunshine_mail="sunshineadsolutions@gmail.com"
-			# UserMailer.send_attachment_email(backup_file,sunshine_mail).deliver_now
+			UserMailer.send_attachment_email(backup_file,sunshine_mail).deliver_now
 			# Delete the temporary file
-			# File.delete(backup_file)
+			File.delete(backup_file)
 		end
 	end
