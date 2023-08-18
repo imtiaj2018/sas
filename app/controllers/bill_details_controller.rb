@@ -228,16 +228,21 @@ class BillDetailsController < ApplicationController
 		column_def_hsh["width"]=55
 		columndef_arr << column_def_hsh 
 		cell_style_hsh={}
-		cell_style_hsh["text-align"]="center" 
+		cell_style_hsh["text-align"]="left" 
 		numeric_filter_arr = [""] 
+		
+		cell_style_hash_editfield={} 
+		cell_style_hash_editfield["border"] =" 1px solid #1553A6"   
+		cell_style_hash_editfield["border-radius"] ="4px"
 		
 		raw_data=BillDetailsHelper.get_bill_details_grid_coldef()
 		raw_data.each do |obj|
-			if numeric_filter_arr.include?(obj["field"])
-				obj[:filter] ="agNumberColumnFilter"
-			else
-				obj[:filter] ="agSetColumnFilter"
-			end
+			# if numeric_filter_arr.include?(obj["field"])
+				# obj[:filter] ="agNumberColumnFilter"
+			# else
+				# obj[:filter] ="agSetColumnFilter"
+			# end
+			
 			obj[:cellRenderer]=obj["decoration_id"].to_s
 			obj[:cellStyle] = cell_style_hsh
 			columndef_arr << obj
@@ -248,7 +253,7 @@ class BillDetailsController < ApplicationController
 	
 	def get_bill_details_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','bill_number','job_number','payable_amount','gross_amount','bill_date','bill_type','bill_status']
+		@column_names_field=['id','bill_number','client_name_address','job_number','payable_amount','gross_amount','job_done_on','bill_date','bill_type','bill_status']
 		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
 		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
 		agdata.each do |data|
@@ -257,6 +262,8 @@ class BillDetailsController < ApplicationController
 				if fieldname == 'bill_status'
 					_tempdatahash[fieldname] = "Open"
 					_tempdatahash[fieldname] = "Closed" if data.bill_status == 1
+				elsif fieldname == 'client_name_address'
+					_tempdatahash[fieldname] = data[fieldname].to_s.split("\r\n")[0]
 				else
 					_tempdatahash[fieldname] = data[fieldname]
 				end

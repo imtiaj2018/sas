@@ -147,13 +147,18 @@
 		}
 		
 		.data-grid-container {
-			width: 1000px;
+			width: 1500px;
 			padding-left: 3px;
 			margin-top: 25px;
 		}
 		
 		.ag-theme-balham {
 			height: 400px;
+			font-size: 16px !important;
+		}
+		
+		.ag-theme-balham .ag-header{
+			font-size: 16px !important;
 		}
 
 		@media only screen and (max-width: 768px) {
@@ -166,6 +171,9 @@
 				padding-left: 3px;
 				
 			}
+		}
+		#document_gridvw{
+			height:600px !important;
 		}
 	</style>
 </head>
@@ -207,9 +215,25 @@
 
 <script> 
 	var coldef_for_bill= <%= raw @coldef.to_json %>
+	var new_columnDefs_obj =[];
+	
+	
+	for(var i=0;i<coldef_for_bill.length;i++){ 
+		var _hash=coldef_for_bill[i]; 
+		if(_hash.hasOwnProperty('cellRenderer')){
+			cell_render_val=_hash["cellRenderer"]  
+			if(cell_render_val =="1"){
+				_hash["cellRenderer"]=currencyDecimalRender; 
+			}
+		}
+		if(_hash["field"]=="bill_number"){
+		  _hash["cellStyle"]=bill_number_cell_style;
+		}
+		new_columnDefs_obj.push(_hash);
+	}
 	
 	var gridOptions = {
-		columnDefs: coldef_for_bill,
+		columnDefs: new_columnDefs_obj,
 		rowData: null,
 		enableSorting: true,
 		enableFilter: true,
@@ -228,40 +252,32 @@
 		pagination: true
 	};  
 	
+	function bill_number_cell_style(params){			
+		var field_val=params.data["bill_type"];   
+		console.log(field_val);
+		if(field_val == "Tax"){
+			return {'color': 'green'}; 
+		}   
+	}
 	
-	var gridOptions = 
-	{
-		columnDefs: coldef_for_bill,
-		rowData: null,
-		enableSorting: true,
-		enableFilter: true,
-		rowSelection: 'multiple',
-		headerHeight: 40, 
-		rowHeight:30,
-		enableRangeSelection: true,			
-		enableStatusBar: true, 
-		pagination: true,
-		paginationPageSize: 2000,
-		suppressRowClickSelection:true,
-		onRowSelected: unchk_header_all,
-		onGridReady: function() {   },
-		enableColResize: true, 
-		icons: {
-			columnGroupOpened: '<i class="fa fa-minus-square-o"/>',
-			columnGroupClosed: '<i class="fa fa-plus-square-o"/>'
-		} ,
-		onSortChanged:  sortpresent,
-		defaultColDef:{
-			comparator: function(a,b) {
-				if (typeof a === 'string') {
-					return a.localeCompare(b);
-				} else {
-					return (a > b ? 1 : (a < b ? -1 : 0));
-				}
+	function currencyDecimalRender(params){ 
+		var cur_symbol="₹"
+		if(params.value===null || params.value===undefined){ 
+			return null;
+		}else if(isNaN(params.value)){ 
+			try{
+				return  cur_symbol + params.value; 
+			}catch(err){ 
+				return  'NaN';
+			}
+		}else{
+			try{
+				return cur_symbol + parseFloat(params.value).toFixed(2).toString();
+			}catch(err){
+				return "";
 			}
 		}
-		
-	}; 
+	}
 	
 	function unchk_header_all(){ 
 		var selected_row_count = get_selected_row_ids().length;
