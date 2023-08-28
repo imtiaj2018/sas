@@ -174,23 +174,23 @@
 								<a class="page-scroll" href="#home">Home</a>
 							</li>
 							<li>
-								<a class="page-scroll" href="#about">About</a>
+								<a class="page-scroll" onclick="call_about();" style="cursor: pointer;">About</a>
 							</li>
 							<li>
-								<a class="page-scroll" href="#Services">Services</a>
+								<a class="page-scroll" onclick="call_services();" style="cursor: pointer;">Services</a>
 							</li>
 							<li>
 								<a class="page-scroll"  onclick="call_gallery();" style="cursor: pointer;">Works</a>
 							</li>
 							<li>
-								<a class="page-scroll" href="#clients">Clients</a>
+								<a class="page-scroll" onclick="call_clients();" style="cursor: pointer;">Clients</a>
 							</li>
 							
 							<li>
-								<a class="page-scroll" href="#team">Team</a>
+								<a class="page-scroll" onclick="call_team();" style="cursor: pointer;">Team</a>
 							</li>
 							<li>
-								<a class="page-scroll" href="#contact">Contact</a>
+								<a class="page-scroll" onclick="call_contact();" style="cursor: pointer;">Contact</a>
 							</li>
 							<li>
 								<button class="page-scroll brochure_class" onclick="download_brochure();" title="Download our latest brochure.">
@@ -739,6 +739,26 @@
 		
 		function call_gallery(){
 			window.location.href="#Gallery";
+		}
+		
+		function call_contact(){
+			window.location.href="#contact";
+		}
+		
+		function call_clients(){
+			window.location.href="#clients";
+		}
+		
+		function call_services(){
+			window.location.href="#Services";
+		}
+		
+		function call_about(){
+			window.location.href="#about";
+		}
+		
+		function call_team(){
+			window.location.href="#team";
 		}
 		
 		function call_gallery_project_images(image_arr){
