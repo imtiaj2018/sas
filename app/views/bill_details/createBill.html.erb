@@ -172,6 +172,15 @@
 			font-size: 20px;
 		}
 		
+		
+		.tot_cost{
+			text-align: center;
+			font-weight: bold;
+			color: rgb(255, 200, 0);
+			background: transparent;
+			border: 0;
+			font-size: 20px;
+		}
 	</style>
 </head>
 <body class="html_css_class">
@@ -233,7 +242,7 @@
 					<td><input type="text" name="size[]" placeholder="Size" class="small-input"></td>
 					<td><input type="text" name="rate[]" placeholder="Rate" class="small-input numericonly"></td>
 					<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly"></td>
-					<td><input type="text" name="cost[]" placeholder="Cost" class="numericonly"></td>
+					<td><input type="text" name="cost[]" placeholder="Cost" class="total_cost" readonly></td>
 					<td><input type="text" name="cgst[]" placeholder="CGST" readonly></td>
 					<td><input type="text" name="sgst[]" placeholder="SGST" readonly></td>
 					<td><input type="text" name="gst[]" value="18" readonly class="small-input"></td>
@@ -250,9 +259,10 @@
 		<input type="text" name="advanced" placeholder="Advanced" id="advanced" class="numericonly">
 		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount" >
 		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."></textarea>
-		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Total Amount </button>
+		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Bill</button>
 		<input type="submit" value="Save Bill" class="generate-bill">
-		<input type="text" id="total_bill_amount" placeholder="Calculated Bill Amount" class="tot_bill" disabled>
+		<input type="text" id="total_cost_amount" placeholder="Calculated Cost" class="tot_cost" disabled>
+		<input type="text" id="total_bill_amount" placeholder="Calculated Bill" class="tot_bill" disabled>
 		</fieldset>
 	</form>
 </body>
@@ -287,7 +297,7 @@
 		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
 		cell4.innerHTML = '<input type="text" name="rate[]" placeholder="Rate" class="small-input">';
 		cell5.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
-		cell6.innerHTML = '<input type="text" name="cost[]" placeholder="Cost">';
+		cell6.innerHTML = '<input type="text" name="cost[]" placeholder="Cost" class="total_cost" readonly>';
 		cell7.innerHTML = '<input type="text" name="cgst[]" placeholder="CGST" readonly>';
 		cell8.innerHTML = '<input type="text" name="sgst[]" placeholder="SGST" readonly>';
 		cell9.innerHTML = '<input type="text" name="gst[]" value="18" class="small-input" readonly>';
@@ -457,6 +467,7 @@
 	}
 	
 	function calculate_total_amount(){
+		calculate_cost_amount(); //to show the cost amount
 		var advanced = $("#advanced").val();
 		var additional_charges = $("#additinonal_charges").val();
 		// Calculate the total amount
@@ -478,7 +489,20 @@
 		}
 		
 		// Update the total amount in the HTML
-		$('#total_bill_amount').val(totalAmount);
+		$('#total_bill_amount').val(totalAmount.toFixed(2));
+	}
+	
+	function calculate_cost_amount(){
+		// Calculate the total cost
+		let totalCost = 0;
+		$('.total_cost').each(function() {
+			const cost = parseFloat($(this).val());
+			if (!isNaN(cost)) {
+				totalCost += cost;
+			}
+		});
+		// Update the total cost amount in the HTML
+		$('#total_cost_amount').val(totalCost.toFixed(2));
 	}
 
 	

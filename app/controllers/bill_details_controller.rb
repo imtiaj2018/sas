@@ -207,6 +207,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.total_of_total = bd_obj.collect{|x| x.total}.sum
 			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
 			client_work_details_object.save
 			render :plain => "success"
 			
@@ -459,6 +460,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.total_of_total = bd_obj.collect{|x| x.total}.sum
 			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
 			render :plain => "success"
