@@ -171,11 +171,21 @@
 			font-family: Camberia;
 			color:#ffffff !important;
 		}
+		
+		.tot_cost{
+			text-align: center;
+			font-weight: bold;
+			color: rgb(255, 200, 0);
+			background: transparent;
+			border: 0;
+			font-size: 20px;
+		}
+		
 	</style>
 </head>
 <body class="html_css_class">
 	
-	<form id="non_tax_bill_edit_form" name="non_tax_bill_edit_form" method="post" action="/update_non_tax_bill" target="_parent" style="float:left;width:80%;">
+	<form id="non_tax_bill_edit_form" name="non_tax_bill_edit_form" method="post" action="/update_non_tax_bill" target="_parent" style="float:left;width:85%;">
 		<fieldset>
 		<legend>Client Details</legend>
 		<input type="hidden" name="oper" id="oper" value="edit" />
@@ -232,7 +242,7 @@
 						<td><input type="text" name="specification[]" placeholder="Specification" value='<%= bd.specification %>'></td>
 						<td><input type="text" name="size[]" placeholder="Size" class="small-input" value='<%= bd.size %>'></td>
 						<td><input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input numericonly" value='<%= bd.qty %>'></td>
-						<td><input type="text" name="cost[]" placeholder="Cost" onchange="cost_onchange(this)" class="numericonly" value='<%= bd.cost %>'></td>
+						<td><input type="text" name="cost[]" placeholder="Cost" onchange="cost_onchange(this)" class="total_cost numericonly" value='<%= bd.cost %>'></td>
 						<td><input type="text" name="total[]" placeholder="Total" class="total_amount" readonly value='<%= bd.total %>'></td>
 						<td><button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button></td>
 					</tr>
@@ -245,9 +255,10 @@
 		<input type="text" name="advanced" id="advanced" placeholder="Advanced" class="numericonly" value='<%= @client_work_details[0].advanced %>'>
 		<input type="text" name="additinonal_charges" id="additinonal_charges" placeholder="Additional/Discount"  value='<%= @client_work_details[0].additional_or_discount %>'>
 		<textarea style="margin-bottom:-3px;" rows="1" cols="30" name="additional_or_discount_info" id="additional_or_discount_info" placeholder="Additional/Discount Info."><%= @client_work_details[0].additional_or_discount_info %></textarea>
-		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Total Amount </button>
+		<button type="button" onclick="calculate_total_amount()" class="calculate-bill">Calculate Bill </button>
 		<input type="submit" value="Update Bill" class="generate-bill">
-		<input type="text" id="total_bill_amount" placeholder="Calculated Bill Amount" class="tot_bill" value='<%= @client_work_details[0].payable_amount %>' disabled>
+		<input type="text" id="total_cost_amount" placeholder="Calculated Cost" class="tot_cost" value='<%= @client_work_details[0].total_cost %>' disabled>
+		<input type="text" id="total_bill_amount" placeholder="Calculated Bill" class="tot_bill" value='<%= @client_work_details[0].payable_amount %>' disabled>
 		</fieldset>
 	</form>
 </body>
@@ -275,7 +286,7 @@
 		cell2.innerHTML = '<input type="text" name="specification[]" placeholder="Specification">';
 		cell3.innerHTML = '<input type="text" name="size[]" placeholder="Size" class="small-input">';
 		cell4.innerHTML = '<input type="text" name="qty[]" onchange="qty_onchange(this)" placeholder="Qty" class="small-input">';
-		cell5.innerHTML = '<input type="text" name="cost[]" onchange="cost_onchange(this)" placeholder="Cost">';
+		cell5.innerHTML = '<input type="text" name="cost[]" class="total_cost" onchange="cost_onchange(this)" placeholder="Cost">';
 		cell6.innerHTML = '<input type="text" name="total[]" placeholder="Total" class="total_amount" readonly>';
 		cell7.innerHTML = '<button type="button" onclick="deleteRow(this)" class="icon-button"><i class="fas fa-trash-alt" style="color:red;"></i></button>';
 	}
@@ -436,6 +447,7 @@
 	}
 	
 	function calculate_total_amount(){
+		calculate_total_cost();
 		var advanced = $("#advanced").val();
 		var additional_charges = $("#additinonal_charges").val();
 		// Calculate the total amount
@@ -457,7 +469,20 @@
 		}
 		
 		// Update the total amount in the HTML
-		$('#total_bill_amount').val(totalAmount);
+		$('#total_bill_amount').val(totalAmount.toFixed(2));
+	}
+	
+	function calculate_total_cost(){
+		// Calculate the total cost
+		let totalCost = 0;
+		$('.total_cost').each(function() {
+			const cost = parseFloat($(this).val());
+			if (!isNaN(cost)) {
+				totalCost += cost;
+			}
+		});
+		// Update the total cost in the HTML
+		$('#total_cost_amount').val(totalCost.toFixed(2));
 	}
 
 	
