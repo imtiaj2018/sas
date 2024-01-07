@@ -51,14 +51,29 @@ class BillDetailsController < ApplicationController
 	end
 	
 	def generate_job_number(bill_type)
+		
 		job_number_str = ""
 		current_year = Time.now.strftime("%y")
 		current_month = Time.now.strftime("%m")
 		next_year = current_year.to_i + 1
-		
-		job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/"
-		job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/B" if bill_type=="tax"
+		current_date = Date.today
+		financial_year_str=financial_year(current_date)
+		# job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/"
+		job_number_str = "SAS/#{financial_year_str}/#{current_month}#{current_year}/"
+		# job_number_str = "SAS/#{current_year}#{next_year}/#{current_month}#{current_year}/B" if bill_type=="tax"
+		job_number_str = "SAS/#{financial_year_str}/#{current_month}#{current_year}/B" if bill_type=="tax"
 		return job_number_str
+	end
+	
+	def financial_year(date)
+		year = date.year
+		financial_start_month = 4 # For example, April in this case
+
+		if date.month < financial_start_month
+			year -= 1
+		end
+
+		return "#{year.to_s[2..4]}#{(year + 1).to_s[2..4]}" 
 	end
 	
 	
