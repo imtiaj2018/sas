@@ -4,7 +4,7 @@
 		desc 'Backup specified tables and send the dump to email'
 		task :backup_and_send_mail => :environment do
 			# Tables to be backed up
-			tables_to_backup = %w[bill_details client_work_details]
+			tables_to_backup = %w[bill_details client_work_details brochure_pdfs clients users project_images]
 			# Temporary file to store the SQL dump
 			current_time = Time.now
 			formatted_time = current_time.strftime('%d%m%Y%H%M%S')
