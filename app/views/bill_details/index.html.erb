@@ -186,6 +186,7 @@
 			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
 			<input type="button" name="cancelBttn" value="Admin Panel" onclick="admin_panel();">
 			<input type="button" name="cancelBttn" value="Close Bill" onclick="close_bill();">
+			<input type="button" name="cancelBttn" value="Sync Bill" onclick="back_up_bill();" style="background-color:red;">
 		</div>
 		
 		<div class="data-grid-container">
@@ -438,6 +439,19 @@
 				}
 			}
 		}
+	}
+	
+	function back_up_bill(){
+		jquery_overlay_start();
+		$.ajax({
+			type: "get",
+			url: "/sync_bill",
+			data: "",
+			success: function(msg){
+				jquery_overlay_stop();
+				
+			}
+		});
 	}
 	
 	

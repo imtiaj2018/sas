@@ -512,6 +512,15 @@ class BillDetailsController < ApplicationController
 	end
 	
 	
+	def sync_bill
+		# system("crontab #{Rails.root}/lib/tasks/backup.rake")
+		system("rake db:backup_and_send_mail")
+		
+		render :plain => "All okay"
+		
+	end
+	
+	
 	def html_content_for_close_bill(client_work_details)
 		html_string=<<-FOO
 			<table style="width: 60%; border-collapse: collapse; margin: 20px auto;">
