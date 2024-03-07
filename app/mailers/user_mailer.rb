@@ -5,6 +5,11 @@ class UserMailer < ApplicationMailer
 		mail(to: user_email, body: message, subject: subject, content_type: "text/html")
 	end
 	
+	def send_site_up_notification(subject, message) 
+		user_email= "imtiajromi@gmail.com"
+		mail(to: user_email, body: message, subject: subject, content_type: "text/html")
+	end
+	
 	def send_attachment_email(attachment_path,user_email)
 		current_time = Time.now
 		formatted_time = current_time.strftime('%d-%m-%Y %H:%M:%S')
