@@ -8,7 +8,8 @@ class UserMailer < ApplicationMailer
 	def send_site_up_notification(subject, message)
 		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
 		user_email_list = yml_data["email_list"].split(',') rescue []
-		mail(to: user_email_list, body: message, subject: subject, content_type: "text/html")
+		# mail(to: user_email_list, body: message, subject: "⚠️ #{b_tag}#{subject}#{b_close_tag} ⚠️ ", content_type: "text/html")
+		mail(to: user_email_list, body: message, subject: "#{subject}", content_type: "text/html")
 	end
 	
 	def send_attachment_email(attachment_path,user_email)
