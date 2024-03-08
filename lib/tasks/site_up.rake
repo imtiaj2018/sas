@@ -2,7 +2,7 @@ require 'net/http'
 
 namespace :chk do
 	desc 'Check website status and notify via email'
-	task :site_up_task do
+	task :site_up_task => :environment do
 		url = 'http://www.sunshineadsolutions.com'  # Replace with your website URL
 		begin
 			response = Net::HTTP.get_response(URI(url))
