@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
 	end
 	
 	def send_site_up_notification(subject, message)
-		yml_data = YAML.load_file("#{Rails.root}/config/database.yml",aliases:true)
+		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
 		user_email_list = yml_data["email_list"].split(',') rescue []
 		mail(to: user_email_list, body: message, subject: subject, content_type: "text/html")
 	end
