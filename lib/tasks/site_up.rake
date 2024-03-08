@@ -12,7 +12,7 @@ namespace :chk do
 				puts "Your website #{url} is up and running."
 			else
 				puts "====================#{response.code}"
-				UserMailer.send_site_up_notification("SAS:Website is down", "Your website #{url} is down. Status code: #{response.code}").deliver_now
+				UserMailer.send_site_up_notification("<div style='color: red;'><b>SAS:Website is down</b></div>", "Your website #{url} is down. <br><b>Status code</b></br>: #{response.code}").deliver_now
 			end
 		rescue StandardError => e
 			UserMailer.send_site_up_notification("Error occurred", "An error occurred while checking the website: #{e.message}").deliver_now
