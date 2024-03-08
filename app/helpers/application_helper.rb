@@ -10,4 +10,8 @@ module ApplicationHelper
 			return  decrypted_string
        	end
 	end
+	
+	def current_year
+		Time.now.year
+	end
 end
