@@ -84,7 +84,6 @@ Rails.application.configure do
 	# Use a different logger for distributed setups.
 	# require 'syslog/logger'
 	# config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-	SECRET_KEY_BASE = "90d7f86ae902e24479792e0eb1a7e563ff4681f93285049faecd518f685de6c2ec6228ee05030633b9ee3c3511101bf08fc4d1c510f368fce2c0647d89a002e7"
 
 	if ENV["RAILS_LOG_TO_STDOUT"].present?
 	logger           = ActiveSupport::Logger.new(STDOUT)
