@@ -358,6 +358,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["bill_date",bill_date]
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["bill_type","Tax"]
 			client_work_details_create_arr<<["job_number",job_number]
 			
 			generic_method_to_truncate_bill_details(bill_number,"incomplete")
