@@ -108,6 +108,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_create_arr<<["bill_date",bill_date]
 			client_work_details_create_arr<<["advanced",advanced]
 			client_work_details_create_arr<<["additional_or_discount",additional_or_discount]
+			client_work_details_create_arr<<["bill_type","Tax"]
 			client_work_details_create_arr<<["job_number",exact_job_number]
 			client_work_details_object=ClientWorkDetail.create_client_work_details(client_work_details_create_arr)
 			
