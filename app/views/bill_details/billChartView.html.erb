@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div style="width: 100%; margin: 0 auto;border:0px solid red;">
+    <canvas id="myChart"></canvas>
+  </div>
+
+  <script>
+  
+	var yearwisemonthlyData = <%= raw @chart_data.to_json %>
+    var ctx = document.getElementById('myChart').getContext('2d');
+     // Extract labels (months) and data (gross amounts)
+	var years = Object.keys(yearwisemonthlyData);
+	var months =["January","February","March","April","May","June","July","August","September","October","November","December"];
+	var datasets = years.map(year => ({
+		label: year,
+		data: months.map(month => yearwisemonthlyData[year][month]?.gross_amount || 0)
+	}));
+
+	// Plot the chart
+	var monthlyGrossChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: months,
+			datasets: datasets
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				title: {
+					display: true
+				}
+			}
+		}
+	});
+  </script>
+</body>
+</html>

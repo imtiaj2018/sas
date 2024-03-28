@@ -579,5 +579,30 @@ class BillDetailsController < ApplicationController
 		end
 		render :plain => render_txt
 	end
+	
+	def billChartView
+		puts "==================================="
+		data_from_sql = BillDetail.get_chart_data
+		# Constructing JSON object
+		yearwise_monthly_data = {}
+
+		data_from_sql.each do |data|
+			year = data["year_value"].to_s
+			month = data["month_value"].to_s
+			gross_amount = data["gross_amount"].to_f.round(2)
+			puts "==================gross_amount====#{gross_amount}"
+
+			yearwise_monthly_data[year] ||= {}
+			yearwise_monthly_data[year][month] = { "gross_amount" => gross_amount }
+		end
+
+		# Convert to JSON format
+		# @chart_data = JSON.pretty_generate(yearwise_monthly_data)
+		@chart_data = yearwise_monthly_data
+		puts @chart_data.inspect
+		
+		render :template => 'bill_details/billChartView.html.erb', :layout=>	false
+		
+	end
 
 end

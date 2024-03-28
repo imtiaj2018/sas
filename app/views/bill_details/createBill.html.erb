@@ -316,7 +316,9 @@
 		if(rowIndex==0){
 			//do nothing
 		}else{
-			row.parentNode.removeChild(row);
+			if(confirm("Are you sure you want to delete bill entry?")){
+				row.parentNode.removeChild(row);
+			}
 		}
 	}
 	
