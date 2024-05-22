@@ -270,7 +270,8 @@ class BillDetailsController < ApplicationController
 	
 	def get_bill_details_aggrid_data		
 		@column_data = []
-		@column_names_field=['id','bill_number','client_name_address','job_number','payable_amount','gross_amount','job_done_on','bill_date','bill_type','bill_status']
+		# @column_names_field=['id','bill_number','client_name_address','job_number','payable_amount','gross_amount','job_done_on','bill_date','bill_type','bill_status']
+		@column_names_field=['id','bill_number','client_name_address','job_number','payable_amount','gross_amount','job_done_on','bill_date','bill_edit_date','bill_type','bill_status']
 		agdata = ClientWorkDetail.get_ag_grid_data_bill_details(params[:limit])
 		agdata_count = ClientWorkDetail.get_ag_grid_data_bill_details()
 		agdata.each do |data|
@@ -409,6 +410,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.total_of_total = client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
+			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
 			render :plain => "success"
@@ -478,6 +480,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.gross_amount = (client_work_details_object.total_of_total.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
+			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
 			render :plain => "success"
