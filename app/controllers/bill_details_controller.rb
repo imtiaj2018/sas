@@ -157,6 +157,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
+			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Create")
 			render :plain => "success"
 			
 		end
@@ -225,6 +226,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
 			client_work_details_object.save
+			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Create")
 			render :plain => "success"
 			
 		end
@@ -413,6 +415,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
+			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Edit")
 			render :plain => "success"
 			
 		end
@@ -483,6 +486,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
+			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Edit")
 			render :plain => "success"
 			
 		end
@@ -532,6 +536,10 @@ class BillDetailsController < ApplicationController
 				<tr style="border: 2px solid black;">
 					<td style="width: 50%; border: 2px solid; padding: 10px;">BILL NUMBER</td>
 					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].bill_number}</td>
+				</tr>
+				<tr style="border: 2px solid black;">
+					<td style="width: 50%; border: 2px solid; padding: 10px;">JOB NUMBER</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].job_number}</td>
 				</tr>
 				<tr style="border: 2px solid black;">
 					<td style="width: 50%; border: 2px solid; padding: 10px;">BILL DATE</td>
@@ -607,5 +615,36 @@ class BillDetailsController < ApplicationController
 		render :template => 'bill_details/billChartView.html.erb', :layout=>	false
 		
 	end
+	
+	def send_mail_with_pdf_while_create_edit_bill(bill_number,type)
+		@bill_details = BillDetail.where("bill_number='#{bill_number}'")
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+		client_name = @client_work_details[0].client_name_address.to_s.split("\r\n")[0]
+		bill_template_page = 'bill_details/generate_pdf_non_tax_bill.html.erb'
+		bill_template_page = 'bill_details/generate_pdf_bill.html.erb' if @client_work_details[0].bill_type.to_s.downcase == "tax"
+		pdf = WickedPdf.new.pdf_from_string(
+		render_to_string("#{bill_template_page}", layout: false, print_media_type: true)
+		)
+		# Temporary file to store the SQL dump
+		current_time = Time.now
+		formatted_time = current_time.strftime('%d%m%Y%H%M%S')
+		pdf_filename = "#{bill_number}_#{formatted_time}_#{type}.pdf"
+		pdf_path = "/mnt/#{pdf_filename}"
+
+		# Write the PDF to /mnt location
+		File.open(pdf_path, 'wb') do |file|
+			file << pdf
+		end
+		
+		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
+		user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		# Retrieve the PDF from /mnt location
+		pdf_attachment = File.read(pdf_path)
+		sunshine_subject = "#{bill_number} : Bill #{type} notification"
+		# Send email with the PDF attachment
+		UserMailer.send_pdf_attachment_email(pdf_path,user_email_list,sunshine_subject,pdf_filename).deliver_now
+		File.delete(pdf_path)
+	end
+
 
 end
