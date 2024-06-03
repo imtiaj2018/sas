@@ -1,9 +1,9 @@
 class UserMailer < ApplicationMailer
 	default from: 'sunshineadsolutions@gmail.com'
 	
-	# def send_mail(user_email, subject, message) 
-		# mail(to: user_email, body: message, subject: subject, content_type: "text/html")
-	# end
+	def send_mail(user_email, subject, message) 
+		mail(to: user_email, body: message, subject: subject, content_type: "text/html")
+	end
 	
 	def send_pdf_attachment_email(attachment_path,user_email,sunshine_subject,pdf_filename)
 		attachments[pdf_filename] = File.read(attachment_path)
