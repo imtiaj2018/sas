@@ -157,7 +157,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.gross_amount = (client_work_details_object.total_cost.to_f + client_work_details_object.total_tax.to_f) + client_work_details_object.additional_or_discount.to_f
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.save
-			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Create")
+			create_edit_bill_and_send_mail(client_work_details_object.bill_number,"Create")
 			render :plain => "success"
 			
 		end
@@ -226,7 +226,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.payable_amount = (client_work_details_object.gross_amount.to_f - client_work_details_object.advanced.to_f)
 			client_work_details_object.total_cost = bd_obj.collect{|x| x.cost}.sum
 			client_work_details_object.save
-			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Create")
+			create_edit_bill_and_send_mail(client_work_details_object.bill_number,"Create")
 			render :plain => "success"
 			
 		end
@@ -415,7 +415,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
-			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Edit")
+			create_edit_bill_and_send_mail(client_work_details_object.bill_number,"Edit")
 			render :plain => "success"
 			
 		end
@@ -486,7 +486,7 @@ class BillDetailsController < ApplicationController
 			client_work_details_object.bill_edit_date = Time.now().strftime("%d/%m/%Y %I:%M:%S")
 			client_work_details_object.save
 			generic_method_to_truncate_bill_details(bill_number,"complete")
-			send_mail_with_pdf_while_create_edit_bill(client_work_details_object.bill_number,"Edit")
+			create_edit_bill_and_send_mail(client_work_details_object.bill_number,"Edit")
 			render :plain => "success"
 			
 		end
@@ -511,7 +511,7 @@ class BillDetailsController < ApplicationController
 		sunshine_mail="sunshineadsolutions@gmail.com"
 		bill_number=params[:bill_number]
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
-		sunshine_message = html_content_for_close_bill(@client_work_details)
+		sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
 		sunshine_subject = "#{bill_number} : Bill close notification"
 		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
 		ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
@@ -530,7 +530,7 @@ class BillDetailsController < ApplicationController
 	end
 	
 	
-	def html_content_for_close_bill(client_work_details)
+	def html_content_for_create_edit_close_bill(client_work_details)
 		html_string=<<-FOO
 			<table style="width: 60%; border-collapse: collapse; margin: 20px auto;">
 				<tr style="border: 2px solid black;">
@@ -558,7 +558,7 @@ class BillDetailsController < ApplicationController
 					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].gross_amount}</td>
 				</tr>
 				<tr style="border: 2px solid black;">
-					<td style="width: 50%; border: 2px solid; padding: 10px;">PAYABLE AMOUNT</td>
+					<td style="width: 50%; border: 2px solid; padding: 10px;">DUE AMOUNT</td>
 					<td style="width: 50%; border: 2px solid; padding: 10px;">#{client_work_details[0].payable_amount}</td>
 				</tr>
 			</table>
@@ -646,5 +646,12 @@ class BillDetailsController < ApplicationController
 		File.delete(pdf_path)
 	end
 
-
+	def create_edit_bill_and_send_mail(bill_number,type)
+		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
+		user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+		sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
+		sunshine_subject = "#{bill_number} : Bill #{type} notification"
+		UserMailer.send_mail(user_email_list, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
+	end
 end
