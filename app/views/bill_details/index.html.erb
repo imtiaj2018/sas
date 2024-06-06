@@ -16,6 +16,28 @@
 
 
 <style>
+	#cancelbtnid_bill_update{
+		background-image: none !important;
+		background: none !important;
+		background-color: #459bac !important;
+		border-radius: 0 !important;
+		padding: 5px !important;
+		text-align: center;
+		border:0px;
+		font-weight:normal;
+		color:#ffffff !important;
+	}
+	#okbtnid_bill_update{
+		background-image: none !important;
+		background: none !important;
+		background-color: #be3364 !important;
+		border-radius: 0 !important;
+		padding: 5px !important;
+		text-align: center;
+		border:0px;
+		font-weight:normal;
+		color:#ffffff !important;
+	}
 	#upload_project_images input[type="button"]{
 		/*border-radius:5px;*/
 		border:0px solid #cccccc;
@@ -277,13 +299,14 @@
 </head>
 <body>
 	<div id="dialog_form_bill_chart_view"></div>	
+	<div id="dialog_form_bill_update"></div>	
 	<div class="admin-panel-button-container" style="width:99%;border: 0px solid;">
 		<div style="width:65%">
 			<input type="button" name="create_bill" value="Create TAX Bill" onclick="window.location.href='/createBill'">
 			<input type="button" name="create_non_tax_bill" value="Create Non-TAX Bill" onclick="window.location.href='/createNonTaxBill'">
 			<input type="button" name="edit_bill" value="Edit" onclick="edit_bill();">
 			<input type="button" name="generate_bill" value="Generate Bill" onclick="call_generate_pdf_bill()">
-			<input type="button" name="cancelBttn" value="Close Bill" onclick="close_bill();">
+			<input type="button" name="cancelBttn" value="Update Bill" onclick="close_bill();">
 			<input type="button" name="cancelBttn" value="Back up Bill" onclick="back_up_bill();" style="background-color:red;">
 		</div>
 		<div style="width:29%">
@@ -314,7 +337,7 @@
 	
 	
 	 $(document).ready(function(){ 
-		
+		call_for_textboxes_data_types();
 		init_grid();
 	 });
 	  
@@ -529,6 +552,7 @@
 	}
 	
 	function close_bill(){
+		
 		var selected_row = get_selected_row_ids(); 
 		if(selected_row.length ==0){
 			alert("Please select atleast one bill.");
@@ -537,9 +561,7 @@
 				alert("Please select one bill only.");
 			}else{
 				var selected_row = get_selected_bill_number();
-				if(confirm("Are you sure you want to close this bill?")){
-					close_bill_and_send_mail(selected_row);
-				}
+				bill_update_dialog_form(selected_row);
 			}
 		}
 	}
@@ -558,16 +580,20 @@
 	}
 	
 	
-	function close_bill_and_send_mail(bill_number){
+	function close_bill_and_send_mail(bill_number){//romi
+		var close_bill_check_box_value = $("#bill_close_checkbox_val").val();
+		var receive_amount = $("#receive_amount").val();
 		jquery_overlay_start();
 		$.ajax({
 			type: "get",
 			url: "/close_bill_and_send_mail",
-			data: "bill_number="+bill_number,
+			data: "bill_number="+bill_number+"&close_bill_check_box_value="+close_bill_check_box_value+"&receive_amount="+receive_amount,
 			success: function(msg){
 				jquery_overlay_stop();
 				alert(msg);
 				load_datasource();
+				$("#dialog_form_bill_update").dialog( "close" );
+				$("#dialog_form_bill_update").dialog("destroy");
 				
 			}
 		});
@@ -629,6 +655,117 @@
 				$("#dialog_form_bill_chart_view").html("<iframe id='bill_chart_view_iframe' class='not-expanded' src='/billChartView' width='100%' height='500' frameborder='0'></iframe>");
 			}
 		}).dialog('open');
+	}
+	
+	function call_for_textboxes_data_types(){ 
+		$('.numericonly').keydown(function(event) {keyDownHandler(event, true)});
+		$('.integeronly').keydown(function(event) {keyDownHandler(event, false)});
+		
+		$('.two_digits_after_deci').on('keyup keydown', function(){ 
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 2){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		$('.one_digits_after_deci').on('keyup keydown', function(){ 			
+			if($(this).val().indexOf('.')!=-1){         
+				if($(this).val().split(".")[1].length > 1){                
+					if( isNaN( parseFloat( this.value ) ) ) return;
+					this.value = this.value.slice(0,-1);
+				}  
+			}            
+			 return this;
+		});
+		function keyDownHandler(e, allowDecimal) {
+			var key = e.keyCode;
+			if(e.shiftKey == 1) e.preventDefault();
+			if(allowDecimal) {
+				var element = e.target;
+				var value = element.value ? element.value : '';
+				if(value.indexOf('.') < 0 && (key == 190 || key == 110)) {
+					return;
+				}
+			}
+			if(!(key == 8 || key == 9 || key == 13 || key == 46  || key ==35 || //key == 110
+					(key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+				e.preventDefault();
+			}
+		}	
+	}
+	
+	
+	function bill_update_dialog_form(selected_row){ 
+		jQuery.fn.extend({
+			propAttr: $.fn.prop || $.fn.attr
+		});
+		
+		var content = "<div id='outer_stch_div'>";
+			content = content + "<div align='left'>";
+			content = content + "<table style='padding-top:10px;' width='75%' border=0>";
+			content = content + "<tr>";
+			content = content + "<td style='padding-top:0px;' align='center'>";
+			content = content + "<div id='message_div'><b>Receive Amount:</b> <input type='text' id='receive_amount' class='numericonly'/></div>";
+			content = content + "</td>";
+			content = content + "</tr>";
+			content = content + "<tr>";
+			content = content + "<td style='padding-top:10px;' align='center'>";
+			content = content + "<label style='color: red; font-weight: bold;'><input type='checkbox' id='bill_close_checkbox' onchange= 'bill_close_checkbox_onchange()'/> Do you want to close this bill?</label>";
+			content = content + "</td>";
+			content = content + "</tr>";
+			content = content + "</table>";
+			content = content + "<div id='chk_box_onchange_div'><input type='hidden' id='bill_close_checkbox_val' value='0'/></div>";
+
+			content = content + "</div></div>";
+		
+		$('#dialog_form_bill_update').html(content);
+		call_for_textboxes_data_types();
+		$('#dialog_form_bill_update').dialog({
+			height: 175,
+			width: 450,
+			title: 'Update Bill',
+			autoOpen: false,
+			modal: true,
+			resizable: true,
+			draggable: true,
+			closeOnEscape: true,
+			show: "blind",
+			hide: "explode",
+			buttons: {			
+				"OK": {
+					text: "OK",
+					id: "okbtnid_bill_update",
+					click: function(){	
+						var bill_close_checkbox_val = $("#bill_close_checkbox_val").val();
+						var receive_amount = $("#receive_amount").val();
+						if(bill_close_checkbox_val=="0" && receive_amount == ""){
+							alert("Please enter receive amount OR close the bill.");
+						}else{
+							close_bill_and_send_mail(selected_row);
+						}
+					}
+				},
+				"Cancel": {
+					text: "Cancel",
+					id: "cancelbtnid_bill_update",
+					click: function(){
+						$(this).dialog( "close" );
+						$(this).dialog("destroy");
+					}									
+				}
+			}
+		}).dialog('open');  
+	
+	 }
+	 
+	 function bill_close_checkbox_onchange(){ 
+		var bill_close_checkbox_val =  $("#bill_close_checkbox").is(":checked"); 
+		if(bill_close_checkbox_val){
+			$("#bill_close_checkbox_val").val("1");
+		}
+		
 	}
 	
 	

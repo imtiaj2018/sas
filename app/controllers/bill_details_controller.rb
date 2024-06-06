@@ -506,17 +506,59 @@ class BillDetailsController < ApplicationController
 		end
 	end
 	
+	def close_bill_decision(bill_number, r_amount, force_close)
+		close_bill_flag = true
+		client_work_details = ClientWorkDetail.where(bill_number: bill_number)
+
+		client_work_details.each do |client_work_detail|
+			client_work_detail.payable_amount = client_work_detail.payable_amount.to_f - r_amount.to_f
+			client_work_detail.save
+			if client_work_detail.payable_amount.to_f > 0
+				close_bill_flag = false
+			end
+		end
+
+		return close_bill_flag
+	end
+
+	
 	
 	def close_bill_and_send_mail
 		sunshine_mail="sunshineadsolutions@gmail.com"
 		bill_number=params[:bill_number]
-		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
-		sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
-		sunshine_subject = "#{bill_number} : Bill close notification"
-		UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
-		ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
+		force_close=params[:close_bill_check_box_value]
+		r_amount=params[:receive_amount]
+		text_val = "#{bill_number} this bill has been updated with received amount."
 		
-		render :plain => "#{bill_number} this bill has been closed. Please check your mail for notification."
+		if r_amount == "" && force_close =="1"
+			@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+			sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
+			sunshine_subject = "#{bill_number} : Bill close notification"
+			UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
+			ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
+			text_val = "#{bill_number} this bill has been closed. Please check your mail for notification."
+			#do nothing
+		elsif r_amount != "" && force_close =="0"
+			close_bill_flag = close_bill_decision(bill_number,r_amount,force_close)
+			if close_bill_flag
+				@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+				sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
+				sunshine_subject = "#{bill_number} : Bill close notification"
+				UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
+				ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
+				text_val = "#{bill_number} this bill has been closed. Please check your mail for notification."
+			end
+		elsif r_amount != "" && force_close =="1"
+			close_bill_flag = close_bill_decision(bill_number,r_amount,force_close)
+			@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
+			sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
+			sunshine_subject = "#{bill_number} : Bill close notification"
+			UserMailer.send_mail(sunshine_mail, sunshine_subject, sunshine_message).deliver #send to sunshine official mail id
+			ActiveRecord::Base.connection.execute("update client_work_details set bill_status = 1 where bill_number = '#{bill_number}'")
+			text_val = "#{bill_number} this bill has been FORCELY closed. Please check your mail for notification."
+		else
+		end
+		render :plain => text_val
 		
 	end
 	
