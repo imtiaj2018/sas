@@ -356,6 +356,10 @@
 		if(_hash["field"]=="bill_number"){
 		  _hash["cellStyle"]=bill_number_cell_style;
 		}
+		
+		if(_hash["field"]=="payable_amount"){
+		  _hash["cellStyle"]=payable_amount_cell_style;
+		}
 		new_columnDefs_obj.push(_hash);
 	}
 	
@@ -384,6 +388,12 @@
 		console.log(field_val);
 		if(field_val == "Tax"){
 			return {'color': 'green'}; 
+		}   
+	}
+	function payable_amount_cell_style(params){			
+		var payable_amount=params.data["payable_amount"];
+		if(parseFloat(payable_amount) > 0){
+			return {'color': 'red'}; 
 		}   
 	}
 	
@@ -552,7 +562,6 @@
 	}
 	
 	function close_bill(){
-		
 		var selected_row = get_selected_row_ids(); 
 		if(selected_row.length ==0){
 			alert("Please select atleast one bill.");
@@ -561,7 +570,8 @@
 				alert("Please select one bill only.");
 			}else{
 				var selected_row = get_selected_bill_number();
-				bill_update_dialog_form(selected_row);
+				var selected_row_obj = get_selected_row_obj();
+				bill_update_dialog_form(selected_row,selected_row_obj);
 			}
 		}
 	}
@@ -697,7 +707,7 @@
 	}
 	
 	
-	function bill_update_dialog_form(selected_row){ 
+	function bill_update_dialog_form(selected_row,selected_row_obj){ 
 		jQuery.fn.extend({
 			propAttr: $.fn.prop || $.fn.attr
 		});
@@ -740,8 +750,14 @@
 					click: function(){	
 						var bill_close_checkbox_val = $("#bill_close_checkbox_val").val();
 						var receive_amount = $("#receive_amount").val();
+						var due_amount = selected_row_obj[0]["payable_amount"];
+						console.log("receive_amount",parseFloat(receive_amount));
+						console.log("due_amount",parseFloat(due_amount));
 						if(bill_close_checkbox_val=="0" && receive_amount == ""){
 							alert("Please enter receive amount OR close the bill.");
+						}
+						else if(parseFloat(receive_amount) > parseFloat(due_amount)){
+							alert("Receive amount should not be greater than Due amount.");
 						}else{
 							close_bill_and_send_mail(selected_row);
 						}
@@ -767,6 +783,18 @@
 		}
 		
 	}
+	
+	function get_selected_row_obj(){//change for ticket #1599
+		var sel_rows=[];
+		gridOptions.api.forEachNodeAfterFilterAndSort(function(node, index){
+			if (node.selected == true) {
+				if (node.data) { 
+					sel_rows.push(node.data);
+				} 
+			}
+		});  
+		return sel_rows;
+	} 
 	
 	
 </script> 

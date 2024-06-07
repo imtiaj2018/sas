@@ -511,9 +511,9 @@ class BillDetailsController < ApplicationController
 		client_work_details = ClientWorkDetail.where(bill_number: bill_number)
 
 		client_work_details.each do |client_work_detail|
-			client_work_detail.payable_amount = client_work_detail.payable_amount.to_f - r_amount.to_f
+			client_work_detail["payable_amount"] = client_work_detail["payable_amount"].to_f - r_amount.to_f
 			client_work_detail.save
-			if client_work_detail.payable_amount.to_f > 0
+			if client_work_detail["payable_amount"].to_f > 0
 				close_bill_flag = false
 			end
 		end
@@ -540,6 +540,7 @@ class BillDetailsController < ApplicationController
 			#do nothing
 		elsif r_amount != "" && force_close =="0"
 			close_bill_flag = close_bill_decision(bill_number,r_amount,force_close)
+			puts "close_bill_flag=== #{close_bill_flag}"
 			if close_bill_flag
 				@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
 				sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
