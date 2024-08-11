@@ -680,7 +680,8 @@ class BillDetailsController < ApplicationController
 		end
 		
 		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
-		user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		# user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		user_email_list = Rails.configuration.bill_notification_email_list rescue ["sunshineadsolutions@gmail.com"]
 		# Retrieve the PDF from /mnt location
 		pdf_attachment = File.read(pdf_path)
 		sunshine_subject = "#{bill_number} : Bill #{type} notification"
@@ -691,7 +692,8 @@ class BillDetailsController < ApplicationController
 
 	def create_edit_bill_and_send_mail(bill_number,type)
 		yml_data = YAML.load_file("#{Rails.root}/config/database.yml")
-		user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		# user_email_list = yml_data["bill_notification_email_list"].split(',') rescue ["sunshineadsolutions@gmail.com"]
+		user_email_list = Rails.configuration.bill_notification_email_list rescue ["sunshineadsolutions@gmail.com"]
 		@client_work_details = ClientWorkDetail.where("bill_number='#{bill_number}'")
 		sunshine_message = html_content_for_create_edit_close_bill(@client_work_details)
 		sunshine_subject = "#{bill_number} : Bill #{type} notification"
