@@ -1,0 +1,8 @@
+
+
+# Begin Whenever generated tasks for: /var/www/my_app/config/schedule.rb at: 2023-07-30 18:41:52 +0000
+31 18 * * * /bin/bash -l -c 'cd /var/www/my_app && rake db:backup_and_send_mail >> /mnt/daily_db_bk.log 2>&1'
+
+# End Whenever generated tasks for: /var/www/my_app/config/schedule.rb at: 2023-07-30 18:41:52 +0000
+
+*/15 * * * * /bin/bash -l -c 'cd /var/www/my_app && rake chk:site_up_task >> /mnt/daily_site_up_bk.log 2>&1'
