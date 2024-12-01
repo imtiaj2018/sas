@@ -37,6 +37,17 @@ Rails.application.routes.draw do
   post 'upload_documentation_file', to:'image_pdf#upload_documentation_file'
   post 'get_documentation_aggrid_data', to:'image_pdf#get_documentation_aggrid_data'
   post 'delete_document_file', to:'image_pdf#delete_document_file'
+
+
+  #=====
+  get 'upload_pdf_file_for_qr_generate', to:'image_pdf#upload_pdf_file_for_qr_generate'
+  get 'download_qr_code', to:'image_pdf#download_qr_code' #download_qr_code
+  post 'upload_pdf_file_for_qr', to:'image_pdf#upload_pdf_file_for_qr' #download_qr_code
+  post 'get_qr_generate_aggrid_data', to:'image_pdf#get_qr_generate_aggrid_data' #download_qr_code
+  post 'delete_qrcode_file', to:'image_pdf#delete_qrcode_file' #download_qr_code
+  
+  
+  #--------
   
   get 'upload_project_images', to:'image_pdf#upload_project_images'
   post 'upload_project_images_form', to:'image_pdf#upload_project_images_form'
