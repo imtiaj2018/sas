@@ -18,32 +18,6 @@ class ImagePdfController < ApplicationController
 		end		
 	end
 
-	def upload_pdf_file_for_qr_bk #qr code
-		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
-		# directory="/mnt/misc_files"  
-		# if !(File.directory? directory) 	#if directory is not present then creating
-		# 	FileUtils.mkdir_p directory, :mode => 0777	rescue nil
-		# end
-		# puts params[:upload].inspect
-		name =  params[:upload]['datafile'].original_filename   
-		file_extention = File.extname(name)
-		file_name = name.split(file_extention)[0]
-		new_file_name = "#{file_name}_#{time}#{file_extention}"
-		#final_file_name="#{directory}/#{new_file_name}" 
-
-		final_file_name = Rails.root.join('public', "#{new_file_name}")
-		File.chmod(0777, final_file_name)
-
-		
-		FileUtils.move params[:upload]['datafile'].path, final_file_name  
-		# Set permissions on the file
-		File.chmod(0777, final_file_name)
-		QrcodePdf.save_pdf_file_for_qr(new_file_name,name,file_extention) 
-		session[:document_upload_status]="Uploaded Successfully"
-		redirect_to '/upload_pdf_file_for_qr_generate'		
-	end
-
-
 	def upload_pdf_file_for_qr
 		# Generate a timestamp for the new file name
 		time = Time.now.strftime("%m_%d_%Y_%I_%M_%S%p")
@@ -129,7 +103,7 @@ class ImagePdfController < ApplicationController
 		require 'uri'
 		id=params[:id]
 		file_name=QrcodePdf.find(id.to_i).file_name  
-		output_image_path = Rails.root.join('public', 'qrcode.png')
+		output_image_path = Rails.root.join('public', "#{id}_qrcode.png")
 		# base_url = "http://127.0.0.1:3000"
 		base_url = "http://www.sunshineadsolutions.com"
 		
