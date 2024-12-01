@@ -32,6 +32,7 @@ class ImagePdfController < ApplicationController
 		#final_file_name="#{directory}/#{new_file_name}" 
 
 		final_file_name = Rails.root.join('public', "#{new_file_name}")
+		File.chmod(0777, final_file_name)
 
 		
 		FileUtils.move params[:upload]['datafile'].path, final_file_name  
