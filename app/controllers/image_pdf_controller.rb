@@ -18,13 +18,13 @@ class ImagePdfController < ApplicationController
 		end		
 	end
 
-	def upload_pdf_file_for_qr #qr code
+	def upload_pdf_file_for_qr_bk #qr code
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
-		directory="/mnt/misc_files"  
-		if !(File.directory? directory) 	#if directory is not present then creating
-			FileUtils.mkdir_p directory, :mode => 0777	rescue nil
-		end
-		puts params[:upload].inspect
+		# directory="/mnt/misc_files"  
+		# if !(File.directory? directory) 	#if directory is not present then creating
+		# 	FileUtils.mkdir_p directory, :mode => 0777	rescue nil
+		# end
+		# puts params[:upload].inspect
 		name =  params[:upload]['datafile'].original_filename   
 		file_extention = File.extname(name)
 		file_name = name.split(file_extention)[0]
@@ -42,6 +42,51 @@ class ImagePdfController < ApplicationController
 		session[:document_upload_status]="Uploaded Successfully"
 		redirect_to '/upload_pdf_file_for_qr_generate'		
 	end
+
+
+	def upload_pdf_file_for_qr
+		# Generate a timestamp for the new file name
+		time = Time.now.strftime("%m_%d_%Y_%I_%M_%S%p")
+	  
+		# Ensure the `params[:upload]` and `params[:upload]['datafile']` are present
+		if params[:upload].nil? || params[:upload]['datafile'].nil?
+		  session[:document_upload_status] = "File upload failed. No valid file provided."
+		  redirect_to '/upload_pdf_file_for_qr_generate' and return
+		end
+	  
+		# Extract the uploaded file's details
+		uploaded_file = params[:upload]['datafile']
+		name = uploaded_file.original_filename
+		file_extension = File.extname(name)
+		file_name = name.chomp(file_extension)
+	  
+		# Generate the new file name
+		new_file_name = "#{file_name}_#{time}#{file_extension}"
+	  
+		# Define the final file path in the public directory
+		final_file_path = Rails.root.join('public', new_file_name)
+	  
+		begin
+		  # Move the uploaded file to the final destination
+		  FileUtils.move(uploaded_file.path, final_file_path)
+	  
+		  # Set permissions on the moved file
+		  File.chmod(0o777, final_file_path)
+	  
+		  # Save details to the database or perform any other required operation
+		  QrcodePdf.save_pdf_file_for_qr(new_file_name, name, file_extension)
+	  
+		  # Set success status and redirect
+		  session[:document_upload_status] = "Uploaded Successfully"
+		rescue StandardError => e
+		  # Handle any errors during file operations
+		  session[:document_upload_status] = "File upload failed: #{e.message}"
+		end
+	  
+		# Redirect to the next step or show the status
+		redirect_to '/upload_pdf_file_for_qr_generate'
+	  end
+	  
 
 	def upload_documentation_file #brochure
 		time = Time.now().strftime("%m_%d_%Y_%I_%M_%S%p")  
@@ -85,8 +130,8 @@ class ImagePdfController < ApplicationController
 		id=params[:id]
 		file_name=QrcodePdf.find(id.to_i).file_name  
 		output_image_path = Rails.root.join('public', 'qrcode.png')
-		base_url = "http://127.0.0.1:3000"
-		# base_url = "http://www.sunshineadsolutions.com"
+		# base_url = "http://127.0.0.1:3000"
+		base_url = "http://www.sunshineadsolutions.com"
 		
 		encoded_file_name = URI.encode_www_form_component(file_name)
 		url = "#{base_url}/#{encoded_file_name}"
