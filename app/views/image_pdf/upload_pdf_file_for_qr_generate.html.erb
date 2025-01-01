@@ -173,6 +173,10 @@
 					<td>
 						<input type="button" name="cancelBttn" value="Admin Panel" style="width:100px; background: #459bac;" onclick="admin_panel();">
 					</td>
+					
+					<td>
+						<input type="button" name="submitBttn" value="Download QR Code for SAS" style="width:100px; background: #459bac;" onclick="download_qr_code_for_website();">
+					</td>
 				</tr>  
 			</table>
 		</form>
@@ -309,6 +313,10 @@
 	
 	function download_file(file_id){
 		window.location.href= '/download_qr_code?id='+file_id;  
+	}	
+	
+	function download_qr_code_for_website(){
+		window.location.href= '/download_qr_code_for_website';  
 	}	
 	
 	function delete_file(file_id){

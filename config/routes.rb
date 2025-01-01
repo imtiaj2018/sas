@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   post 'upload_pdf_file_for_qr', to:'image_pdf#upload_pdf_file_for_qr' #download_qr_code
   post 'get_qr_generate_aggrid_data', to:'image_pdf#get_qr_generate_aggrid_data' #download_qr_code
   post 'delete_qrcode_file', to:'image_pdf#delete_qrcode_file' #download_qr_code
+  get 'download_qr_code_for_website', to:'image_pdf#download_qr_code_for_website' #download_qr_code for website
   
   
   #--------

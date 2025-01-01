@@ -120,6 +120,22 @@ class ImagePdfController < ApplicationController
 		send_file output_image_path, type: 'image/png', disposition: 'inline'
 	end
 	
+	def download_qr_code_for_website #calling from grid Download button
+		require 'uri'
+		output_image_path = Rails.root.join('public', "website_qrcode.png")
+		base_url = "http://www.sunshineadsolutions.com"
+		url = "#{base_url}"
+		qr_code = RQRCode::QRCode.new(url)
+		# Generate the QR code as an image
+		png = qr_code.as_png(size: 300, border_modules: 4)
+		# Save the PNG data as an image file
+		image = MiniMagick::Image.read(png.to_s) do |img|
+			img.format "png"
+		end
+		image.write(output_image_path)
+		send_file output_image_path, type: 'image/png', disposition: 'inline'
+	end
+	
 	def download_file 
 		file_name = params[:file_name] if params[:file_name].present? 
 		send_file file_name, :type=>"application/csv", :disposition => "attachment", :stream => false 
