@@ -6,7 +6,8 @@ namespace :db do
 		# Temporary file to store the SQL dump
 		current_time = Time.now
 		formatted_time = current_time.strftime('%d%m%Y%H%M%S')
-		backup_file = Rails.root.join('mnt', "backup_#{formatted_time}.sql")
+		# backup_file = Rails.root.join('tmp', "backup_#{formatted_time}.sql")
+		backup_file = "/mnt/backup_#{formatted_time}.sql"
 		config = ActiveRecord::Base.configurations[Rails.env]
 		dump_cmd = "mysqldump --user=#{config['username']} --password=#{config['password']} --host=#{config['host']} #{config['database']} #{tables_to_backup.join(" ")} > #{backup_file}"
 		system(dump_cmd)
