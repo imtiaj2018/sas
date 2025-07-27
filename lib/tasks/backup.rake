@@ -62,7 +62,7 @@ namespace :db do
 
         # Send email (uncomment below line when mailer is ready)
         sunshine_mail = "sunshineadsolutions@gmail.com"
-        # UserMailer.send_attachment_email(backup_file, sunshine_mail).deliver_now
+        UserMailer.send_attachment_email(backup_file, sunshine_mail).deliver_now
 
         # Optionally delete the backup after sending (uncomment below if needed)
         # File.delete(backup_file) if File.exist?(backup_file)
